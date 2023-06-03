@@ -1,8 +1,8 @@
 
 - <a href="#supermetroid" id="toc-supermetroid">supermetroid</a>
-- <a href="#at-what-times-do-super-metroid-speed-runs-get-competitive"
-  id="toc-at-what-times-do-super-metroid-speed-runs-get-competitive">At
-  what times do Super Metroid speed runs get competitive?</a>
+- <a href="#at-what-times-do-super-metroid-100-speed-runs-get-competitive"
+  id="toc-at-what-times-do-super-metroid-100-speed-runs-get-competitive">At
+  what times do Super Metroid 100% speed runs get competitive?</a>
 - <a href="#what-is-super-metroid" id="toc-what-is-super-metroid">What is
   Super Metroid?</a>
 - <a href="#analyses-work-in-progress"
@@ -65,17 +65,33 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-# At what times do Super Metroid speed runs get competitive?
+# At what times do Super Metroid 100% speed runs get competitive?
 
 # What is Super Metroid?
 
-- [thegamehoard](https://thegamehoard.com/2022/04/24/50-years-of-video-games-super-metroid-snes/)
+> While the exploration-focused platformers known as Metroidvanias
+> derive their genre name from two different series, there’s one game
+> they’re all judged by. Super Metroid wasn’t the first Metroidvania,
+> the first Metroid game also had the focus on exploring a large
+> interconnected map and using new abilities to open up new areas, but
+> its polish, visual direction, and atmosphere all created a more
+> involved experience than its predecessors. Released in 1994, Super
+> Metroid’s shadow looms over every game in the genre since… -
+> [thegamehoard
+> 2022](https://thegamehoard.com/2022/04/24/50-years-of-video-games-super-metroid-snes/)
+
+``` r
+# source: wikipedia
+knitr::include_graphics("img/Smetroidbox-wiki.png")
+```
+
+<img src="img/Smetroidbox-wiki.png" width="50%" style="display: block; margin: auto;" />
 
 # Analyses (work in progress)
 
 ## Speed run times from speedrum.com
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 # Getting the data
 
@@ -306,7 +322,7 @@ distribution of runs.
 all_run_raincloud(src_run_df)
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
 
 There are some odd values near 0, which suggest that we need to
 investigate if there are unfinished runs logged on speedrun.com.
@@ -342,7 +358,7 @@ src_run_df %>%
   all_run_raincloud()
 ```
 
-<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
 
 # Getting the data from splitsio
 

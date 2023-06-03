@@ -46,7 +46,7 @@ all_run_raincloud <- function(run_df = src_run_df,
     ggplot2::labs(
       title = "Super Metroid 100% speed run times" %>%
         str_wrap(40),
-      subtitle = "Duration of speedrun",
+      subtitle = "Duration of speedrun distribution",
       y = "time (ms)",
       x = '',
       caption = source

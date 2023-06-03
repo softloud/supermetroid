@@ -21,11 +21,19 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-# At what times do Super Metroid speed runs get competitive?
+# At what times do Super Metroid 100% speed runs get competitive?
 
 # What is Super Metroid?
 
-- [thegamehoard](https://thegamehoard.com/2022/04/24/50-years-of-video-games-super-metroid-snes/) 
+> While the exploration-focused platformers known as Metroidvanias derive their genre name from two different series, there’s one game they’re all judged by. Super Metroid wasn’t the first Metroidvania, the first Metroid game also had the focus on exploring a large interconnected map and using new abilities to open up new areas, but its polish, visual direction, and atmosphere all created a more involved experience than its predecessors. Released in 1994, Super Metroid’s shadow looms over every game in the genre since... - [thegamehoard 2022](https://thegamehoard.com/2022/04/24/50-years-of-video-games-super-metroid-snes/) 
+
+
+```{r fig.align='center', out.width="50%"}
+# source: wikipedia
+knitr::include_graphics("img/Smetroidbox-wiki.png")
+
+```
+
 
 # Analyses (work in progress)
 
