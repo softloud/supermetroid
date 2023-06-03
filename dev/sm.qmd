@@ -1,0 +1,289 @@
+---
+title: "dave's super metroid breakdown"
+format: revealjs
+editor: visual
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+```{r pkg}
+library(tidyverse)
+library(rvest)
+library(gt)
+library(googlesheets4)
+
+
+```
+
+```{r eval=FALSE}
+
+hun_url <- "https://deertier.com/Leaderboard/OneHundredPercent"
+any_url <- "https://deertier.com/Leaderboard/AnyPercentRealTime"
+
+hun_dat <- read_html(hun_url) %>% html_table() %>% pluck(1) %>% mutate(category = "100%")
+any_dat <- read_html(any_url) %>% html_table() %>% pluck(1) %>% mutate(category = "Any%")
+
+sm_dat <- bind_rows(any_dat, hun_dat) %>% select(-Video) %>% janitor::clean_names()
+
+write_csv(sm_dat, "sm_dat.csv")
+
+```
+
+```{r dhb update}
+
+# dave's obs
+dhb_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1eWvJiXBav4cyCH0eNhUtfyTaCLlb60pHpFeZklaKrSM/edit#gid=0",
+                      # col_types=list(
+                      #   "i", # hours
+                      #   "i", # minutes
+                      #   "i", # seconds
+                      #   "D", # date
+                      #   "c", # month, unsure what type
+                      #   "c", # category
+                      #   "c" # notes
+                      # )
+                      col_types = c("iiiDccc")
+                      )
+```
+
+```{r raw}
+sm_dat_raw <- read_csv("../data-raw/sm_dat.csv", col_types = cols(.default = "c"))
+
+sm_dat <- sm_dat_raw %>% select(-comment)
+
+
+```
+
+```{r dhb preprocess}
+dhb_dat <- 
+  dhb_raw %>% 
+    replace_na(list(hours = 0, minutes = 0, seconds=0)) %>% 
+    mutate(
+      t = (60^2 * hours + 60 * minutes + seconds)/60/60 
+    ) 
+
+```
+
+```{r}
+# convert real_time to a number or multiple numbers
+sm_times <- 
+sm_dat %>% 
+  mutate(
+    real_time = if_else(
+      str_count(real_time, ":") == 1,
+      paste0("00:", real_time),
+      real_time
+    )
+  ) %>% 
+  separate(real_time, into=c("h", "m", "s"), remove = FALSE, fill = "left") %>% 
+  mutate(
+    across(c("h", "m", "s"), as.integer)
+  ) %>% 
+  mutate(
+    t = (h * 60 * 60 + m * 60 + s)/60/60
+  )
+
+```
+
+## Where does it get competive?
+
+```{r}
+
+sm_times %>% 
+  ggplot(aes(x = t)) + 
+  geom_density() +
+  facet_wrap(~category) +
+  labs(title = "There are some big outliers that don't help us understand where it gets competitive" %>% str_wrap(50),
+       x = "hours") +
+  theme_minimal() 
+
+
+
+```
+
+```{r}
+dhb <- 
+tribble(
+  ~player, ~h, ~m, ~s, ~category,
+  "anatomecha", 2, 12, 0, "100%",
+  "anatomecha", 1, 35, 0, "Any%"
+) %>% mutate(t = h * 60 * 60 + m * 60, t = t / 60 /60) 
+
+
+
+```
+
+## Run times under 3 hours
+
+```{r}
+
+sm_times %>% 
+  filter(t < 3) %>% 
+  ggplot(aes(x = t)) + 
+  geom_density(alpha = 0.7, fill = "grey", colour = "grey") +
+  geom_vline(
+    data = dhb,
+    aes(xintercept = t),
+    linetype = "dotted",
+    colour = "deepskyblue4"
+  ) +
+  facet_wrap(~category) +
+  labs(title = "Super Metroid run times under 3 hours" %>% str_wrap(50),
+       x = "Hours",
+       y = "Density",
+       subtitle = "100% and Any% Categories") +
+  theme_minimal(base_size = 15, base_family = "serif") +
+  theme(
+    axis.text.y = element_blank()
+  )
+
+
+
+
+```
+
+## Run times under 3 hours
+
+```{r}
+sm_times %>% 
+  # filter to less than 3 hours
+  filter(t < 3) %>%
+  ggplot(aes(x = t)) +
+  geom_boxplot() +
+  facet_wrap(~category, scales = "free") +
+  ggthemes::theme_tufte(base_size = 15) +
+   geom_vline(
+    data = dhb,
+    aes(xintercept = t),
+    linetype = "dotted",
+    colour = "darkgrey"
+  ) +
+  labs(
+    title = "Distribution of runs under 3 hours",
+    x = "time"
+  )
+
+```
+
+## Most Any% runs are close to an hour
+
+```{r}
+sm_times %>% 
+  filter(
+    str_detect(category, "ny"),
+    t < 2
+  ) %>% 
+  ggplot(
+    aes(x = t)
+  ) +
+  geom_vline(
+    data = dhb %>% filter(str_detect(category, "ny")),
+    aes(
+      xintercept = t
+    ),
+    colour = "deepskyblue4",
+    linetype = "dotted"
+  ) +
+  labs(
+    title = "Any% runs under 2 hours"
+  ) + 
+  geom_density(
+  ) +
+  theme_minimal(
+    base_size = 15,
+    base_family="serif"
+  )
+
+
+```
+
+## 
+
+```{r}
+# https://www.r-bloggers.com/2021/07/ggdist-make-a-raincloud-plot-to-visualize-distribution-in-ggplot2/
+
+sm_theme <- c("cadetblue4","deepskyblue4")
+
+boi <- "cadetblue4"
+
+sm_raincloud <-
+sm_times %>% 
+  filter(
+    t < 3
+  ) %>% 
+  ggplot(aes(x = factor(category),
+             y = t,
+             colour = factor(category),
+             fill = factor(category))) +
+  ggdist::stat_halfeye(
+    adjust = 0.5,
+    justification = -0.1,
+    .width = 0,
+    point_colour = NA,
+    alpha = 0.8
+  ) +
+  geom_boxplot(
+    width = .12,
+    outlier.color = NA,
+    alpha = 0.5
+  ) +
+  ggdist::stat_dots(
+    side = "left",
+    justification = 1.1,
+    binwidth = 0.25
+  ) + 
+  scale_color_manual(values = sm_theme) +
+  scale_fill_manual("Category", values = sm_theme) +
+  theme_minimal(
+    base_size = 20,
+    base_family = "serif"
+  ) +
+  labs(
+    title = "Super Metroid speed runs" %>% str_wrap(50),
+    subtitle = "Super Metroid Any% and 100% speed runs under 3 hours",
+    y = "Run time (hrs)",
+    x = "Category",
+    caption= "Source: https://deertier.com"
+  ) +
+  coord_flip() +
+  theme(
+    legend.position = "",
+    panel.grid.major.y = element_blank()
+  )
+  
+
+
+```
+
+```{r}
+
+sm_raincloud
+
+# add Dave
+sm_raincloud +   # Add Dave
+  geom_point(
+    aes(
+      y = t,
+      x = category
+    ),
+    colour = sm_theme,
+    size = 3,
+    data = dhb
+  ) +
+  geom_text(
+    aes(
+      y = t,
+      x = category,
+      label = round(t, 1)
+    ),
+    colour = sm_theme,
+    size = 3,
+    data = dhb_dat,
+    nudge_y = 0.05
+  ) +
+  labs(
+    title = "Dave's best speed run compared to ranked Super Metroid speed runs" %>% str_wrap(50)) 
+
+```

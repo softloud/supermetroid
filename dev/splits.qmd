@@ -1,0 +1,714 @@
+---
+format: 
+  revealjs:
+    theme: dark
+# toc: true
+title: "Dave's Super Metroid Stats"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE,error=TRUE, message = FALSE,warning = FALSE,fig.height = 6,fig.width = 12,fig.align = "center")
+
+
+```
+
+
+
+```{r pkg, message=FALSE}
+library(xml2)
+library(tidyverse)
+library(XML)
+library(ggimage)
+library(gt)
+library(gtExtras)
+library(patchwork)
+
+```
+
+# all important colour palette
+
+```{r set colours}
+# https://coolors.co/image-picker
+
+
+sm_cols <- list(
+  teal = "#426969",
+  black = "#00000A",
+  night = "#101010",
+  oxford_blue = "#001738",
+  persian_indigo = "#2A007F",
+  resolution_blue = "#17268C",
+  ice_blue = "#A5FFFF",
+  blue = "#17268C",
+  wine = "#6D3842",
+  cream = "#E0DEAC",
+  red = "#C13D41",
+  text_green = "#35EB34",
+  orange = "#FB9435"
+)
+
+
+```
+
+```{r}
+
+
+
+sm_cols_look <- function(base_size=20) {
+  tibble(
+    colour = names(sm_cols),
+    hash = as.character(sm_cols),
+    theta = 1
+  ) %>%
+    ggplot(aes(y = colour, x = theta)) +
+    # sm_theme() +
+    geom_segment(
+      x = 0,
+      xend = 1,
+      aes(colour = colour, yend = colour),
+      size = 10
+    ) +
+    scale_color_manual(values = sm_cols) +
+    theme_minimal(
+      base_family = "courier",base_size=base_size) +
+    theme(
+      axis.text = element_text(
+        colour="grey"
+      ),
+      plot.background = element_rect(fill="black"),
+      legend.position = "none",
+      panel.grid = element_blank(),
+       panel.background = element_rect(
+      colour="black",
+      fill="black"
+    )) +
+    labs(x = "", y = "", title="sm_col")
+}
+
+
+```
+
+## palette
+
+```{r}
+
+sm_cols_look()
+
+```
+
+
+```{r vis theme}
+theme_sm <- function(base_size = 15) {
+  theme_minimal(
+    base_size = base_size,
+    base_family = "courier"
+  ) +
+  theme(
+    # background
+    plot.background=element_rect(fill=sm_cols$night),
+    panel.background = element_rect(
+      colour=sm_cols$night,
+      fill=sm_cols$black
+    ),
+    panel.grid = element_line(colour=sm_cols$oxford_blue),
+    
+    # axist text
+    axis.text.x = element_text(colour = sm_cols$text_green),
+    axis.text.y = element_text(colour = sm_cols$text_green),
+    axis.ticks = element_blank(),
+    plot.title = element_text(colour=sm_cols$cream),
+    plot.subtitle = element_text(colour=sm_cols$cream),
+    plot.caption = element_text(colour=sm_cols$cream),
+    legend.text = element_text(colour=sm_cols$orange),
+    legend.title = element_text(colour=sm_cols$orange)
+  ) 
+}
+
+```
+
+
+## 
+
+```{r}
+knitr::include_graphics("colour palette 2023-05-28 12-49-59.png")
+
+```
+
+
+# get dat
+
+```{r filepaths}
+
+any_raw <- read_xml("Super Metroid Any% KPDR.lss")
+hun_raw <- read_xml("Super Metroid - 100%.lss")
+
+
+```
+
+
+```{r eval=FALSE}
+# exploration to help with wrangling
+xml_structure(any_raw) %>% head()
+xml_children(any_raw)
+
+```
+
+```{r}
+
+attempts_raw <- xml_child(hun_raw, 'AttemptHistory')
+segments_raw <- xml_child(hun_raw, 'Segments')
+
+```
+
+
+```{r}
+# str(as_list(segments_raw),2)
+
+# as_list(segments_raw) %>% map(pluck, "SegmentHistory") %>% str(3)
+
+seg_listdf <- 
+  tibble(
+  segment_name = as_list(segments_raw) %>% map_chr(pluck, 'Name',1),
+  # split_time =  as_list(segments_raw) %>% map(pluck, 'SplitTimes',1),
+  segment_history = as_list(segments_raw) %>% map(pluck, "SegmentHistory")
+)  
+
+```
+
+```{r}
+
+convert_time <- function(t) {
+  # returns time in minutes
+  h_m_s <- str_split(t, ":") %>% unlist() %>% as.numeric()
+  
+  (h_m_s[1] * 60 * 60 + h_m_s[2] * 60 + h_m_s[3]) / 60 
+  
+}
+
+splits_obs <-
+  seg_listdf %>%
+  mutate(
+    segment_name = fct_relevel(segment_name, rev(seg_listdf$segment_name))
+  ) %>% 
+  unnest(segment_history) %>% 
+  # do not understand the records with both negative ids & missing records
+  # head() %>%
+  mutate(
+    real_time = map(segment_history, pluck, "RealTime") %>% map(pluck, 1) %>%
+      as.character(),
+    game_time = map(segment_history, pluck, "GameTime") %>% map(pluck, 1) %>%
+      as.character(),
+    id = map(segment_history, attributes) %>% map_chr(pluck, 2) %>% as.integer()
+  ) %>% select(-segment_history)
+
+```
+
+```{r eval=FALSE}
+# wrangle attempts
+as_list(attempts_raw) %>% map(attributes) %>% str()
+
+```
+
+
+```{r}
+
+attempts_df <- 
+tibble(
+  id = as_list(attempts_raw) %>% map(attributes) %>% map_chr(pluck, "id"),
+  names = as_list(attempts_raw) %>% map(attributes) %>% map(pluck, "names"),
+  start = as_list(attempts_raw) %>% map(attributes) %>% map_chr(pluck, "started"),
+  end = as_list(attempts_raw) %>% map(attributes) %>% map_chr(pluck, "ended")
+)
+
+attempts_dat <-
+  attempts_df %>% 
+  mutate(
+    start = mdy_hms(start),
+    end = mdy_hms(end),
+    total_run_time = difftime(end, start, units = ''),
+    date = as_date(end),
+    id = as.integer(id)
+  ) 
+
+```
+
+## QA
+
+```{r}
+knitr::include_graphics("splits_editor.PNG")
+
+```
+
+## Are we interpreting the data correctly?
+
+```{r echo=TRUE}
+# most recent trial should be 7
+splits_obs %>% 
+  filter(id == 7) %>% 
+  select(-game_time) %>% 
+  head() %>% 
+  gt()
+
+```
+
+## icons
+
+```{r icon data}
+icon_dat <- 
+  splits_obs %>% 
+  select(segment_name) %>% 
+  distinct() %>% 
+  mutate(
+    # create icon path
+    icon_path = str_remove_all(segment_name, " |-"),
+    icon_path = str_c("icons/SMetroid", icon_path, "Icon.png")
+  )
+
+
+```
+
+
+```{r icon vis}
+icon_vis <- 
+icon_dat %>% 
+  bind_rows(tibble(segment_name = "placeholder", icon_path = icon_dat$icon_path[[1]])) %>% 
+  mutate(
+    y = rep(rev(seq(1:9)),3),
+    x = c(rep(1,9), rep(2, 9), rep(3, 9)) 
+  ) %>% 
+  select(x, y, everything()) %>% 
+  ggplot(aes(x = x, y = y)) +
+  theme_sm() +
+  geom_text(aes(label = segment_name),
+            nudge_y = 0.4, colour=sm_cols$text_green,family="courier") +
+  geom_image(aes(image = icon_path)) +
+  labs(
+    x = "",
+    y = "",
+    title = "Dave's Super Metroid Segments" %>% str_wrap(20)
+  ) +
+  xlim(0,4) +
+  theme(
+    plot.title = element_text(hjust=0.5),
+    panel.grid = element_blank(),
+    axis.text = element_blank()
+  ) 
+
+
+  
+
+```
+
+
+```{r icon show, fig.width=6,fig.height=6}
+icon_vis 
+
+
+```
+
+# 100% Splits
+
+
+
+```{r splits_dat}
+
+splits_dat <-
+  splits_obs %>% 
+  filter(id > 0, id != 6) %>% 
+  mutate(
+    real_time = map_dbl(real_time, convert_time),
+    game_time = map_dbl(game_time, convert_time)
+  ) %>% 
+  left_join(
+    # patch in dates
+    attempts_dat %>% select(id, date),
+    by = "id"
+  ) %>% 
+  mutate(
+    id_n = id,
+    id = date
+  ) %>% 
+  select(-date) %>% 
+  left_join(icon_dat, by = "segment_name")
+
+```
+
+
+```{r splits vis}
+
+splits_all <- 
+splits_dat %>% 
+  group_by(id) %>% 
+  ggplot(aes(x = real_time, y = segment_name, colour = factor(id))) +
+  geom_point(alpha=0.5, size = 3) +
+  theme_sm() +
+  labs(
+    title = "Real time for each segment",
+    x = "Real time",
+    y = "Segment"
+  ) +
+  scale_colour_brewer("Most recent run darkest", palette = "Greys") +
+  theme(legend.position = "top") +
+  scale_x_continuous(position = "top")
+
+```
+
+
+
+## 
+
+```{r splits all vis}
+splits_all
+
+
+```
+
+## 
+
+```{r splits 15 vis}
+splits_all + 
+  xlim(0,0.25) +
+  labs(subtitle = "Under 15 minutes")
+
+
+```
+
+##
+
+```{r splits 5 vis}
+splits_all + 
+  xlim(0,5/60) +
+  labs(
+    subtitle = "Under 5 minutes"
+  )
+
+```
+
+##
+
+
+```{r mu vs sigma, fig.height=6, fig.width=12, fig.align='center'}
+mu_sig_dat <-
+  splits_dat %>%
+  group_by(segment_name) %>%
+  # mutate(real_time = log(real_time)) %>%
+  summarise(mean = log(mean(real_time)),
+            sd = log(sd(real_time)),
+            min = min(real_time)) %>%
+  left_join(icon_dat, by = "segment_name")
+
+# mean vs variance
+mu_sig <-
+  mu_sig_dat %>%
+  ggplot(aes(x = mean, y = sd)) +
+  labs(
+    title = "Mean vs log Standard Deviation",
+    subtitle = "Target segments with largest mean and standard deviation" %>% str_wrap(40),
+    x = "log(mean)",
+    y = "log(standard deviation)"
+  ) +
+  theme_sm() +
+  geom_image(aes(image = icon_path))+
+  theme(
+    panel.background = element_rect(colour=sm_cols$persian_indigo)
+  )
+
+mu_sig + icon_vis
+```
+
+##
+
+```{r time vs trial, fig.width=8, fig.width=8}
+# time vs trial story
+splits_dat %>% 
+  group_by(id) %>% 
+  mutate(crt = cumsum(real_time)) %>% 
+  ggplot(aes(
+    x = crt,
+    y = factor(id),
+    group = factor(id)
+  )) +
+  geom_line(
+    colour = "cadetblue4"
+  ) +
+  geom_image(aes(image = icon_path), size = 0.05, by = "height",alpha=0.5) +
+  labs(
+    title = "Cumulative real time by trial",
+    y = "Run",
+    x = "Cumulative real time"
+  ) +
+  theme_sm()
+
+
+```
+
+##
+
+```{r cumulative time}
+# cumulative time graph
+splits_dat %>% 
+  mutate(
+    rt_cum = cumsum(real_time),
+    segment_name = fct_relevel(segment_name, seg_listdf$segment_name)
+  ) %>% 
+  ggplot(aes(x = segment_name, y = rt_cum)) +
+  # geom_smooth() +
+  scale_color_brewer("Most recent run darkest", palette="Greys") +
+  theme_sm() +
+  labs(
+    title = "Cumulative segment time",
+    x = "Segment",
+    y = "Cumulative time"
+  ) +
+  geom_point(aes(colour = factor(id))) +
+  theme(
+    axis.text.x = element_text(angle=30,hjust=1),
+    legend.position = "top"
+  ) 
+
+
+```
+
+# Too many Segments
+
+## 
+
+```{r hclust,fig.width=12}
+
+hclust_dat <- 
+splits_dat %>% 
+  group_by(segment_name) %>% 
+  summarise(
+    mu = mean(log(real_time)),
+    var = var(log(real_time))
+  ) %>% 
+  column_to_rownames("segment_name")
+
+hclust_results <- 
+  hclust_dat %>% 
+  dist() %>% 
+  hclust(method = "complete") 
+
+
+```
+
+
+```{r dendro vis}
+library(ggdendro)
+
+dendro_vis <- 
+ggdendrogram(hclust_results, rotate = FALSE) +
+  theme_sm() +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_text(angle=90, hjust=1),
+    axis.text.y = element_blank()
+  ) +
+  labs(
+    x = "Segment",
+    y = "",
+    title = "Similarity of Super Metroid Segments",
+    subtitle = "Similarity (Euclidean distance) of log Mean and log Variance Super Metroid Run Time Segments" %>% str_wrap(40)
+  )
+
+# https://stackoverflow.com/questions/74075161/r-changing-line-width-and-branch-color-of-dendrogram
+dendro_vis$layers[[2]]$aes_params$colour <- sm_cols$orange
+
+```
+
+```{r}
+dendro_vis
+
+```
+
+
+## clusters
+
+```{r fig.width=6,fig.height=6}
+# get cluster results for second-largest cluster (atm Draygon is biggest)
+clusters <- cutree(hclust_results, 3)
+
+
+cluster_dat <- 
+  tibble(
+    segment_name = levels(splits_dat$segment_name),
+    cluster = clusters
+  )
+
+cluster_plot <- 
+  mu_sig +
+    geom_point(
+      data = mu_sig_dat %>% left_join(cluster_dat, by = "segment_name"), 
+      aes(colour = factor(cluster),
+shape = factor(cluster)),
+      size = 10,
+      alpha=0.5
+    ) + 
+  # scale_shape_discrete() +
+  scale_colour_manual(values=list(sm_cols$orange, sm_cols$red, sm_cols$teal)) +
+    theme(
+      legend.position = "None"
+    ) + 
+  geom_image(aes(image = icon_path)) 
+
+  
+
+
+```
+
+
+
+```{r}
+cluster_plot + dendro_vis
+
+
+```
+
+## 
+
+```{r}
+cluster_plot + icon_vis
+
+```
+
+## cluster stats
+
+```{r}
+cluster_stats <- 
+splits_dat %>% 
+  left_join(cluster_dat, by = "segment_name") %>% 
+  group_by(cluster) %>% 
+  summarise(
+    n_segments = n_distinct(segment_name),
+    mean_min = mean(real_time) * 60,
+    sd_min = sd(real_time) * 60
+  ) %>% 
+  mutate(
+    target_cluster = mean_min == max(mean_min)
+  )
+  
+cluster_stats %>% 
+  gt()
+
+```
+
+
+
+# Time series analysis
+
+## forecast
+
+```{r}
+library(fable)
+library(tsibbledata)
+library(tsibble)
+
+target_cluster <- 
+  cluster_stats %>% 
+  filter(target_cluster == TRUE) %>% 
+  pull(cluster) %>% 
+  pluck(1)
+
+target_segments <- 
+  levels(splits_dat$segment_name)[clusters == target_cluster]
+
+
+splits_ts <-
+splits_dat %>%
+  select(id, real_time, segment_name) %>%
+  mutate(real_time = real_time * 60) %>% 
+  filter(
+    # how to extract cluster results?
+    segment_name %in% target_segments
+  ) %>% 
+  as_tsibble(index = id, key = segment_name) %>%  
+  fill_gaps() %>% 
+  model(
+    arima = ARIMA(real_time)
+  ) %>% 
+  forecast(h = "2 months", bootstrap=TRUE)
+
+
+```
+
+```{r}
+
+splits_ts %>% 
+  autoplot() +
+  facet_grid(segment_name~.) +
+  theme_sm()
+
+splits_ts %>% 
+  autoplot()+ 
+  geom_line(aes(x = id, y =real_time), data=splits_dat %>% 
+              filter(segment_name %in% target_segments) %>% 
+                        mutate(
+                         real_time = real_time * 60
+                       )) +
+  geom_point(aes(x = id, y =real_time), data=splits_dat %>% 
+              filter(segment_name %in% target_segments) %>% 
+                        mutate(
+                         real_time = real_time * 60
+                       ), colour = sm_cols$red) +
+  theme_sm(base_size = 12) +
+  labs(
+    x = "Chronological Time",
+    y = "Segment Time (minutes)",
+    title = "Target Cluster",
+    subtitle = "Trends and prediction from forecast",
+    cap = "Segments belong to cluster of long and varied"
+  ) +
+  theme(
+    panel.grid = element_blank()
+  )
+
+```
+
+
+
+```{r eval=FALSE}
+aus_retail %>%
+  as_tibble() %>% 
+  filter(
+    State %in% c("New South Wales", "Victoria"),
+    Industry == "Department stores"
+  ) %>% 
+  group_by(State, Month) %>% 
+  sample_n(7) %>% 
+  as_tsibble() %>% 
+  model(
+    ets = ETS(box_cox(Turnover, 0.3)),
+    arima = ARIMA(log(Turnover)),
+    snaive = SNAIVE(Turnover)
+  ) %>% forecast() %>% autoplot()
+
+
+```
+
+
+# Subgroup analyses
+
+## Why is Grappling Beam so variable?
+
+```{r grappling bar}
+splits_dat %>% 
+  mutate(
+    minutes = real_time * 60
+  ) %>% 
+  filter(segment_name == "Grappling Beam") %>% 
+  ggplot(aes(x = id, y = minutes)) +
+  geom_col(fill=sm_cols$blue,colour=sm_cols$ice_blue) +
+  theme_sm() +
+  labs(
+    title = "Grappling Beam run times",
+    x = "Date",
+    y = "Real Time (minutes)",
+    subtitle = "Do not need to work on Grappling Beam now"
+  )
+
+
+```
+
+## Questions to answer
+
+- Based on his previous runs, 

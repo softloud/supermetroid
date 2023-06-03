@@ -1,0 +1,118 @@
+---
+title: "all-dat"
+format: html
+editor: visual
+---
+
+```{r include=FALSE}
+# knitr::opts_chunk$set(error = TRUE, cache=TRUE)
+```
+
+```{r}
+here::here()
+```
+
+```{r pkg r}
+library(tidyverse)
+library(gt)
+library(supermetroid)
+
+```
+
+```{python pkg py}
+
+# pip install splistio
+from splitsio import *
+import pandas as pd
+import pickle
+import os
+
+
+```
+
+# Getting all data with python module splitsio
+
+Super Metroid's Speed Runners
+
+```{python, eval=FALSE}
+
+# this chunk is not evaluated
+
+# get 100% Category Super Metroid game data  
+hun_cat = Category.from_id("279", historic=True)
+save_object(hun_cat, "data-raw/hun_cat.splistio")
+
+# saving an anonymous object in python 
+# https://stackoverflow.com/questions/4529815/saving-an-object-data-persistence
+
+def save_object(obj, filename):
+    with open(filename, 'wb') as outp:  # Overwrites any existing file.
+        pickle.dump(obj, outp, pickle.HIGHEST_PROTOCOL)
+
+# save object
+save_object(hun_cat, 'data-raw/hun_cat.pkl')
+
+
+
+
+```
+
+```{python}
+# hej Python, where am I?
+os.getcwd()
+
+
+```
+
+```{r}
+# hej R, where am I?
+here::here()
+
+```
+
+```{python, error=TRUE}
+
+with open('../data-raw/hun_cat.pkl', 'rb') as inp:
+    hun_cat = pickle.load(inp)
+
+# extract runners and run from category
+runners = hun_cat.runners()
+runs = hun_cat.runs()
+
+runners[0:3]
+
+```
+
+# 100% Super Metroid Speed Runs
+
+```{python, error=TRUE}
+a_run = runs[-1]
+a_run
+type(a_run)
+a_run.id
+a_run.segments
+
+test_df = pd.DataFrame({'run':runs[0:3]})
+
+test_df
+
+```
+
+```{python }
+
+
+
+
+
+
+```
+
+```{python}
+
+```
+
+```         
+```
+
+```         
+```

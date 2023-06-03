@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.330">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>all-dat</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="alldat_files/libs/clipboard/clipboard.min.js"></script>
+<script src="alldat_files/libs/quarto-html/quarto.js"></script>
+<script src="alldat_files/libs/quarto-html/popper.min.js"></script>
+<script src="alldat_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="alldat_files/libs/quarto-html/anchor.min.js"></script>
+<link href="alldat_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="alldat_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="alldat_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="alldat_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="alldat_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">all-dat</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/home/cantabile/Documents/GitHub/supermetroid"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(supermetroid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install splistio</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> splitsio <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="getting-all-data-with-python-module-splitsio" class="level1">
+<h1>Getting all data with python module splitsio</h1>
+<p>Super Metroid’s Speed Runners</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this chunk is not evaluated</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># get 100% Category Super Metroid game data  </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>hun_cat <span class="op">=</span> Category.from_id(<span class="st">"279"</span>, historic<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>save_object(hun_cat, <span class="st">"data-raw/hun_cat.splistio"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># saving an anonymous object in python </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># https://stackoverflow.com/questions/4529815/saving-an-object-data-persistence</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_object(obj, filename):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'wb'</span>) <span class="im">as</span> outp:  <span class="co"># Overwrites any existing file.</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        pickle.dump(obj, outp, pickle.HIGHEST_PROTOCOL)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># save object</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>save_object(hun_cat, <span class="st">'data-raw/hun_cat.pkl'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hej Python, where am I?</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>os.getcwd()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'/home/cantabile/Documents/GitHub/supermetroid/dev'</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hej R, where am I?</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/home/cantabile/Documents/GitHub/supermetroid"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'../data-raw/hun_cat.pkl'</span>, <span class="st">'rb'</span>) <span class="im">as</span> inp:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    hun_cat <span class="op">=</span> pickle.load(inp)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># extract runners and run from category</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>runners <span class="op">=</span> hun_cat.runners()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>runs <span class="op">=</span> hun_cat.runs()</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>runners[<span class="dv">0</span>:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Runner(id='284', twitch_id='37537140', twitch_name='dyceron', display_name='Dyceron', name='Dyceron'), Runner(id='749', twitch_id='80374205', twitch_name='countcreep', display_name='CountCreep', name='CountCreep'), Runner(id='802', twitch_id='12884825', twitch_name='tm9001', display_name='tm9001', name='tm9001')]</code></pre>
+</div>
+</div>
+</section>
+<section id="super-metroid-speed-runs" class="level1">
+<h1>100% Super Metroid Speed Runs</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>a_run <span class="op">=</span> runs[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>a_run</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Run(id='9qhm', srdc_id=None, realtime_duration_ms=5244406, realtime_sum_of_best_ms=5123150, gametime_duration_ms=3385250, gametime_sum_of_best_ms=3214369, default_timing='real', program='livesplit', attempts=16, image_url=None, parsed_at='2023-05-01T21:05:53.990Z', created_at='2022-08-06T15:10:22.804Z', updated_at='2023-05-01T21:05:53.997Z', video_url=None, game=Game(id='50', name='Super Metroid', shortname='supermetroid'), category=Category(id='279', name='100%'), runners=[Runner(id='25600', twitch_id=None, twitch_name=None, display_name='marcelodmc3', name='marcelodmc3')])</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(a_run)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'splitsio.api.Run'&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>a_run.<span class="bu">id</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'9qhm'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>a_run.segments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Segment(id='ebb62e86-88bf-47ce-a09a-9a41577dae14', name='Bomb Torizo', display_name='Bomb Torizo', segment_number=0, realtime_start_ms=0, realtime_duration_ms=353870, realtime_end_ms=353870, realtime_shortest_duration_ms=346960, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=0, gametime_duration_ms=283867, gametime_end_ms=283867, gametime_shortest_duration_ms=216400, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='da270d36-1163-488d-a446-948c357781ef', name='Kraid E-Tank', display_name='Kraid E-Tank', segment_number=1, realtime_start_ms=353870, realtime_duration_ms=432491, realtime_end_ms=786361, realtime_shortest_duration_ms=418990, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=283867, gametime_duration_ms=197116, gametime_end_ms=480983, gametime_shortest_duration_ms=197116, gametime_gold=True, gametime_skipped=False, gametime_reduced=False), Segment(id='f3b8aab4-f70d-4ea1-b25f-93be494d7634', name='Grapple Missiles', display_name='Grapple Missiles', segment_number=2, realtime_start_ms=786361, realtime_duration_ms=455534, realtime_end_ms=1241895, realtime_shortest_duration_ms=448846, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=480983, gametime_duration_ms=279350, gametime_end_ms=760333, gametime_shortest_duration_ms=271683, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='39912e0a-8b5d-499d-9594-e2b8c539a013', name='Beta PBs', display_name='Beta PBs', segment_number=3, realtime_start_ms=1241895, realtime_duration_ms=256763, realtime_end_ms=1498658, realtime_shortest_duration_ms=256762, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=760333, gametime_duration_ms=151317, gametime_end_ms=911650, gametime_shortest_duration_ms=151317, gametime_gold=True, gametime_skipped=False, gametime_reduced=False), Segment(id='ca11315a-964f-4318-bba7-62910c768140', name='West WS Supers', display_name='West WS Supers', segment_number=4, realtime_start_ms=1498658, realtime_duration_ms=273080, realtime_end_ms=1771738, realtime_shortest_duration_ms=249652, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=911650, gametime_duration_ms=198267, gametime_end_ms=1109917, gametime_shortest_duration_ms=174184, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='4970c03c-19b4-430b-a60b-ef99bb1c487f', name='Gravity Suit', display_name='Gravity Suit', segment_number=5, realtime_start_ms=1771738, realtime_duration_ms=318923, realtime_end_ms=2090661, realtime_shortest_duration_ms=316064, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=1109917, gametime_duration_ms=217366, gametime_end_ms=1327283, gametime_shortest_duration_ms=214717, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='7a021f88-28d9-4931-bbb4-e59cfe44a4c1', name='Etecoon PBs', display_name='Etecoon PBs', segment_number=6, realtime_start_ms=2090661, realtime_duration_ms=265526, realtime_end_ms=2356187, realtime_shortest_duration_ms=257279, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=1327283, gametime_duration_ms=152184, gametime_end_ms=1479467, gametime_shortest_duration_ms=145817, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='87e7f74e-db92-4e84-adca-f3ddb41550c6', name='Green Hill Missiles', display_name='Green Hill Missiles', segment_number=7, realtime_start_ms=2356187, realtime_duration_ms=228902, realtime_end_ms=2585089, realtime_shortest_duration_ms=223264, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=1479467, gametime_duration_ms=130666, gametime_end_ms=1610133, gametime_shortest_duration_ms=124400, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='c229d92f-4e9b-43ea-ac4d-90c6c8080340', name='Watering Hole Supers', display_name='Watering Hole Supers', segment_number=8, realtime_start_ms=2585089, realtime_duration_ms=232269, realtime_end_ms=2817358, realtime_shortest_duration_ms=230979, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=1610133, gametime_duration_ms=131667, gametime_end_ms=1741800, gametime_shortest_duration_ms=130033, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='b5c4cf7c-8e6a-420c-8ed8-1b1225cbc156', name='Spring Ball', display_name='Spring Ball', segment_number=9, realtime_start_ms=2817358, realtime_duration_ms=399375, realtime_end_ms=3216733, realtime_shortest_duration_ms=391799, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=1741800, gametime_duration_ms=282733, gametime_end_ms=2024533, gametime_shortest_duration_ms=274850, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='986f9269-acfa-4eb6-8e50-0845119ec6f5', name='Aqueduct Supers', display_name='Aqueduct Supers', segment_number=10, realtime_start_ms=3216733, realtime_duration_ms=216114, realtime_end_ms=3432847, realtime_shortest_duration_ms=210025, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=2024533, gametime_duration_ms=123834, gametime_end_ms=2148367, gametime_shortest_duration_ms=120684, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='f72a398e-0091-49b2-af51-231d46b6b694', name='Kraid Missiles', display_name='Kraid Missiles', segment_number=11, realtime_start_ms=3432847, realtime_duration_ms=118320, realtime_end_ms=3551167, realtime_shortest_duration_ms=117739, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=2148367, gametime_duration_ms=74183, gametime_end_ms=2222550, gametime_shortest_duration_ms=70750, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='a02ceda2-24cd-4c7b-b70b-391991f80726', name='WRitG', display_name='WRitG', segment_number=12, realtime_start_ms=3551167, realtime_duration_ms=308854, realtime_end_ms=3860021, realtime_shortest_duration_ms=299703, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=2222550, gametime_duration_ms=188367, gametime_end_ms=2410917, gametime_shortest_duration_ms=178200, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='797f7134-5d99-4daa-a14f-3b0765dc12fe', name='Ridley E-Tank', display_name='Ridley E-Tank', segment_number=13, realtime_start_ms=3860021, realtime_duration_ms=194386, realtime_end_ms=4054407, realtime_shortest_duration_ms=194386, realtime_gold=True, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=2410917, gametime_duration_ms=144900, gametime_end_ms=2555817, gametime_shortest_duration_ms=144900, gametime_gold=True, gametime_skipped=False, gametime_reduced=False), Segment(id='829ae115-3b11-441b-824e-8717434e29a5', name='Bubble Mountain Missiles', display_name='Bubble Mountain Missiles', segment_number=14, realtime_start_ms=4054407, realtime_duration_ms=285333, realtime_end_ms=4339740, realtime_shortest_duration_ms=280725, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=2555817, gametime_duration_ms=173583, gametime_end_ms=2729400, gametime_shortest_duration_ms=169017, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='e82f1504-fb3d-45d5-b95a-df984a0c6d0e', name='Golden Four', display_name='Golden Four', segment_number=15, realtime_start_ms=4339740, realtime_duration_ms=429609, realtime_end_ms=4769349, realtime_shortest_duration_ms=420033, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=2729400, gametime_duration_ms=248517, gametime_end_ms=2977917, gametime_shortest_duration_ms=237800, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='fb880314-d617-4a42-b351-f796e0515b38', name='Mother Fucking Brain', display_name='Mother Fucking Brain', segment_number=16, realtime_start_ms=4769349, realtime_duration_ms=227481, realtime_end_ms=4996830, realtime_shortest_duration_ms=223061, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=2977917, gametime_duration_ms=185416, gametime_end_ms=3163333, gametime_shortest_duration_ms=180634, gametime_gold=False, gametime_skipped=False, gametime_reduced=False), Segment(id='71c63e1d-400b-47b7-aa4f-ce1079fa8f53', name='END ME', display_name='END ME', segment_number=17, realtime_start_ms=4996830, realtime_duration_ms=247576, realtime_end_ms=5244406, realtime_shortest_duration_ms=236881, realtime_gold=False, realtime_skipped=False, realtime_reduced=False, gametime_start_ms=3163333, gametime_duration_ms=221917, gametime_end_ms=3385250, gametime_shortest_duration_ms=211866, gametime_gold=False, gametime_skipped=False, gametime_reduced=False)]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> pd.DataFrame({<span class="st">'run'</span>:runs[<span class="dv">0</span>:<span class="dv">3</span>]})</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>test_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                 run
+0  Run(id='asmc', srdc_id=None, realtime_duration...
+1  Run(id='amuv', srdc_id=None, realtime_duration...
+2  Run(id='amcl', srdc_id=None, realtime_duration...</code></pre>
+</div>
+</div>
+<pre><code></code></pre>
+<pre><code></code></pre>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
