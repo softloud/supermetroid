@@ -5,10 +5,14 @@
   what times do Super Metroid speed runs get competitive?</a>
 - <a href="#what-is-super-metroid" id="toc-what-is-super-metroid">What is
   Super Metroid?</a>
+- <a href="#analyses-work-in-progress"
+  id="toc-analyses-work-in-progress">Analyses (work in progress)</a>
+  - <a href="#speed-run-times-from-speedrumcom"
+    id="toc-speed-run-times-from-speedrumcom">Speed run times from
+    speedrum.com</a>
 - <a href="#getting-the-data" id="toc-getting-the-data">Getting the
   data</a>
   - <a href="#sources" id="toc-sources">Sources</a>
-    - <a href="#last-updated" id="toc-last-updated">Last updated</a>
   - <a href="#desired-output-ggplot-friendlytidy-data"
     id="toc-desired-output-ggplot-friendlytidy-data">Desired output:
     <code>ggplot</code>-friendly/tidy data</a>
@@ -22,12 +26,18 @@
 - <a href="#import-pkg--helper-functions"
   id="toc-import-pkg--helper-functions">Import pkg &amp; helper
   functions</a>
+  - <a href="#last-updated" id="toc-last-updated">Last updated</a>
 - <a href="#get-data-from-speedruncom"
   id="toc-get-data-from-speedruncom">Get data from speedrun.com</a>
   - <a href="#load-runs-from-100-leaderboard"
     id="toc-load-runs-from-100-leaderboard">Load runs from 100%
     leaderboard</a>
   - <a href="#run-dataframe" id="toc-run-dataframe">Run dataframe</a>
+  - <a href="#write-speedruncom-data-to-package"
+    id="toc-write-speedruncom-data-to-package">Write speedrun.com data to
+    package</a>
+- <a href="#visualise-runs" id="toc-visualise-runs">Visualise runs</a>
+  - <a href="#raincloud" id="toc-raincloud">Raincloud</a>
 - <a href="#getting-the-data-from-splitsio"
   id="toc-getting-the-data-from-splitsio">Getting the data from
   splitsio</a>
@@ -61,6 +71,12 @@
 
 - [thegamehoard](https://thegamehoard.com/2022/04/24/50-years-of-video-games-super-metroid-snes/)
 
+# Analyses (work in progress)
+
+## Speed run times from speedrum.com
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
 # Getting the data
 
 ## Sources
@@ -73,10 +89,6 @@ data.
 | [speedrun](https://www.speedrun.com/supermetroid?h=Any&x=9d8v96lk) | [python](https://github.com/blha303/srcomapi)(how to get historical?) & [curl](https://github.com/glacials/splits-io/blob/master/docs/api.md) | most complete list of speed runs                                                     |
 | [splitio](https://splits.io/)                                      | [python](https://github.com/splitio/python-api)                                                                                               | by-segment times for each run, but for a smaller number of runners than speedrun.com |
 | [deertier](https://deertier.com/)                                  | there is an api, but I think we can get everything we need with `rvest`                                                                       | super metroid game-specific speed running site                                       |
-
-### Last updated
-
-todo :
 
 ## Desired output: `ggplot`-friendly/tidy data
 
@@ -144,6 +156,16 @@ import pickle
 import splitsio
 ```
 
+``` r
+library(tidyverse)
+library(tidyquant)
+library(ggdist)
+library(reticulate)
+
+# load r functions for this analysis
+library(supermetroid)
+```
+
 ``` python
 # helper function: saving an anonymous object in python 
 # https://stackoverflow.com/questions/4529815/saving-an-object-data-persistence
@@ -152,6 +174,22 @@ def save_object(obj, filename):
     with open(filename, 'wb') as outp:  # Overwrites any existing file.
         pickle.dump(obj, outp, pickle.HIGHEST_PROTOCOL)
 ```
+
+## Last updated
+
+``` r
+# this chunk is evaluated when data is updated
+
+write_rds(today(), "data-raw/readme-updated.rds")
+```
+
+``` r
+# get last updated
+
+update_date <- read_rds("data-raw/readme-updated.rds")
+```
+
+This read me was last updated: 2023-06-03.
 
 # Get data from speedrun.com
 
@@ -245,6 +283,66 @@ src_run_df.head()
 ``` python
 # number of unique values
 ```
+
+## Write speedrun.com data to package
+
+``` r
+# this chunk is evaluated when data is updated
+
+src_run_raw <- py$src_run_df
+
+usethis::use_data(src_run_df, overwrite=TRUE)
+#> ✔ Setting active project to '/home/cantabile/Documents/GitHub/supermetroid'
+#> ✔ Saving 'src_run_df' to 'data/src_run_df.rda'
+#> • Document your data (see 'https://r-pkgs.org/data.html')
+```
+
+# Visualise runs
+
+Now we have the data from speedrun.com leaderboard, we can plot the
+distribution of runs.
+
+``` r
+all_run_raincloud(src_run_df)
+```
+
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+
+There are some odd values near 0, which suggest that we need to
+investigate if there are unfinished runs logged on speedrun.com.
+
+If there *are* unfinished runs, this density is spurious, includes
+unfinished runs even after filtering out near-zero entries, we need to
+find a way to label rows that are unfinished, or identify the weird
+entries with the page.
+
+We have a handful of 0 entries, we’ll filter these.
+
+``` r
+# how many runs are really low?
+src_run_df %>% 
+  filter(t_s < 4000)
+#>     run_id rank t_s       date
+#> 1 y20nprwm  591   0 2022-02-23
+#> 2 znp3nvvm  592   0 2022-05-07
+#> 3 ywp6dqnz  593   0 2018-11-06
+#> 4 y21k26wz  594   0 2019-12-06
+#> 5 yv8peoxm  595   0 2023-02-19
+#> 6 yl9oenxy  596   0 2017-08-02
+```
+
+## Raincloud
+
+``` r
+src_run_df %>%
+  filter(# remove 0 length runs
+    t_s > 0,
+    # remove runs that are greater than 4 hours
+    t_s < 4 * 60 * 60) %>%
+  all_run_raincloud()
+```
+
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
 
 # Getting the data from splitsio
 

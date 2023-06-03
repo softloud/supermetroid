@@ -66,29 +66,35 @@ sm_cols_look <- function(base_size=20) {
 #' @export
 
 theme_sm <- function(base_size = 15) {
-  theme_minimal(
+  ggplot2::theme_minimal(
     base_size = base_size,
     base_family = "courier"
   ) +
-    theme(
+    ggplot2::theme(
       # background
-      plot.background=element_rect(fill=sm_cols$night),
-      panel.background = element_rect(
+      plot.background=ggplot2::element_rect(fill=sm_cols$night),
+      panel.background = ggplot2::element_rect(
         colour=sm_cols$night,
         fill=sm_cols$black
       ),
-      panel.grid = element_line(colour=sm_cols$oxford_blue),
+      panel.grid = ggplot2::element_line(colour=sm_cols$oxford_blue,
+                                         linetype="dotted"),
 
-      # axist text
-      axis.text.x = element_text(colour = sm_cols$text_green),
-      axis.text.y = element_text(colour = sm_cols$text_green),
-      axis.ticks = element_blank(),
-      plot.title = element_text(colour=sm_cols$cream),
-      plot.subtitle = element_text(colour=sm_cols$cream),
-      plot.caption = element_text(colour=sm_cols$cream),
-      legend.text = element_text(colour=sm_cols$orange),
-      legend.title = element_text(colour=sm_cols$orange),
-      strip.text = element_text(colour=sm_cols$orange)
+      # axis text
+      axis.title =
+        ggplot2::element_text(
+          colour = sm_cols$text_green
+        ),
+      axis.text.x =
+        ggplot2::element_text(colour = sm_cols$text_green),
+      axis.text.y = ggplot2::element_text(colour = sm_cols$text_green),
+      axis.ticks = ggplot2::element_blank(),
+      plot.title = ggplot2::element_text(colour=sm_cols$cream),
+      plot.subtitle = ggplot2::element_text(colour=sm_cols$cream),
+      plot.caption = ggplot2::element_text(colour=sm_cols$cream),
+      legend.text = ggplot2::element_text(colour=sm_cols$orange),
+      legend.title = ggplot2::element_text(colour=sm_cols$orange),
+      strip.text = ggplot2::element_text(colour=sm_cols$orange)
     )
 }
 
