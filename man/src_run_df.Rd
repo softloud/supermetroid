@@ -5,7 +5,7 @@
 \alias{src_run_df}
 \title{Speedrun.com leaderboard data}
 \format{
-An object of class \code{data.frame} with 596 rows and 4 columns.
+An object of class \code{data.frame} with 582 rows and 4 columns.
 }
 \usage{
 src_run_df

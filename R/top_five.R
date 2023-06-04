@@ -1,8 +1,10 @@
 #' Top five plot
 #'
+#' @param base_size `theme_minimal` argument
+#'
 #' @export
 
-top_five_vis <- function() {
+top_five_vis <- function(base_size = 10) {
   # source: speedrun.com (SNES) 2021-30-05
   top_five <-
     tribble(
@@ -45,18 +47,18 @@ top_five_vis <- function() {
     geom_segment(
       aes(x = 0, xend = count + 0.01*count, y = game, yend=game),
       colour=sm_cols$ice_blue,
-      size=22
+      size=base_size*1.3
     ) +
     geom_segment(
       aes(x = 0, xend = count, y = game, yend=game),
       colour=sm_cols$persian_indigo,
-      size=20
+      size=base_size*1.2
     ) +
-    theme_sm(base_size = 20) +
+    theme_sm(base_size = base_size) +
     geom_text(
       aes(x = 0.75 * count, y = game, label = count),
       family="courier",
-      size = 8,
+      size = base_size/2,
       colour = sm_cols$ice_blue
     ) +
     facet_wrap(
@@ -72,16 +74,17 @@ top_five_vis <- function() {
         str_wrap(40),
       x = "",
       y = "",
-      caption="speedrun.com"
+      caption="speedrun.com (2023-06-01)"
     ) +
     theme(axis.text.x = element_blank())
 }
 
 #' Super Metroid vs top games on speedrun.com
 #'
+#'
 #' @export
 
-top_games_vis <- function() {
+top_games_vis <- function(base_size = 10) {
 
 # top three of each category as of 2023-06-01
 
@@ -122,7 +125,7 @@ tribble(
     colour=sm_cols$persian_indigo,
     size=20
   ) +
-  theme_sm(base_size = 20) +
+  theme_sm(base_size = base_size) +
   geom_text(
     aes(x = 0.75 * count, y = game, label = count),
     family="courier",
@@ -132,7 +135,6 @@ tribble(
   facet_wrap(
     counted_thing ~ ., scale="free"
   ) +
-  #  coord_flip() +
   labs(
     title =
       "Super Metroid compared to top speed runner games" %>%
@@ -142,7 +144,7 @@ tribble(
       str_wrap(40),
     x = "",
     y = "",
-    caption="speedrun.com"
+    caption="speedrun.com (2023-06-01)"
   ) +
   theme(axis.text.x = element_blank())
 }

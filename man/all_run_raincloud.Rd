@@ -4,7 +4,7 @@
 \alias{all_run_raincloud}
 \title{Raincloud plot of speedrun.com run times}
 \usage{
-all_run_raincloud(run_df = src_run_df)
+all_run_raincloud(run_df = src_run_df, source = "speedrun.com")
 }
 \description{
 Raincloud plot of speedrun.com run times

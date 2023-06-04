@@ -1,15 +1,30 @@
 
 - <a href="#supermetroid" id="toc-supermetroid">supermetroid</a>
-- <a href="#at-what-times-do-super-metroid-100-speed-runs-get-competitive"
-  id="toc-at-what-times-do-super-metroid-100-speed-runs-get-competitive">At
-  what times do Super Metroid 100% speed runs get competitive?</a>
 - <a href="#what-is-super-metroid" id="toc-what-is-super-metroid">What is
   Super Metroid?</a>
+  - <a href="#super-metroid-speed-running"
+    id="toc-super-metroid-speed-running">Super Metroid speed running</a>
 - <a href="#analyses-work-in-progress"
   id="toc-analyses-work-in-progress">Analyses (work in progress)</a>
-  - <a href="#speed-run-times-from-speedrumcom"
-    id="toc-speed-run-times-from-speedrumcom">Speed run times from
-    speedrum.com</a>
+- <a href="#super-metroid-and-speed-running"
+  id="toc-super-metroid-and-speed-running">Super Metroid and speed
+  running</a>
+  - <a href="#super-metroid-is-the-top-snes-speed-runner-game"
+    id="toc-super-metroid-is-the-top-snes-speed-runner-game">Super Metroid
+    is the top SNES speed runner game</a>
+  - <a href="#subway-surfers-tiktok-phenomenon-or-good-upload-interface"
+    id="toc-subway-surfers-tiktok-phenomenon-or-good-upload-interface">Subway
+    Surfers TikTok phenomenon or good upload interface?</a>
+- <a href="#run-times" id="toc-run-times">Run times</a>
+  - <a href="#speed-run-times-from-speedruncom"
+    id="toc-speed-run-times-from-speedruncom">Speed run times from
+    speedrun.com</a>
+- <a href="#segment-times" id="toc-segment-times">Segment times</a>
+  - <a href="#label-chaos" id="toc-label-chaos">Label chaos</a>
+  - <a href="#comparison-of-segments"
+    id="toc-comparison-of-segments">Comparison of segments</a>
+  - <a href="#single-segment-analyses"
+    id="toc-single-segment-analyses">Single segment analyses</a>
 - <a href="#getting-the-data" id="toc-getting-the-data">Getting the
   data</a>
   - <a href="#sources" id="toc-sources">Sources</a>
@@ -36,8 +51,11 @@
   - <a href="#write-speedruncom-data-to-package"
     id="toc-write-speedruncom-data-to-package">Write speedrun.com data to
     package</a>
-- <a href="#visualise-runs" id="toc-visualise-runs">Visualise runs</a>
+  - <a href="#visualise-runs" id="toc-visualise-runs">Visualise runs</a>
   - <a href="#raincloud" id="toc-raincloud">Raincloud</a>
+  - <a href="#write-run-data-from-speedruncom-to-supermetroid"
+    id="toc-write-run-data-from-speedruncom-to-supermetroid">Write run data
+    from speedrun.com to supermetroid</a>
 - <a href="#getting-the-data-from-splitsio"
   id="toc-getting-the-data-from-splitsio">Getting the data from
   splitsio</a>
@@ -45,6 +63,16 @@
     runs and runners</a>
   - <a href="#inspect-data" id="toc-inspect-data">Inspect data</a>
   - <a href="#run-dataframe-1" id="toc-run-dataframe-1">Run dataframe</a>
+  - <a href="#convert-splitsio-object-to-dataframe"
+    id="toc-convert-splitsio-object-to-dataframe">Convert splitsio object to
+    dataframe</a>
+  - <a href="#load-splitsio-data" id="toc-load-splitsio-data">Load splitsio
+    data</a>
+  - <a href="#3-different-fields-for-dates"
+    id="toc-3-different-fields-for-dates">3 different fields for dates</a>
+    - <a href="#run-id" id="toc-run-id">Run id</a>
+    - <a href="#speedruncom-player-id"
+      id="toc-speedruncom-player-id">speedrun.com player id</a>
   - <a href="#srdc-ids-and-player-ids" id="toc-srdc-ids-and-player-ids">srdc
     ids and player ids?</a>
     - <a href="#ids-in-speedruncom" id="toc-ids-in-speedruncom">ids in
@@ -53,6 +81,8 @@
       splits.io</a>
   - <a href="#create-segments-dataframe"
     id="toc-create-segments-dataframe">create segments dataframe</a>
+  - <a href="#fucking-segment-labels"
+    id="toc-fucking-segment-labels">fucking segment labels</a>
 - <a href="#deertier" id="toc-deertier">deertier</a>
 - <a href="#speedrunslive" id="toc-speedrunslive">speedrunslive</a>
 - <a href="#wikipedia" id="toc-wikipedia">wikipedia</a>
@@ -65,7 +95,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-# At what times do Super Metroid 100% speed runs get competitive?
+This is an analysis repository that captures Super Metroid speed run
+data from leaderboards and aims to analyse the data to answer the
+following question, posed by a runner.
+
+> At what times do Super Metroid 100% speed runs get competitive?
 
 # What is Super Metroid?
 
@@ -87,11 +121,66 @@ knitr::include_graphics("img/Smetroidbox-wiki.png")
 
 <img src="img/Smetroidbox-wiki.png" width="50%" style="display: block; margin: auto;" />
 
+## Super Metroid speed running
+
+As part of the verification of their speed run results, many players
+upload a video of their run to youtube.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7-cj22T2Yu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+
 # Analyses (work in progress)
 
-## Speed run times from speedrum.com
+``` r
+library(supermetroid)
+library(tidyverse) # data science tools
+library(gt) # for html tables
+```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+# Super Metroid and speed running
+
+## Super Metroid is the top SNES speed runner game
+
+``` r
+top_five_vis(base_size = 10)
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+- [ ] convert to coloured barchart, grouped by game, coloured by
+  category
+- [ ] can we scrape these data?
+
+## Subway Surfers TikTok phenomenon or good upload interface?
+
+``` r
+top_games_vis(base_size = 10)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+- [ ] add platform
+
+# Run times
+
+### Speed run times from speedrun.com
+
+``` r
+
+all_run_raincloud(src_run_df)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+- [ ] interpretable x axis
+
+# Segment times
+
+## Label chaos
+
+## Comparison of segments
+
+## Single segment analyses
 
 # Getting the data
 
@@ -105,6 +194,482 @@ data.
 | [speedrun](https://www.speedrun.com/supermetroid?h=Any&x=9d8v96lk) | [python](https://github.com/blha303/srcomapi)(how to get historical?) & [curl](https://github.com/glacials/splits-io/blob/master/docs/api.md) | most complete list of speed runs                                                     |
 | [splitio](https://splits.io/)                                      | [python](https://github.com/splitio/python-api)                                                                                               | by-segment times for each run, but for a smaller number of runners than speedrun.com |
 | [deertier](https://deertier.com/)                                  | there is an api, but I think we can get everything we need with `rvest`                                                                       | super metroid game-specific speed running site                                       |
+
+``` r
+
+tribble(
+  ~source, ~runs, ~players,
+  "speedrun.com", nrow(src_run_df), NA,
+  "splits.io", NA, NA,
+  "deertier", NA, NA
+) %>% 
+  gt()
+```
+
+<div id="byjnwazzdu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#byjnwazzdu table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#byjnwazzdu thead, #byjnwazzdu tbody, #byjnwazzdu tfoot, #byjnwazzdu tr, #byjnwazzdu td, #byjnwazzdu th {
+  border-style: none;
+}
+
+#byjnwazzdu p {
+  margin: 0;
+  padding: 0;
+}
+
+#byjnwazzdu .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#byjnwazzdu .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#byjnwazzdu .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#byjnwazzdu .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#byjnwazzdu .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#byjnwazzdu .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#byjnwazzdu .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#byjnwazzdu .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#byjnwazzdu .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#byjnwazzdu .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#byjnwazzdu .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#byjnwazzdu .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#byjnwazzdu .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#byjnwazzdu .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#byjnwazzdu .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byjnwazzdu .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#byjnwazzdu .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#byjnwazzdu .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#byjnwazzdu .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byjnwazzdu .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#byjnwazzdu .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byjnwazzdu .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#byjnwazzdu .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byjnwazzdu .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#byjnwazzdu .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byjnwazzdu .gt_left {
+  text-align: left;
+}
+
+#byjnwazzdu .gt_center {
+  text-align: center;
+}
+
+#byjnwazzdu .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#byjnwazzdu .gt_font_normal {
+  font-weight: normal;
+}
+
+#byjnwazzdu .gt_font_bold {
+  font-weight: bold;
+}
+
+#byjnwazzdu .gt_font_italic {
+  font-style: italic;
+}
+
+#byjnwazzdu .gt_super {
+  font-size: 65%;
+}
+
+#byjnwazzdu .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#byjnwazzdu .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#byjnwazzdu .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#byjnwazzdu .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#byjnwazzdu .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#byjnwazzdu .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#byjnwazzdu .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="runs">runs</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="players">players</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="source" class="gt_row gt_left">speedrun.com</td>
+<td headers="runs" class="gt_row gt_right">582</td>
+<td headers="players" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="source" class="gt_row gt_left">splits.io</td>
+<td headers="runs" class="gt_row gt_right">NA</td>
+<td headers="players" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="source" class="gt_row gt_left">deertier</td>
+<td headers="runs" class="gt_row gt_right">NA</td>
+<td headers="players" class="gt_row gt_center">NA</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
 
 ## Desired output: `ggplot`-friendly/tidy data
 
@@ -173,10 +738,9 @@ import splitsio
 ```
 
 ``` r
-library(tidyverse)
 library(tidyquant)
-library(ggdist)
-library(reticulate)
+library(ggdist) # for rainclouds
+library(reticulate) # Python <-> R
 
 # load r functions for this analysis
 library(supermetroid)
@@ -221,6 +785,7 @@ and saved.
 
 with open('data-raw/src_runs.pkl', 'rb') as inp:
     src_runs = pickle.load(inp)
+    
 ```
 
 ``` python
@@ -267,11 +832,6 @@ src_runs[0:3]
 | rank        | rank, empty if historical, currently don’t have historical obs | `src_runs[x]['place']`                      |
 
 ``` python
-print("Hello world")
-#> Hello world
-```
-
-``` python
 
 n_obs = len(src_runs)
 
@@ -283,82 +843,110 @@ src_run_df = pd.DataFrame({
   # need to inspect what happens to historical ranking
   'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
   't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
-  'date' : [src_runs[x]['run']['date'] for x in range(n_obs)]
+  'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
+  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)]
 })
 
 # inspect runs dataframe
 src_run_df.head()
-#>      run_id  rank      t_s        date
-#> 0  z5do82dm     1  4373.00  2021-07-31
-#> 1  yo75d4dm     2  4375.00  2021-02-24
-#> 2  m36d0q6m     3  4375.93  2021-12-08
-#> 3  m3qo724y     4  4392.00  2023-05-08
-#> 4  y4g31v3y     5  4442.00  2022-12-10
+#>      run_id  rank      t_s        date    player
+#> 0  z5do82dm     1  4373.00  2021-07-31  zxzno3ex
+#> 1  yo75d4dm     2  4375.00  2021-02-24  18v6k4nx
+#> 2  m36d0q6m     3  4375.93  2021-12-08  zxz2wy4x
+#> 3  m3qo724y     4  4392.00  2023-05-08  xk49m26j
+#> 4  y4g31v3y     5  4442.00  2022-12-10  x35ve3kj
 ```
 
 ``` python
 # number of unique values
+pd.DataFrame(src_runs[1]['run']['players']).loc['id']
+
+#> Error: KeyError: 'id'
 ```
 
 ## Write speedrun.com data to package
 
 ``` r
-# this chunk is evaluated when data is updated
+# get the data from python into R
 
 src_run_raw <- py$src_run_df
-
-usethis::use_data(src_run_df, overwrite=TRUE)
-#> ✔ Setting active project to '/home/cantabile/Documents/GitHub/supermetroid'
-#> ✔ Saving 'src_run_df' to 'data/src_run_df.rda'
-#> • Document your data (see 'https://r-pkgs.org/data.html')
 ```
 
-# Visualise runs
+## Visualise runs
 
 Now we have the data from speedrun.com leaderboard, we can plot the
 distribution of runs.
 
 ``` r
-all_run_raincloud(src_run_df)
+all_run_raincloud(src_run_raw)
 ```
 
-<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
 
-There are some odd values near 0, which suggest that we need to
-investigate if there are unfinished runs logged on speedrun.com.
-
-If there *are* unfinished runs, this density is spurious, includes
-unfinished runs even after filtering out near-zero entries, we need to
-find a way to label rows that are unfinished, or identify the weird
-entries with the page.
-
-We have a handful of 0 entries, we’ll filter these.
+We have a handful of 0 entries and some \> 3 hours.
 
 ``` r
 # how many runs are really low?
-src_run_df %>% 
-  filter(t_s < 4000)
-#>     run_id rank t_s       date
-#> 1 y20nprwm  591   0 2022-02-23
-#> 2 znp3nvvm  592   0 2022-05-07
-#> 3 ywp6dqnz  593   0 2018-11-06
-#> 4 y21k26wz  594   0 2019-12-06
-#> 5 yv8peoxm  595   0 2023-02-19
-#> 6 yl9oenxy  596   0 2017-08-02
+src_run_raw %>% 
+  filter(t_s < 4000 | t_s > 3 * 60 * 60)
+#>      run_id rank       t_s       date   player
+#> 1  mk5q77xm  584  11760.00 2021-10-03 qjnldw4x
+#> 2  z05785jm  585  12000.00 2020-05-26 v8lpwk7j
+#> 3  zpg3djxz  586  12015.00 2023-01-08 j20563px
+#> 4  zp1n1rnz  587  12357.00 2021-04-10 8wk1zz48
+#> 5  yor95l1y  588  21003.81 2021-12-24 y8d9w3gx
+#> 6  yjp79v7y  589  25483.56 2022-05-05 qjn072qx
+#> 7  y6p3gxjm  590 199158.00 2017-06-08 dx3l5p6x
+#> 8  y20nprwm  591      0.00 2022-02-23 x7m21p6x
+#> 9  znp3nvvm  592      0.00 2022-05-07 8gez077j
+#> 10 ywp6dqnz  593      0.00 2018-11-06 kj9oo2vj
+#> 11 y21k26wz  594      0.00 2019-12-06 j921z1n8
+#> 12 yv8peoxm  595      0.00 2023-02-19 j40o9vw8
+#> 13 yl9oenxy  596      0.00 2017-08-02 1xykvdw8
 ```
+
+The 0 entries are run times where `gametime` was captured, but
+`realtime` was not by the tool the player used to record the run. Our
+analyses are on `realtime`, so we will exclude these observations.
+
+We are also interest in comparing *speed runners*, as opposed to those
+logging playing through the game, which takes some hours.
+
+``` r
+(prop_greater_3hrs <- sum(src_run_raw$t_s > 3 * 60 * 60) / nrow(src_run_raw))
+#> [1] 0.01174497
+```
+
+Since only {r round(prop_greater_3hrs, 2) \* 100}% of runs are greater
+than 3 hours, these are negligible, and arguably not *speed* runs. We
+will define a Super Metroid speed run, for this analysis, to be a Super
+Metroid 100% run that takes under 3 hours.
 
 ## Raincloud
 
 ``` r
-src_run_df %>%
-  filter(# remove 0 length runs
-    t_s > 0,
-    # remove runs that are greater than 4 hours
-    t_s < 4 * 60 * 60) %>%
+src_run_raw %>%
+  filter(
+    # remove 0 length runs
+    t_s > 0, 
+    # exclude runs > 3 hours
+    t_s < 3 * 60 * 60) %>%  
   all_run_raincloud()
 ```
 
-<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
+
+## Write run data from speedrun.com to supermetroid
+
+``` r
+# this chunk is evaluated when data is updated
+src_run_df <- 
+  src_run_raw %>% 
+  filter(t_s > 0,t_s < 3 * 60 * 60)
+
+
+usethis::use_data(src_run_df, overwrite=TRUE)
+```
 
 # Getting the data from splitsio
 
@@ -391,14 +979,14 @@ sio_runs = hun_cat.runs()
 sio_runs[0]
 
 # can we call nested elements by index and key?
-#> Run(id='asmc', srdc_id=None, realtime_duration_ms=6543298, realtime_sum_of_best_ms=6388932, gametime_duration_ms=4631917, gametime_sum_of_best_ms=4242831, default_timing='real', program='livesplit', attempts=183, image_url=None, parsed_at='2023-05-26T13:55:36.932Z', created_at='2023-05-26T13:55:02.091Z', updated_at='2023-05-26T13:55:36.984Z', video_url=None, game=Game(id='50', name='Super Metroid', shortname='supermetroid'), category=Category(id='279', name='100%'), runners=[Runner(id='89051', twitch_id='452077937', twitch_name='juniorr300', display_name='juniorr300', name='juniorr300')])
+#> Run(id='ato1', srdc_id=None, realtime_duration_ms=7013075, realtime_sum_of_best_ms=6651338, gametime_duration_ms=5050217, gametime_sum_of_best_ms=4788713, default_timing='real', program='livesplit', attempts=8, image_url=None, parsed_at='2023-06-04T09:38:27.836Z', created_at='2023-06-04T09:38:07.030Z', updated_at='2023-06-04T09:38:27.850Z', video_url=None, game=Game(id='50', name='Super Metroid', shortname='supermetroid'), category=Category(id='279', name='100%'), runners=[Runner(id='89646', twitch_id=None, twitch_name=None, display_name='anatomecha', name='anatomecha')])
 type(sio_runs[0])
 # I think this is a series object?
 #> <class 'splitsio.api.Run'>
 print(pd.DataFrame(sio_runs[1:3]))
 #>      id srdc_id  ...                                           segments  histories
-#> 0  amuv    None  ...  [{'id': 'f847b639-9003-480e-9c5c-51d25e247df5'...       None
-#> 1  amcl    None  ...  [{'id': '56c3ce3f-5fa5-4ba6-a8c4-75613cac6c3c'...       None
+#> 0  asmc    None  ...  [{'id': '66be0a6c-9c80-4309-8705-843e8ea71aa4'...       None
+#> 1  amuv    None  ...  [{'id': 'f847b639-9003-480e-9c5c-51d25e247df5'...       None
 #> 
 #> [2 rows x 19 columns]
 print(pd.DataFrame(sio_runs[1:3]).columns)
@@ -428,6 +1016,8 @@ Objective: to wrangle a data frame with run data
 | rank          | “historical” if from previous record (nb only applies to speedrun.com); otherwise rank as int, list column | ?                                           |
 | src_player_id | speedrun.com player id                                                                                     | `srdc_id`                                   |
 
+## Convert splitsio object to dataframe
+
 ``` python
 # this chunk isn't evaluated
 
@@ -437,6 +1027,8 @@ sio_df = pd.DataFrame(sio_runs)
 save_object(sio_df, "data-raw/sio_df.pkl")
 ```
 
+## Load splitsio data
+
 ``` python
 
 # load runs df
@@ -445,15 +1037,26 @@ with open('data-raw/sio_df.pkl', 'rb') as inp:
 ```
 
 ``` python
+# take a look 
 sio_df.columns
-
 #> Index(['id', 'srdc_id', 'realtime_duration_ms', 'realtime_sum_of_best_ms',
 #>        'gametime_duration_ms', 'gametime_sum_of_best_ms', 'default_timing',
 #>        'program', 'attempts', 'image_url', 'parsed_at', 'created_at',
 #>        'updated_at', 'video_url', 'game', 'category', 'runners', 'segments',
 #>        'histories'],
 #>       dtype='object')
+sio_df.head()
+#>      id srdc_id  ...                                           segments  histories
+#> 0  asmc    None  ...  [{'id': '66be0a6c-9c80-4309-8705-843e8ea71aa4'...       None
+#> 1  amuv    None  ...  [{'id': 'f847b639-9003-480e-9c5c-51d25e247df5'...       None
+#> 2  amcl    None  ...  [{'id': '56c3ce3f-5fa5-4ba6-a8c4-75613cac6c3c'...       None
+#> 3  ajht    None  ...  [{'id': '4ae47e1b-f288-4e51-8b04-b01cb9fd2470'...       None
+#> 4  ar7a    None  ...  [{'id': 'a0b1ee5f-4846-48a7-8cdf-39e956ece071'...       None
+#> 
+#> [5 rows x 19 columns]
 ```
+
+## 3 different fields for dates
 
 ``` python
 
@@ -476,15 +1079,20 @@ sio_df[['created_at', 'parsed_at', 'updated_at']]
 #> [584 rows x 3 columns]
 ```
 
+### Run id
+
 ``` python
 # id is hopefully the run id
 
-# there should be the same number of unique run 
+# there are the same number of unique run 
 # ids as there are rows in the dataframe
 sio_df[['id']].drop_duplicates().shape[0] == sio_df.shape[0]
 
+# so we can assume id is run id
 #> True
 ```
+
+### speedrun.com player id
 
 ``` python
 # it would be super useful to have the srcom ids match
@@ -493,7 +1101,11 @@ sio_df[['id']].drop_duplicates().shape[0] == sio_df.shape[0]
 
 sio_df[['srdc_id']].dropna() 
 
-# but that means we can only match this proportion of records
+# that means we can only match this proportion of records, possibly we can use
+# play handle
+
+# why are some srdc ids duplicated? because historic=TRUE for these data,
+# so these must be speedrun.com player ids
 #>       srdc_id
 #> 20   yd19vdqy
 #> 29   yol1r0jy
@@ -508,15 +1120,13 @@ sio_df[['srdc_id']].dropna()
 #> 541  zpqrl4gy
 #> 
 #> [62 rows x 1 columns]
-src_splits_prop = sio_df[['id','srdc_id']].dropna().shape[0] / sio_df.shape[0]
-
-
-# why are some srdc ids duplicated? because historic=TRUE for these data
 ```
 
-Only 10% of records match:
+Only 10% of records contain speedrun.com ids, though:
 
 ``` python
+src_splits_prop = sio_df[['id','srdc_id']].dropna().shape[0] / sio_df.shape[0]
+
 round(src_splits_prop, 2)
 #> 0.11
 ```
@@ -584,6 +1194,10 @@ segment_raw.columns
 #>        'gametime_skipped', 'gametime_reduced', 'histories', 'run_id'],
 #>       dtype='object')
 ```
+
+## fucking segment labels
+
+This could easily be its own vignette, it’s so complicated.
 
 # deertier
 

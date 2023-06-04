@@ -5,9 +5,12 @@
 all_run_raincloud <- function(run_df = src_run_df,
                               source = "speedrun.com") {
   run_df %>%
+    # convert milliseconds to hours, for now
+    mutate(t_h = t_s/60/60) %>%
+
     # exclude runs > 3 hours
 
-    ggplot2::ggplot(ggplot2::aes(y = t_s)) +
+    ggplot2::ggplot(ggplot2::aes(y = t_h)) +
 
     # plot layers
 
@@ -19,7 +22,9 @@ all_run_raincloud <- function(run_df = src_run_df,
       # above after flip
       justification = -.2,
       .width = 0,
-      point_colour = NA
+      alpha=0.5,
+      point_colour = NA,
+      fill=sm_cols$orange
     ) +
 
     # boxplot
@@ -27,7 +32,9 @@ all_run_raincloud <- function(run_df = src_run_df,
       width=.2,
       ## remove outliers
       outlier.color = NA,
-      alpha = 0.5
+      alpha = 0.5,
+      colour=sm_cols$orange,
+      fill=sm_cols$orange
     ) +
 
     # dots
@@ -37,7 +44,10 @@ all_run_raincloud <- function(run_df = src_run_df,
       # # adjust grouping (binning of observations)
       # binwidth=0.25, # seems better to let it choose
       # move geom to the left
-      justification = 1.2
+      justification = 1.2,
+      alpha=0.5,
+      colour=sm_cols$orange,
+      fill=sm_cols$orange
     ) +
 
     # set theme
@@ -47,7 +57,7 @@ all_run_raincloud <- function(run_df = src_run_df,
       title = "Super Metroid 100% speed run times" %>%
         str_wrap(40),
       subtitle = "Duration of speedrun distribution",
-      y = "time (ms)",
+      y = "time (hrs)",
       x = '',
       caption = source
     ) +
