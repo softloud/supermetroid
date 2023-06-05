@@ -236,6 +236,8 @@ The game object was too nested to pickle, so runs have been extracted and saved.
 
 with open('data-raw/src_runs.pkl', 'rb') as inp:
     src_runs = pickle.load(inp)
+
+# argh the fuck, why does this work when it's compiled, but not at the console?!
     
 ```
 
@@ -294,8 +296,7 @@ src_run_df = pd.DataFrame({
   'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
   't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
   'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
-  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)],
-'player_api' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,2] for x in range(n_obs)]
+  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)]
 })
 
 # inspect runs dataframe
@@ -303,13 +304,6 @@ src_run_df.head()
 
 ```
 
-
-```{python}
-# number of unique values
-pd.DataFrame(src_runs[1]['run']['players']).loc['id']
-
-
-```
 
 ### Visualise runs
 
@@ -392,10 +386,9 @@ players = []
 ```{python}
 # this loop fails because not all ids are valid
 
-# get players
-src_players = []
 
 # get a list of player records for each valid player id
+src_players = []
 for player in src_run_df.player:
   print("loop index")
   print(len(src_players))
@@ -420,6 +413,7 @@ players = pd.DataFrame({
 
 
 # get a list of player records for each valid player id
+src_players = []
 for player in src_run_df.player[0:3]:
   print("loop index")
   print(len(src_players))
@@ -427,33 +421,39 @@ for player in src_run_df.player[0:3]:
   user = src_api.get_user(player)
   src_players.append(user)
 
-# extract player data into dataframe    
-src_players_df = pd.DataFrame({
-  'player_id' : [src_players[x].id for x in range(len(src_players))],
-  'player_name' : [src_players[x].name for x in range(len(src_players))]# ,
-  # 'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
-})
-  
-src_players_df.head()
 
 
 ```
 
-It does 
+```{python}
+# extract player data into dataframe    
+src_players_df = pd.DataFrame({
+  'player_id' : [src_players[x].id for x in range(len(src_players))],
+  'player_name' : [src_players[x].name for x in range(len(src_players))],
+  'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
+})
+  
+src_players_df.head()
+
+```
+
+
+### Not all ids are valid 
 
 
 ```{python}
 
 
-# the player id extracted does not always match to api
-# api uri is also wrong, matches the incorrect player id
-src_run_df.player.str.len().value_counts()
-
 # get users with length 8 ids 
 # filter out ids that don't contain numbers (some are player handles)
 # (hopefully these will capture the valid apis)
 
-src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8').player
+# the player id extracted does not always match to api
+# api uri is also wrong, matches the incorrect player id
+src_run_df.player.str.len().value_counts()
+
+# take a look at the records with strings not of length 8
+src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8')
 
 ```
 

@@ -57,6 +57,8 @@
     - <a href="#location-of-players-on-speedruncom-1"
       id="toc-location-of-players-on-speedruncom-1">Location of players on
       speedrun.com</a>
+    - <a href="#not-all-ids-are-valid" id="toc-not-all-ids-are-valid">Not all
+      ids are valid</a>
 - <a href="#getting-the-data-from-splitsio"
   id="toc-getting-the-data-from-splitsio">Getting the data from
   splitsio</a>
@@ -340,6 +342,8 @@ and saved.
 
 with open('data-raw/src_runs.pkl', 'rb') as inp:
     src_runs = pickle.load(inp)
+
+# argh the fuck, why does this work when it's compiled, but not at the console?!
     
 ```
 
@@ -399,27 +403,17 @@ src_run_df = pd.DataFrame({
   'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
   't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
   'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
-  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)],
-'player_api' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,2] for x in range(n_obs)]
+  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)]
 })
 
 # inspect runs dataframe
 src_run_df.head()
-#>      run_id  rank  ...    player                                      player_api
-#> 0  z5do82dm     1  ...  zxzno3ex  https://www.speedrun.com/api/v1/users/zxzno3ex
-#> 1  yo75d4dm     2  ...  18v6k4nx  https://www.speedrun.com/api/v1/users/18v6k4nx
-#> 2  m36d0q6m     3  ...  zxz2wy4x  https://www.speedrun.com/api/v1/users/zxz2wy4x
-#> 3  m3qo724y     4  ...  xk49m26j  https://www.speedrun.com/api/v1/users/xk49m26j
-#> 4  y4g31v3y     5  ...  x35ve3kj  https://www.speedrun.com/api/v1/users/x35ve3kj
-#> 
-#> [5 rows x 6 columns]
-```
-
-``` python
-# number of unique values
-pd.DataFrame(src_runs[1]['run']['players']).loc['id']
-
-#> Error: KeyError: 'id'
+#>      run_id  rank      t_s        date    player
+#> 0  z5do82dm     1  4373.00  2021-07-31  zxzno3ex
+#> 1  yo75d4dm     2  4375.00  2021-02-24  18v6k4nx
+#> 2  m36d0q6m     3  4375.93  2021-12-08  zxz2wy4x
+#> 3  m3qo724y     4  4392.00  2023-05-08  xk49m26j
+#> 4  y4g31v3y     5  4442.00  2022-12-10  x35ve3kj
 ```
 
 ### Visualise runs
@@ -450,7 +444,7 @@ all_run_raincloud(src_run_raw)
 #> Unknown or uninitialised column: `dist`.
 ```
 
-<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
 
 We have a handful of 0 entries and some \> 3 hours.
 
@@ -472,20 +466,6 @@ src_run_raw %>%
 #> 11 y21k26wz  594      0.00 2019-12-06 j921z1n8
 #> 12 yv8peoxm  595      0.00 2023-02-19 j40o9vw8
 #> 13 yl9oenxy  596      0.00 2017-08-02 1xykvdw8
-#>                                        player_api
-#> 1  https://www.speedrun.com/api/v1/users/qjnldw4x
-#> 2  https://www.speedrun.com/api/v1/users/v8lpwk7j
-#> 3  https://www.speedrun.com/api/v1/users/j20563px
-#> 4  https://www.speedrun.com/api/v1/users/8wk1zz48
-#> 5  https://www.speedrun.com/api/v1/users/y8d9w3gx
-#> 6  https://www.speedrun.com/api/v1/users/qjn072qx
-#> 7  https://www.speedrun.com/api/v1/users/dx3l5p6x
-#> 8  https://www.speedrun.com/api/v1/users/x7m21p6x
-#> 9  https://www.speedrun.com/api/v1/users/8gez077j
-#> 10 https://www.speedrun.com/api/v1/users/kj9oo2vj
-#> 11 https://www.speedrun.com/api/v1/users/j921z1n8
-#> 12 https://www.speedrun.com/api/v1/users/j40o9vw8
-#> 13 https://www.speedrun.com/api/v1/users/1xykvdw8
 ```
 
 The 0 entries are run times where `gametime` was captured, but
@@ -532,7 +512,7 @@ src_run_raw %>%
 #> Unknown or uninitialised column: `dist`.
 ```
 
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
 
 ### Write run data from speedrun.com to supermetroid
 
@@ -567,10 +547,9 @@ players = []
 ``` python
 # this loop fails because not all ids are valid
 
-# get players
-src_players = []
 
 # get a list of player records for each valid player id
+src_players = []
 for player in src_run_df.player:
   print("loop index")
   print(len(src_players))
@@ -593,6 +572,7 @@ players = pd.DataFrame({
 
 
 # get a list of player records for each valid player id
+src_players = []
 for player in src_run_df.player[0:3]:
   print("loop index")
   print(len(src_players))
@@ -600,44 +580,46 @@ for player in src_run_df.player[0:3]:
   user = src_api.get_user(player)
   src_players.append(user)
 
-# extract player data into dataframe    
 #> loop index
-#> 6
+#> 0
 #> zxzno3ex
 #> loop index
-#> 7
+#> 1
 #> 18v6k4nx
 #> loop index
-#> 8
+#> 2
 #> zxz2wy4x
+```
+
+``` python
+# extract player data into dataframe    
 src_players_df = pd.DataFrame({
   'player_id' : [src_players[x].id for x in range(len(src_players))],
-  'player_name' : [src_players[x].name for x in range(len(src_players))]# ,
-  # 'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
+  'player_name' : [src_players[x].name for x in range(len(src_players))],
+  'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
 })
   
 src_players_df.head()
-
-#>   player_id   player_name
-#> 0  zxzno3ex     ShinyZeni
-#> 1  18v6k4nx         zoast
-#> 2  zxz2wy4x    Behemoth87
-#> 3  xk49m26j         Gebbu
-#> 4  x35ve3kj  Static_Shock
+#>   player_id player_name       location
+#> 0  zxzno3ex   ShinyZeni  United States
+#> 1  18v6k4nx       zoast          Palau
+#> 2  zxz2wy4x  Behemoth87        England
 ```
 
-It does
+### Not all ids are valid
 
 ``` python
 
+
+# get users with length 8 ids 
+# filter out ids that don't contain numbers (some are player handles)
+# (hopefully these will capture the valid apis)
 
 # the player id extracted does not always match to api
 # api uri is also wrong, matches the incorrect player id
 src_run_df.player.str.len().value_counts()
 
-# get users with length 8 ids 
-# filter out ids that don't contain numbers (some are player handles)
-# (hopefully these will capture the valid apis)
+# take a look at the records with strings not of length 8
 #> 8     510
 #> 10     19
 #> 9      11
@@ -654,19 +636,21 @@ src_run_df.player.str.len().value_counts()
 #> 18      1
 #> 16      1
 #> Name: player, dtype: int64
-src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8').player
-#> 6      LynxXUnlimited
-#> 71         Flowsouth8
-#> 98         Yeahboiii5
-#> 135       Sweetkid689
-#> 147        Dhaos Tk31
-#>             ...      
-#> 564        hubert0987
-#> 567     Hellmessenger
-#> 569        playingg0d
-#> 571         PinkTeddy
-#> 573       jewelediris
-#> Name: player, Length: 86, dtype: object
+src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8')
+#>        run_id  rank     t_s        date          player  id_len
+#> 6    me16939y     7  4485.0  2022-04-03  LynxXUnlimited      14
+#> 71   z1j38k7z    72  4955.0  2019-06-02      Flowsouth8      10
+#> 98   nz167pwm    99  5031.0  2014-12-11      Yeahboiii5      10
+#> 135  9yowdv5z   136  5161.0  2017-02-27     Sweetkid689      11
+#> 147  wzpjjkrz   148  5206.0  2017-03-08      Dhaos Tk31      10
+#> ..        ...   ...     ...         ...             ...     ...
+#> 564  9mrd504z   565  8789.0  2015-05-03      hubert0987      10
+#> 567  1zx05jgz   568  8937.0  2015-02-24   Hellmessenger      13
+#> 569  pydpj3xy   570  9060.0  2017-01-20      playingg0d      10
+#> 571  kz5w6ldz   572  9407.0        None       PinkTeddy       9
+#> 573  pm3v2w6z   574  9808.0  2016-10-23     jewelediris      11
+#> 
+#> [86 rows x 6 columns]
 ```
 
 # Getting the data from splitsio

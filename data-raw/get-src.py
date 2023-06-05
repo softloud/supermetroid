@@ -1,16 +1,16 @@
-import srcomapi, srcomapi.datatypes as dt
+import srcomapi, srcomsrc_api.datatypes as dt
 import pickle
 
 
 # call api
 
-api = srcomapi.SpeedrunCom(); api.debug = 1
+src_api = srcomapi.SpeedrunCom(); src_api.debug = 1
 
 # It's recommended to cache the game ID and use it for future requests.
 # Data is cached for the current session by classname/id so future
 # requests for the same game are instantaneous.
 
-api.search(srcomapi.datatypes.Game, {"name": "super metroid"})
+src_api.search(srcomapi.datatypes.Game, {"name": "super metroid"})
 
 # can we add a historical == true to this?
 
@@ -21,19 +21,19 @@ game = _[0]
 
 # https://github.com/blha303/srcomapi#getting-a-dict-containing-all-runs-from-a-game
 
-sms_runs = {}
+src_runs = {}
 for category in game.categories:
-  if not category.name in sms_runs:
-    sms_runs[category.name] = {}
+  if not category.name in src_runs:
+    src_runs[category.name] = {}
   if category.type == 'per-level':
     for level in game.levels:
-      sms_runs[category.name][level.name] = dt.Leaderboard(api, data=api.get("leaderboards/{}/level/{}/{}?embed=variables".format(game.id, level.id, category.id)))
+      src_runs[category.name][level.name] = dt.Leaderboard(api, data=src_api.get("leaderboards/{}/level/{}/{}?embed=variables".format(game.id, level.id, category.id)))
   else:
-    sms_runs[category.name] = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?embed=variables".format(game.id, category.id)))
+    src_runs[category.name] = dt.Leaderboard(api, data=src_api.get("leaderboards/{}/category/{}?embed=variables".format(game.id, category.id)))
 
 ### 100% Super Metroid leaderbaord
 
-leaderboard = sms_runs['100%']
+leaderboard = src_runs['100%']
 
 # display keys of dictionary
 leaderboard.__dict__.keys()
