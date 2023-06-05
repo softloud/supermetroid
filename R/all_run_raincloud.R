@@ -1,12 +1,19 @@
 #' Raincloud plot of speedrun.com run times
 #'
+#' @param run_df Dataframe of column of run times `t_s` in seconds
+#' @param xmin Set limits of x axis (for shiny slider input)
+#' @param xmax Set max of x axis (shiny slider)
+#' @param source Caption provenance
+#'
 #' @export
 
 all_run_raincloud <- function(run_df = src_run_df,
+                              xmin = min(src_run_df$t_s),
+                              xmax = max(src_run_df$t_s),
                               source = "speedrun.com") {
   run_df %>%
     # convert milliseconds to hours, for now
-    mutate(t_h = t_s/60/60) %>%
+    mutate(t_h = t_s / 60 / 60) %>%
 
     # exclude runs > 3 hours
 
@@ -22,19 +29,19 @@ all_run_raincloud <- function(run_df = src_run_df,
       # above after flip
       justification = -.2,
       .width = 0,
-      alpha=0.5,
+      alpha = 0.5,
       point_colour = NA,
-      fill=sm_cols$orange
+      fill = sm_cols$orange
     ) +
 
     # boxplot
     ggplot2::geom_boxplot(
-      width=.2,
+      width = .2,
       ## remove outliers
       outlier.color = NA,
       alpha = 0.5,
-      colour=sm_cols$orange,
-      fill=sm_cols$orange
+      colour = sm_cols$orange,
+      fill = sm_cols$orange
     ) +
 
     # dots
@@ -45,9 +52,9 @@ all_run_raincloud <- function(run_df = src_run_df,
       # binwidth=0.25, # seems better to let it choose
       # move geom to the left
       justification = 1.2,
-      alpha=0.5,
-      colour=sm_cols$orange,
-      fill=sm_cols$orange
+      alpha = 0.5,
+      colour = sm_cols$orange,
+      fill = sm_cols$orange
     ) +
 
     # set theme
@@ -62,12 +69,13 @@ all_run_raincloud <- function(run_df = src_run_df,
       caption = source
     ) +
 
-    # rotate
+    # zoom for shiny
+    ylim(xmin, xmax) +
+
+  # rotate
     ggplot2::coord_flip() +
 
     # final tweaks
-    ggplot2::theme(
-      axis.text.y = ggplot2::element_blank()
-    )
+    ggplot2::theme(axis.text.y = ggplot2::element_blank())
 
 }

@@ -48,14 +48,15 @@
     id="toc-load-runs-from-100-leaderboard">Load runs from 100%
     leaderboard</a>
   - <a href="#run-dataframe" id="toc-run-dataframe">Run dataframe</a>
-  - <a href="#write-speedruncom-data-to-package"
-    id="toc-write-speedruncom-data-to-package">Write speedrun.com data to
-    package</a>
-  - <a href="#visualise-runs" id="toc-visualise-runs">Visualise runs</a>
-  - <a href="#raincloud" id="toc-raincloud">Raincloud</a>
-  - <a href="#write-run-data-from-speedruncom-to-supermetroid"
-    id="toc-write-run-data-from-speedruncom-to-supermetroid">Write run data
-    from speedrun.com to supermetroid</a>
+    - <a href="#visualise-runs" id="toc-visualise-runs">Visualise runs</a>
+    - <a href="#raincloud" id="toc-raincloud">Raincloud</a>
+    - <a href="#write-run-data-from-speedruncom-to-supermetroid"
+      id="toc-write-run-data-from-speedruncom-to-supermetroid">Write run data
+      from speedrun.com to supermetroid</a>
+  - <a href="#player-data" id="toc-player-data">Player data</a>
+    - <a href="#location-of-players-on-speedruncom-1"
+      id="toc-location-of-players-on-speedruncom-1">Location of players on
+      speedrun.com</a>
 - <a href="#getting-the-data-from-splitsio"
   id="toc-getting-the-data-from-splitsio">Getting the data from
   splitsio</a>
@@ -124,17 +125,15 @@ knitr::include_graphics("img/Smetroidbox-wiki.png")
 ## Super Metroid speed running
 
 As part of the verification of their speed run results, many players
-upload a video of their run to youtube.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7-cj22T2Yu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
-</iframe>
+upload a [video of the run](https://www.youtube.com/embed/7-cj22T2Yu4)
+to youtube.
 
 # Analyses (work in progress)
 
 ``` r
 library(supermetroid)
 library(tidyverse) # data science tools
-library(gt) # for html tables
+library(knitr) # for html tables
 ```
 
 # Super Metroid and speed running
@@ -168,6 +167,21 @@ top_games_vis(base_size = 10)
 ``` r
 
 all_run_raincloud(src_run_df)
+#> Warning: Removed 582 rows containing missing values (`stat_slabinterval()`).
+#> Warning: Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Warning: Removed 582 rows containing non-finite values (`stat_boxplot()`).
+#> Warning: Removed 582 rows containing missing values (`stat_slabinterval()`).
+#> Warning: Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -203,473 +217,14 @@ tribble(
   "splits.io", NA, NA,
   "deertier", NA, NA
 ) %>% 
-  gt()
+  kable()
 ```
 
-<div id="byjnwazzdu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#byjnwazzdu table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#byjnwazzdu thead, #byjnwazzdu tbody, #byjnwazzdu tfoot, #byjnwazzdu tr, #byjnwazzdu td, #byjnwazzdu th {
-  border-style: none;
-}
-
-#byjnwazzdu p {
-  margin: 0;
-  padding: 0;
-}
-
-#byjnwazzdu .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#byjnwazzdu .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#byjnwazzdu .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#byjnwazzdu .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#byjnwazzdu .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#byjnwazzdu .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#byjnwazzdu .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#byjnwazzdu .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#byjnwazzdu .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#byjnwazzdu .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#byjnwazzdu .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#byjnwazzdu .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#byjnwazzdu .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#byjnwazzdu .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#byjnwazzdu .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#byjnwazzdu .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#byjnwazzdu .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#byjnwazzdu .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#byjnwazzdu .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#byjnwazzdu .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#byjnwazzdu .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#byjnwazzdu .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#byjnwazzdu .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#byjnwazzdu .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#byjnwazzdu .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#byjnwazzdu .gt_left {
-  text-align: left;
-}
-
-#byjnwazzdu .gt_center {
-  text-align: center;
-}
-
-#byjnwazzdu .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#byjnwazzdu .gt_font_normal {
-  font-weight: normal;
-}
-
-#byjnwazzdu .gt_font_bold {
-  font-weight: bold;
-}
-
-#byjnwazzdu .gt_font_italic {
-  font-style: italic;
-}
-
-#byjnwazzdu .gt_super {
-  font-size: 65%;
-}
-
-#byjnwazzdu .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#byjnwazzdu .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#byjnwazzdu .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#byjnwazzdu .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#byjnwazzdu .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#byjnwazzdu .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#byjnwazzdu .gt_indent_5 {
-  text-indent: 25px;
-}
-</style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="source">source</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="runs">runs</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="players">players</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="source" class="gt_row gt_left">speedrun.com</td>
-<td headers="runs" class="gt_row gt_right">582</td>
-<td headers="players" class="gt_row gt_center">NA</td></tr>
-    <tr><td headers="source" class="gt_row gt_left">splits.io</td>
-<td headers="runs" class="gt_row gt_right">NA</td>
-<td headers="players" class="gt_row gt_center">NA</td></tr>
-    <tr><td headers="source" class="gt_row gt_left">deertier</td>
-<td headers="runs" class="gt_row gt_right">NA</td>
-<td headers="players" class="gt_row gt_center">NA</td></tr>
-  </tbody>
-  
-  
-</table>
-</div>
+| source       | runs | players |
+|:-------------|-----:|:--------|
+| speedrun.com |  582 | NA      |
+| splits.io    |   NA | NA      |
+| deertier     |   NA | NA      |
 
 ## Desired output: `ggplot`-friendly/tidy data
 
@@ -844,17 +399,20 @@ src_run_df = pd.DataFrame({
   'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
   't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
   'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
-  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)]
+  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)],
+'player_api' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,2] for x in range(n_obs)]
 })
 
 # inspect runs dataframe
 src_run_df.head()
-#>      run_id  rank      t_s        date    player
-#> 0  z5do82dm     1  4373.00  2021-07-31  zxzno3ex
-#> 1  yo75d4dm     2  4375.00  2021-02-24  18v6k4nx
-#> 2  m36d0q6m     3  4375.93  2021-12-08  zxz2wy4x
-#> 3  m3qo724y     4  4392.00  2023-05-08  xk49m26j
-#> 4  y4g31v3y     5  4442.00  2022-12-10  x35ve3kj
+#>      run_id  rank  ...    player                                      player_api
+#> 0  z5do82dm     1  ...  zxzno3ex  https://www.speedrun.com/api/v1/users/zxzno3ex
+#> 1  yo75d4dm     2  ...  18v6k4nx  https://www.speedrun.com/api/v1/users/18v6k4nx
+#> 2  m36d0q6m     3  ...  zxz2wy4x  https://www.speedrun.com/api/v1/users/zxz2wy4x
+#> 3  m3qo724y     4  ...  xk49m26j  https://www.speedrun.com/api/v1/users/xk49m26j
+#> 4  y4g31v3y     5  ...  x35ve3kj  https://www.speedrun.com/api/v1/users/x35ve3kj
+#> 
+#> [5 rows x 6 columns]
 ```
 
 ``` python
@@ -864,24 +422,35 @@ pd.DataFrame(src_runs[1]['run']['players']).loc['id']
 #> Error: KeyError: 'id'
 ```
 
-## Write speedrun.com data to package
-
-``` r
-# get the data from python into R
-
-src_run_raw <- py$src_run_df
-```
-
-## Visualise runs
+### Visualise runs
 
 Now we have the data from speedrun.com leaderboard, we can plot the
 distribution of runs.
 
 ``` r
+# get the data from python into R
+
+src_run_raw <- py$src_run_df
+
 all_run_raincloud(src_run_raw)
+#> Warning: Removed 596 rows containing missing values (`stat_slabinterval()`).
+#> Warning: Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Warning: Removed 596 rows containing non-finite values (`stat_boxplot()`).
+#> Warning: Removed 596 rows containing missing values (`stat_slabinterval()`).
+#> Warning: Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
 ```
 
-<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
 
 We have a handful of 0 entries and some \> 3 hours.
 
@@ -903,6 +472,20 @@ src_run_raw %>%
 #> 11 y21k26wz  594      0.00 2019-12-06 j921z1n8
 #> 12 yv8peoxm  595      0.00 2023-02-19 j40o9vw8
 #> 13 yl9oenxy  596      0.00 2017-08-02 1xykvdw8
+#>                                        player_api
+#> 1  https://www.speedrun.com/api/v1/users/qjnldw4x
+#> 2  https://www.speedrun.com/api/v1/users/v8lpwk7j
+#> 3  https://www.speedrun.com/api/v1/users/j20563px
+#> 4  https://www.speedrun.com/api/v1/users/8wk1zz48
+#> 5  https://www.speedrun.com/api/v1/users/y8d9w3gx
+#> 6  https://www.speedrun.com/api/v1/users/qjn072qx
+#> 7  https://www.speedrun.com/api/v1/users/dx3l5p6x
+#> 8  https://www.speedrun.com/api/v1/users/x7m21p6x
+#> 9  https://www.speedrun.com/api/v1/users/8gez077j
+#> 10 https://www.speedrun.com/api/v1/users/kj9oo2vj
+#> 11 https://www.speedrun.com/api/v1/users/j921z1n8
+#> 12 https://www.speedrun.com/api/v1/users/j40o9vw8
+#> 13 https://www.speedrun.com/api/v1/users/1xykvdw8
 ```
 
 The 0 entries are run times where `gametime` was captured, but
@@ -922,7 +505,7 @@ than 3 hours, these are negligible, and arguably not *speed* runs. We
 will define a Super Metroid speed run, for this analysis, to be a Super
 Metroid 100% run that takes under 3 hours.
 
-## Raincloud
+### Raincloud
 
 ``` r
 src_run_raw %>%
@@ -932,11 +515,26 @@ src_run_raw %>%
     # exclude runs > 3 hours
     t_s < 3 * 60 * 60) %>%  
   all_run_raincloud()
+#> Warning: Removed 582 rows containing missing values (`stat_slabinterval()`).
+#> Warning: Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Warning: Removed 582 rows containing non-finite values (`stat_boxplot()`).
+#> Warning: Removed 582 rows containing missing values (`stat_slabinterval()`).
+#> Warning: Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
+#> Unknown or uninitialised column: `dist`.
 ```
 
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
 
-## Write run data from speedrun.com to supermetroid
+### Write run data from speedrun.com to supermetroid
 
 ``` r
 # this chunk is evaluated when data is updated
@@ -946,6 +544,129 @@ src_run_df <-
 
 
 usethis::use_data(src_run_df, overwrite=TRUE)
+```
+
+## Player data
+
+### Location of players on speedrun.com
+
+| player_df     | description                   |
+|---------------|-------------------------------|
+| *player_id*   | unique identifier of player   |
+| player_handle | human-readable **unique** tag |
+| location      | geographic location of player |
+
+``` python
+src_api = srcomapi.SpeedrunCom(); api.debug = 1
+#> Error: NameError: name 'api' is not defined
+player_locations = []
+player_handles = []
+players = []
+```
+
+``` python
+# this loop fails because not all ids are valid
+
+# get players
+src_players = []
+
+# get a list of player records for each valid player id
+for player in src_run_df.player:
+  print("loop index")
+  print(len(src_players))
+  print(player)
+  user = src_api.get_user(player)
+  src_players.append(user)
+
+# extract player data into dataframe    
+#> Error: srcomapi.exceptions.APIRequestException: (404, 'Not Found', 'users/LynxXUnlimited')
+players = pd.DataFrame({
+  'player_id' : [src_players[x].id for x in range(len(src_players))],
+  'player_name' : [src_players[x].name for x in range(len(src_players))],
+  'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
+})
+  
+```
+
+``` python
+# curiously this works on first three records
+
+
+# get a list of player records for each valid player id
+for player in src_run_df.player[0:3]:
+  print("loop index")
+  print(len(src_players))
+  print(player)
+  user = src_api.get_user(player)
+  src_players.append(user)
+
+# extract player data into dataframe    
+#> loop index
+#> 6
+#> zxzno3ex
+#> loop index
+#> 7
+#> 18v6k4nx
+#> loop index
+#> 8
+#> zxz2wy4x
+src_players_df = pd.DataFrame({
+  'player_id' : [src_players[x].id for x in range(len(src_players))],
+  'player_name' : [src_players[x].name for x in range(len(src_players))]# ,
+  # 'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
+})
+  
+src_players_df.head()
+
+#>   player_id   player_name
+#> 0  zxzno3ex     ShinyZeni
+#> 1  18v6k4nx         zoast
+#> 2  zxz2wy4x    Behemoth87
+#> 3  xk49m26j         Gebbu
+#> 4  x35ve3kj  Static_Shock
+```
+
+It does
+
+``` python
+
+
+# the player id extracted does not always match to api
+# api uri is also wrong, matches the incorrect player id
+src_run_df.player.str.len().value_counts()
+
+# get users with length 8 ids 
+# filter out ids that don't contain numbers (some are player handles)
+# (hopefully these will capture the valid apis)
+#> 8     510
+#> 10     19
+#> 9      11
+#> 7      10
+#> 11      8
+#> 6       7
+#> 14      6
+#> 15      5
+#> 13      5
+#> 12      4
+#> 4       4
+#> 5       4
+#> 19      1
+#> 18      1
+#> 16      1
+#> Name: player, dtype: int64
+src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8').player
+#> 6      LynxXUnlimited
+#> 71         Flowsouth8
+#> 98         Yeahboiii5
+#> 135       Sweetkid689
+#> 147        Dhaos Tk31
+#>             ...      
+#> 564        hubert0987
+#> 567     Hellmessenger
+#> 569        playingg0d
+#> 571         PinkTeddy
+#> 573       jewelediris
+#> Name: player, Length: 86, dtype: object
 ```
 
 # Getting the data from splitsio

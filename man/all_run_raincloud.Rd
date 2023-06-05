@@ -4,7 +4,21 @@
 \alias{all_run_raincloud}
 \title{Raincloud plot of speedrun.com run times}
 \usage{
-all_run_raincloud(run_df = src_run_df, source = "speedrun.com")
+all_run_raincloud(
+  run_df = src_run_df,
+  xmin = min(src_run_df$t_s),
+  xmax = max(src_run_df$t_s),
+  source = "speedrun.com"
+)
+}
+\arguments{
+\item{run_df}{Dataframe of column of run times \code{t_s} in seconds}
+
+\item{xmin}{Set limits of x axis (for shiny slider input)}
+
+\item{xmax}{Set max of x axis (shiny slider)}
+
+\item{source}{Caption provenance}
 }
 \description{
 Raincloud plot of speedrun.com run times

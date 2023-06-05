@@ -39,12 +39,7 @@ knitr::include_graphics("img/Smetroidbox-wiki.png")
 
 ## Super Metroid speed running
 
-
-As part of the verification of their speed run results, many players upload a video of their run to youtube.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7-cj22T2Yu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
+As part of the verification of their speed run results, many players upload a [video of the run](https://www.youtube.com/embed/7-cj22T2Yu4) to youtube.
 
 
 # Analyses (work in progress)
@@ -52,7 +47,7 @@ As part of the verification of their speed run results, many players upload a vi
 ```{r message=FALSE}
 library(supermetroid)
 library(tidyverse) # data science tools
-library(gt) # for html tables
+library(knitr) # for html tables
 
 
 ```
@@ -122,7 +117,7 @@ tribble(
   "splits.io", NA, NA,
   "deertier", NA, NA
 ) %>% 
-  gt()
+  kable()
 
 ```
 
@@ -299,7 +294,8 @@ src_run_df = pd.DataFrame({
   'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
   't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
   'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
-  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)]
+  'player' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] for x in range(n_obs)],
+'player_api' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,2] for x in range(n_obs)]
 })
 
 # inspect runs dataframe
@@ -315,20 +311,15 @@ pd.DataFrame(src_runs[1]['run']['players']).loc['id']
 
 ```
 
-## Write speedrun.com data to package
+### Visualise runs
+
+Now we have the data from speedrun.com leaderboard, we can plot the distribution of runs. 
 
 ```{r}
 # get the data from python into R
 
 src_run_raw <- py$src_run_df
 
-```
-
-## Visualise runs
-
-Now we have the data from speedrun.com leaderboard, we can plot the distribution of runs. 
-
-```{r}
 all_run_raincloud(src_run_raw)
 
 ```
@@ -353,7 +344,7 @@ We are also interest in comparing _speed runners_, as opposed to those logging p
 
 Since only {r round(prop_greater_3hrs, 2) * 100}% of runs are greater than 3 hours, these are negligible, and arguably not _speed_ runs. We will define a Super Metroid speed run, for this analysis, to be a Super Metroid 100% run that takes under 3 hours. 
 
-## Raincloud
+### Raincloud
 
 ```{r}
 src_run_raw %>%
@@ -366,7 +357,7 @@ src_run_raw %>%
 
 ```
 
-## Write run data from speedrun.com to supermetroid
+### Write run data from speedrun.com to supermetroid
 
 ```{r eval=FALSE}
 # this chunk is evaluated when data is updated
@@ -379,7 +370,92 @@ usethis::use_data(src_run_df, overwrite=TRUE)
 
 ```
 
+## Player data
 
+### Location of players on speedrun.com
+
+player_df | description | srcomapi 
+- | - | 
+*player_id* | unique identifier of player 
+player_handle | human-readable **unique** tag | api.get_user -> user.name
+location | geographic location of player | api.get_user -> user.location
+
+```{python}
+src_api = srcomapi.SpeedrunCom(); api.debug = 1
+
+player_locations = []
+player_handles = []
+players = []
+
+```
+
+```{python}
+# this loop fails because not all ids are valid
+
+# get players
+src_players = []
+
+# get a list of player records for each valid player id
+for player in src_run_df.player:
+  print("loop index")
+  print(len(src_players))
+  print(player)
+  user = src_api.get_user(player)
+  src_players.append(user)
+
+# extract player data into dataframe    
+players = pd.DataFrame({
+  'player_id' : [src_players[x].id for x in range(len(src_players))],
+  'player_name' : [src_players[x].name for x in range(len(src_players))],
+  'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
+})
+  
+
+```
+
+
+
+```{python}
+# curiously this works on first three records
+
+
+# get a list of player records for each valid player id
+for player in src_run_df.player[0:3]:
+  print("loop index")
+  print(len(src_players))
+  print(player)
+  user = src_api.get_user(player)
+  src_players.append(user)
+
+# extract player data into dataframe    
+src_players_df = pd.DataFrame({
+  'player_id' : [src_players[x].id for x in range(len(src_players))],
+  'player_name' : [src_players[x].name for x in range(len(src_players))]# ,
+  # 'location' : [src_players[x].location['country']['names']['international'] for x in range(len(src_players))] 
+})
+  
+src_players_df.head()
+
+
+```
+
+It does 
+
+
+```{python}
+
+
+# the player id extracted does not always match to api
+# api uri is also wrong, matches the incorrect player id
+src_run_df.player.str.len().value_counts()
+
+# get users with length 8 ids 
+# filter out ids that don't contain numbers (some are player handles)
+# (hopefully these will capture the valid apis)
+
+src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8').player
+
+```
 
 # Getting the data from splitsio
 
