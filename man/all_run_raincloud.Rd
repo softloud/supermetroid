@@ -8,6 +8,7 @@ all_run_raincloud(
   run_df = src_run_df,
   xmin = min(src_run_df$t_s),
   xmax = max(src_run_df$t_s),
+  base_size = 15,
   source = "speedrun.com"
 )
 }
@@ -17,6 +18,8 @@ all_run_raincloud(
 \item{xmin}{Set limits of x axis (for shiny slider input)}
 
 \item{xmax}{Set max of x axis (shiny slider)}
+
+\item{base_size}{For theme_minimal}
 
 \item{source}{Caption provenance}
 }

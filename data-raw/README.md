@@ -10,5 +10,11 @@ also get-src.py
 
 ## splitsio
 
-- splitio-io.*.json attempts to use curl, but were curtailed to 25?
+### Labels
 
+label-counts.csv has the lower case labels and counts uploaded so anatomecha
+can update them.
+
+### Old data, probably should delete
+
+splitio-io.*.json attempts to use curl, but were curtailed to 25?

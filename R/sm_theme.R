@@ -59,13 +59,19 @@ sm_cols_look <- function(base_size=20) {
 
 #' Add Super Metroid theme to ggplot
 #'
+#' @param base_size for theme_minimal
+#' @param leaderboard_api string for api "splits.io" or "speedrunner.com"
+#'
 #' Stuff to do
+#'
 #'
 #' Possibly add source as an argument
 #'
 #' @export
 
-theme_sm <- function(base_size = 15) {
+theme_sm <- function(base_size = 15# , hmm how to add captino
+                     # leaderboard_api
+                     ) {
   ggplot2::theme_minimal(
     base_size = base_size,
     base_family = "courier"

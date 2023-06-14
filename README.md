@@ -1,95 +1,55 @@
 
-- <a href="#supermetroid" id="toc-supermetroid">supermetroid</a>
-- <a href="#what-is-super-metroid" id="toc-what-is-super-metroid">What is
-  Super Metroid?</a>
-  - <a href="#super-metroid-speed-running"
-    id="toc-super-metroid-speed-running">Super Metroid speed running</a>
-- <a href="#analyses-work-in-progress"
-  id="toc-analyses-work-in-progress">Analyses (work in progress)</a>
-- <a href="#super-metroid-and-speed-running"
-  id="toc-super-metroid-and-speed-running">Super Metroid and speed
-  running</a>
-  - <a href="#super-metroid-is-the-top-snes-speed-runner-game"
-    id="toc-super-metroid-is-the-top-snes-speed-runner-game">Super Metroid
-    is the top SNES speed runner game</a>
-  - <a href="#subway-surfers-tiktok-phenomenon-or-good-upload-interface"
-    id="toc-subway-surfers-tiktok-phenomenon-or-good-upload-interface">Subway
-    Surfers TikTok phenomenon or good upload interface?</a>
-- <a href="#run-times" id="toc-run-times">Run times</a>
-  - <a href="#speed-run-times-from-speedruncom"
-    id="toc-speed-run-times-from-speedruncom">Speed run times from
-    speedrun.com</a>
-- <a href="#segment-times" id="toc-segment-times">Segment times</a>
-  - <a href="#label-chaos" id="toc-label-chaos">Label chaos</a>
-  - <a href="#comparison-of-segments"
-    id="toc-comparison-of-segments">Comparison of segments</a>
-  - <a href="#single-segment-analyses"
-    id="toc-single-segment-analyses">Single segment analyses</a>
-- <a href="#getting-the-data" id="toc-getting-the-data">Getting the
-  data</a>
-  - <a href="#sources" id="toc-sources">Sources</a>
-  - <a href="#desired-output-ggplot-friendlytidy-data"
-    id="toc-desired-output-ggplot-friendlytidy-data">Desired output:
-    <code>ggplot</code>-friendly/tidy data</a>
-    - <a href="#runs" id="toc-runs">Runs</a>
-    - <a href="#location-of-players-on-speedruncom"
-      id="toc-location-of-players-on-speedruncom">Location of players on
-      speedrun.com</a>
-    - <a href="#segments-for-each-run-from-splitsio"
-      id="toc-segments-for-each-run-from-splitsio">Segments for each run from
-      splitsio</a>
-- <a href="#import-pkg--helper-functions"
-  id="toc-import-pkg--helper-functions">Import pkg &amp; helper
-  functions</a>
-  - <a href="#last-updated" id="toc-last-updated">Last updated</a>
-- <a href="#get-data-from-speedruncom"
-  id="toc-get-data-from-speedruncom">Get data from speedrun.com</a>
-  - <a href="#load-runs-from-100-leaderboard"
-    id="toc-load-runs-from-100-leaderboard">Load runs from 100%
-    leaderboard</a>
-  - <a href="#run-dataframe" id="toc-run-dataframe">Run dataframe</a>
-    - <a href="#visualise-runs" id="toc-visualise-runs">Visualise runs</a>
-    - <a href="#raincloud" id="toc-raincloud">Raincloud</a>
-    - <a href="#write-run-data-from-speedruncom-to-supermetroid"
-      id="toc-write-run-data-from-speedruncom-to-supermetroid">Write run data
-      from speedrun.com to supermetroid</a>
-  - <a href="#player-data" id="toc-player-data">Player data</a>
-    - <a href="#location-of-players-on-speedruncom-1"
-      id="toc-location-of-players-on-speedruncom-1">Location of players on
-      speedrun.com</a>
-    - <a href="#not-all-ids-are-valid" id="toc-not-all-ids-are-valid">Not all
-      ids are valid</a>
-- <a href="#getting-the-data-from-splitsio"
-  id="toc-getting-the-data-from-splitsio">Getting the data from
-  splitsio</a>
-  - <a href="#load-runs-and-runners" id="toc-load-runs-and-runners">Load
-    runs and runners</a>
-  - <a href="#inspect-data" id="toc-inspect-data">Inspect data</a>
-  - <a href="#run-dataframe-1" id="toc-run-dataframe-1">Run dataframe</a>
-  - <a href="#convert-splitsio-object-to-dataframe"
-    id="toc-convert-splitsio-object-to-dataframe">Convert splitsio object to
-    dataframe</a>
-  - <a href="#load-splitsio-data" id="toc-load-splitsio-data">Load splitsio
-    data</a>
-  - <a href="#3-different-fields-for-dates"
-    id="toc-3-different-fields-for-dates">3 different fields for dates</a>
-    - <a href="#run-id" id="toc-run-id">Run id</a>
-    - <a href="#speedruncom-player-id"
-      id="toc-speedruncom-player-id">speedrun.com player id</a>
-  - <a href="#srdc-ids-and-player-ids" id="toc-srdc-ids-and-player-ids">srdc
-    ids and player ids?</a>
-    - <a href="#ids-in-speedruncom" id="toc-ids-in-speedruncom">ids in
-      speedrun.com</a>
-    - <a href="#10-ids-in-splitsio" id="toc-10-ids-in-splitsio">~10% ids in
-      splits.io</a>
-  - <a href="#create-segments-dataframe"
-    id="toc-create-segments-dataframe">create segments dataframe</a>
-  - <a href="#fucking-segment-labels"
-    id="toc-fucking-segment-labels">fucking segment labels</a>
-- <a href="#deertier" id="toc-deertier">deertier</a>
-- <a href="#speedrunslive" id="toc-speedrunslive">speedrunslive</a>
-- <a href="#wikipedia" id="toc-wikipedia">wikipedia</a>
-- <a href="#later" id="toc-later">later</a>
+- [supermetroid](#supermetroid)
+- [What is Super Metroid?](#what-is-super-metroid)
+  - [Super Metroid speed running](#super-metroid-speed-running)
+- [Analyses (work in progress)](#analyses-work-in-progress)
+- [Super Metroid and speed running](#super-metroid-and-speed-running)
+  - [Super Metroid is the top SNES speed runner
+    game](#super-metroid-is-the-top-snes-speed-runner-game)
+  - [Subway Surfers TikTok phenomenon or good upload
+    interface?](#subway-surfers-tiktok-phenomenon-or-good-upload-interface)
+- [Run times](#run-times)
+  - [Speed run times from
+    speedrun.com](#speed-run-times-from-speedruncom)
+- [Segment times](#segment-times)
+  - [Label chaos](#label-chaos)
+  - [Comparison of segments](#comparison-of-segments)
+  - [Single segment analyses](#single-segment-analyses)
+- [Getting the data](#getting-the-data)
+  - [Sources](#sources)
+  - [Desired output: `ggplot`-friendly/tidy
+    data](#desired-output-ggplot-friendlytidy-data)
+    - [Runs](#runs)
+    - [Location of players on
+      speedrun.com](#location-of-players-on-speedruncom)
+    - [Segments for each run from
+      splitsio](#segments-for-each-run-from-splitsio)
+- [Import pkg & helper functions](#import-pkg--helper-functions)
+  - [Last updated](#last-updated)
+- [speedrun.com](#speedruncom)
+  - [Load runs from 100% leaderboard](#load-runs-from-100-leaderboard)
+  - [Run dataframe](#run-dataframe)
+    - [Visualise runs](#visualise-runs)
+    - [Raincloud](#raincloud)
+    - [Write run data from speedrun.com to
+      supermetroid](#write-run-data-from-speedruncom-to-supermetroid)
+  - [Player data](#player-data)
+    - [Location of players on
+      speedrun.com](#location-of-players-on-speedruncom-1)
+    - [Not all ids are valid](#not-all-ids-are-valid)
+- [splits.io](#splitsio)
+  - [Load runs and runners](#load-runs-and-runners)
+- [Try with converting to a dictionary much
+  earlier](#try-with-converting-to-a-dictionary-much-earlier)
+  - [Inspect data](#inspect-data)
+  - [Run dataframe](#run-dataframe-1)
+  - [Try with list of dictionaries](#try-with-list-of-dictionaries)
+  - [create segments dataframe](#create-segments-dataframe)
+  - [fucking segment labels](#fucking-segment-labels)
+- [deertier](#deertier)
+- [speedrunslive](#speedrunslive)
+- [wikipedia](#wikipedia)
+- [later](#later)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -328,7 +288,7 @@ update_date <- read_rds("data-raw/readme-updated.rds")
 
 This read me was last updated: 2023-06-03.
 
-# Get data from speedrun.com
+# speedrun.com
 
 ## Load runs from 100% leaderboard
 
@@ -653,7 +613,7 @@ src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8')
 #> [86 rows x 6 columns]
 ```
 
-# Getting the data from splitsio
+# splits.io
 
 ## Load runs and runners
 
@@ -662,19 +622,37 @@ src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8')
 # to minimise api calls
 
 # get 100% Category Super Metroid game data  
-hun_cat = splitsio.Category.from_id("279", historic=True)
-save_object(hun_cat, "data-raw/sio_hun_cat.pkl")
+sio_cat = splitsio.Category.from_id("279", historic=True)
+save_object(sio_cat, "data-raw/sio_cat.pkl")
 ```
 
 ``` python
 # load sio data
-with open('data-raw/sio_hun_cat.pkl', 'rb') as inp:
-    hun_cat = pickle.load(inp)
+with open('data-raw/sio_cat.pkl', 'rb') as inp:
+    sio_cat = pickle.load(inp)
 
 # extract runners and run from category
-sio_runners = hun_cat.runners()
+sio_runners = sio_cat.runners()
 
-sio_runs = hun_cat.runs()
+sio_runs = sio_cat.runs()
+```
+
+# Try with converting to a dictionary much earlier
+
+``` python
+sio_run_dict_max = 3
+
+sio_run_dicts = [sio_runs[x].to_dict() for x in range(sio_run_dict_max)]
+
+# each element of the list is a dictionary with keys
+sio_run_dicts[0].keys()
+#> dict_keys(['id', 'srdc_id', 'realtime_duration_ms', 'realtime_sum_of_best_ms', 'gametime_duration_ms', 'gametime_sum_of_best_ms', 'default_timing', 'program', 'attempts', 'image_url', 'parsed_at', 'created_at', 'updated_at', 'video_url', 'game', 'category', 'runners', 'segments', 'histories'])
+```
+
+``` r
+testing_index <- 3
+
+# find 
 ```
 
 ## Inspect data
@@ -713,156 +691,71 @@ sio_runners[0]
 
 Objective: to wrangle a data frame with run data
 
-| sio_run_df    | description                                                                                                | splitsio                                    |
-|---------------|------------------------------------------------------------------------------------------------------------|---------------------------------------------|
-| *run_id*      | splits.io id                                                                                               | `id`                                        |
-| date          | timestamp of run upload                                                                                    | ? `'created_at', 'parsed_at', 'updated_at'` |
-| run_time      | total time of run in s or ms                                                                               | `realtime_duration_ms`                      |
-| rank          | “historical” if from previous record (nb only applies to speedrun.com); otherwise rank as int, list column | ?                                           |
-| src_player_id | speedrun.com player id                                                                                     | `srdc_id`                                   |
+| sio_run_df    | description                                                                                                | splitsio                                                                                                             |
+|---------------|------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| *run_id*      | splits.io id                                                                                               | `id`                                                                                                                 |
+| date          | timestamp of run upload                                                                                    | ? `'created_at', 'parsed_at', 'updated_at'` we’ll use ‘updated_at’ for now, but should check splitsio docs for which |
+| run_time      | total time of run in s or ms                                                                               | `realtime_duration_ms`                                                                                               |
+| rank          | “historical” if from previous record (nb only applies to speedrun.com); otherwise rank as int, list column | ?                                                                                                                    |
+| src_player_id | speedrun.com player id                                                                                     | `srdc_id`                                                                                                            |
 
-## Convert splitsio object to dataframe
-
-``` python
-# this chunk isn't evaluated
-
-# this dataframe takes too long to create for knitting, save object
-sio_df = pd.DataFrame(sio_runs)
-
-save_object(sio_df, "data-raw/sio_df.pkl")
-```
-
-## Load splitsio data
+## Try with list of dictionaries
 
 ``` python
+sio_run_dicts = [sio_runs[x].to_dict() for x in range(len(sio_runs))]
 
-# load runs df
-with open('data-raw/sio_df.pkl', 'rb') as inp:
-    sio_df = pickle.load(inp)
+# each element is a dictionary with keys
+sio_run_dicts[0].keys()
+#> dict_keys(['id', 'srdc_id', 'realtime_duration_ms', 'realtime_sum_of_best_ms', 'gametime_duration_ms', 'gametime_sum_of_best_ms', 'default_timing', 'program', 'attempts', 'image_url', 'parsed_at', 'created_at', 'updated_at', 'video_url', 'game', 'category', 'runners', 'segments', 'histories'])
 ```
 
 ``` python
-# take a look 
-sio_df.columns
-#> Index(['id', 'srdc_id', 'realtime_duration_ms', 'realtime_sum_of_best_ms',
-#>        'gametime_duration_ms', 'gametime_sum_of_best_ms', 'default_timing',
-#>        'program', 'attempts', 'image_url', 'parsed_at', 'created_at',
-#>        'updated_at', 'video_url', 'game', 'category', 'runners', 'segments',
-#>        'histories'],
-#>       dtype='object')
-sio_df.head()
-#>      id srdc_id  ...                                           segments  histories
-#> 0  asmc    None  ...  [{'id': '66be0a6c-9c80-4309-8705-843e8ea71aa4'...       None
-#> 1  amuv    None  ...  [{'id': 'f847b639-9003-480e-9c5c-51d25e247df5'...       None
-#> 2  amcl    None  ...  [{'id': '56c3ce3f-5fa5-4ba6-a8c4-75613cac6c3c'...       None
-#> 3  ajht    None  ...  [{'id': '4ae47e1b-f288-4e51-8b04-b01cb9fd2470'...       None
-#> 4  ar7a    None  ...  [{'id': 'a0b1ee5f-4846-48a7-8cdf-39e956ece071'...       None
-#> 
-#> [5 rows x 19 columns]
+# run id
+sio_run_dicts[0].keys()
+
+# get id
+#> dict_keys(['id', 'srdc_id', 'realtime_duration_ms', 'realtime_sum_of_best_ms', 'gametime_duration_ms', 'gametime_sum_of_best_ms', 'default_timing', 'program', 'attempts', 'image_url', 'parsed_at', 'created_at', 'updated_at', 'video_url', 'game', 'category', 'runners', 'segments', 'histories'])
+sio_run_dicts[0]['id']
+
+# get realtime
+#> 'ato1'
+sio_run_dicts[0]['realtime_duration_ms']
+#> 7013075
 ```
 
-## 3 different fields for dates
-
 ``` python
+# player data
+pd.json_normalize(sio_run_dicts[0]['runners'])['id'][0]
+#> '89646'
+sio_run_player_index = 10 # len(sio_run_dicts)
 
-# three fields that look like dates
-# which should we intepret as the "date" of the run?
-sio_df[['created_at', 'parsed_at', 'updated_at']]
-#>                  created_at               parsed_at              updated_at
-#> 0   2023-05-26 13:55:02.091 2023-05-26 13:55:36.932 2023-05-26 13:55:36.984
-#> 1   2023-04-07 19:16:29.375 2023-05-14 15:29:09.869 2023-05-14 15:29:09.881
-#> 2   2023-04-03 14:09:56.151 2023-05-14 10:34:06.391 2023-05-14 10:34:06.575
-#> 3   2023-03-10 23:30:26.626 2023-05-13 07:44:20.405 2023-05-13 07:44:20.415
-#> 4   2023-05-12 01:30:18.683 2023-05-12 01:30:34.126 2023-05-12 01:30:34.131
-#> ..                      ...                     ...                     ...
-#> 579 2018-01-01 03:41:01.212 2018-01-01 03:41:19.538 2019-03-16 08:06:41.469
-#> 580 2017-12-16 01:49:19.032 2017-12-16 01:49:21.724 2019-03-16 08:05:25.117
-#> 581 2017-11-29 03:23:35.645 2017-11-29 03:23:39.638 2019-03-16 08:03:58.329
-#> 582 2017-11-29 03:22:44.063 2017-11-29 03:22:47.135 2019-03-16 08:03:58.305
-#> 583 2015-06-16 04:51:19.260 2018-12-06 22:42:01.089 2019-03-16 07:26:30.176
-#> 
-#> [584 rows x 3 columns]
+run_runners_list = [pd.json_normalize(sio_run_dicts[x]['runners']).assign(run_id = sio_runs[x].id) for x in range(len(sio_runs))]
+
+run_runners_concat = pd.concat(run_runners)
+#> Error: NameError: name 'run_runners' is not defined
+run_runners = run_runners_concat[['display_name', 'name', 'run_id','id']].rename(columns={'id':'player_id', 'name':'player_name'})
+#> Error: NameError: name 'run_runners_concat' is not defined
+len(run_runners) != len(sio_runs) # :( whyeee
+#> Error: NameError: name 'run_runners' is not defined
+sio_run_dicts[0].keys()
+#> dict_keys(['id', 'srdc_id', 'realtime_duration_ms', 'realtime_sum_of_best_ms', 'gametime_duration_ms', 'gametime_sum_of_best_ms', 'default_timing', 'program', 'attempts', 'image_url', 'parsed_at', 'created_at', 'updated_at', 'video_url', 'game', 'category', 'runners', 'segments', 'histories'])
+sio_runs_df = pd.DataFrame({
+  'run_id' : [sio_run_dicts[x]['id'] for x in range(len(sio_runs))],
+  't_ms' : [sio_run_dicts[x]['realtime_duration_ms'] for x in range(len(sio_runs))],
+  'date' : [sio_run_dicts[x]['updated_at'] for x in range(len(sio_runs))],
+  'image_url': [sio_run_dicts[x]['image_url'] for x in range(len(sio_runs))],
+  'video_url': [sio_run_dicts[x]['video_url'] for x in range(len(sio_runs))]
+}).merge(run_runners, on = "run_id", how = 'left').set_index('run_id')
+
+# get segments
+
+#> Error: NameError: name 'run_runners' is not defined
 ```
 
-### Run id
-
-``` python
-# id is hopefully the run id
-
-# there are the same number of unique run 
-# ids as there are rows in the dataframe
-sio_df[['id']].drop_duplicates().shape[0] == sio_df.shape[0]
-
-# so we can assume id is run id
-#> True
-```
-
-### speedrun.com player id
-
-``` python
-# it would be super useful to have the srcom ids match
-
-# this many are not empty
-
-sio_df[['srdc_id']].dropna() 
-
-# that means we can only match this proportion of records, possibly we can use
-# play handle
-
-# why are some srdc ids duplicated? because historic=TRUE for these data,
-# so these must be speedrun.com player ids
-#>       srdc_id
-#> 20   yd19vdqy
-#> 29   yol1r0jy
-#> 30   meerjw8m
-#> 31   yolww15y
-#> 32   z1qee4wy
-#> ..        ...
-#> 527  zpqrl4gy
-#> 529  zq6gx85y
-#> 530  zpqrl4gy
-#> 531  zpqrl4gy
-#> 541  zpqrl4gy
-#> 
-#> [62 rows x 1 columns]
-```
-
-Only 10% of records contain speedrun.com ids, though:
-
-``` python
-src_splits_prop = sio_df[['id','srdc_id']].dropna().shape[0] / sio_df.shape[0]
-
-round(src_splits_prop, 2)
-#> 0.11
-```
-
-## srdc ids and player ids?
-
-### ids in speedrun.com
-
-``` python
-src_run_df[['run_id', 'play_id']]
-#> Error: KeyError: "['play_id'] not in index"
-```
-
-### \~10% ids in splits.io
-
-``` python
-sio_df[['srdc_id']].dropna() 
-#>       srdc_id
-#> 20   yd19vdqy
-#> 29   yol1r0jy
-#> 30   meerjw8m
-#> 31   yolww15y
-#> 32   z1qee4wy
-#> ..        ...
-#> 527  zpqrl4gy
-#> 529  zq6gx85y
-#> 530  zpqrl4gy
-#> 531  zpqrl4gy
-#> 541  zpqrl4gy
-#> 
-#> [62 rows x 1 columns]
+``` r
+inspect_sio_runs <- py$sio_runs_df %>% select(-contains("url")) %>% 
+  select(display_name, everything())
+#> Error in eval(expr, envir, enclos): AttributeError: module '__main__' has no attribute 'sio_runs_df'
 ```
 
 ## create segments dataframe
@@ -876,28 +769,56 @@ sio_df[['srdc_id']].dropna()
 ``` python
 # first level of segments
 type(sio_df['segments'][0])
-#> <class 'list'>
+#> Error: NameError: name 'sio_df' is not defined
 len(sio_df['segments'][0])
 
 # second level of segments
-#> 15
+#> Error: NameError: name 'sio_df' is not defined
 type(sio_df['segments'][0][0])
-#> <class 'dict'>
+#> Error: NameError: name 'sio_df' is not defined
 sio_df['segments'][0][2].keys()
 
-#> dict_keys(['id', 'name', 'display_name', 'segment_number', 'realtime_start_ms', 'realtime_duration_ms', 'realtime_end_ms', 'realtime_shortest_duration_ms', 'realtime_gold', 'realtime_skipped', 'realtime_reduced', 'gametime_start_ms', 'gametime_duration_ms', 'gametime_end_ms', 'gametime_shortest_duration_ms', 'gametime_gold', 'gametime_skipped', 'gametime_reduced', 'histories'])
+#> Error: NameError: name 'sio_df' is not defined
 segments_list = [pd.DataFrame(sio_df.segments[x]).assign(run_id = sio_df.id[x]) for x in range(sio_df.shape[0]) ]
-
+#> Error: NameError: name 'sio_df' is not defined
 segment_raw = pd.concat(segments_list)
-
+#> Error: NameError: name 'segments_list' is not defined
 segment_raw.columns
-#> Index(['id', 'name', 'display_name', 'segment_number', 'realtime_start_ms',
-#>        'realtime_duration_ms', 'realtime_end_ms',
-#>        'realtime_shortest_duration_ms', 'realtime_gold', 'realtime_skipped',
-#>        'realtime_reduced', 'gametime_start_ms', 'gametime_duration_ms',
-#>        'gametime_end_ms', 'gametime_shortest_duration_ms', 'gametime_gold',
-#>        'gametime_skipped', 'gametime_reduced', 'histories', 'run_id'],
-#>       dtype='object')
+#> Error: NameError: name 'segment_raw' is not defined
+segment_raw.shape
+#> Error: NameError: name 'segment_raw' is not defined
+sio_segments_df = segment_raw.merge(
+  sio_runs_df[['player_name', 'player_id']], on = "run_id", how="left")
+
+#> Error: NameError: name 'segment_raw' is not defined
+```
+
+``` r
+# tidy it up in R before writing it
+
+sio_segments <- py$sio_segments_df
+#> Error in eval(expr, envir, enclos): AttributeError: module '__main__' has no attribute 'sio_segments_df'
+
+
+sio_splits_df <- 
+sio_segments %>% 
+  select(
+    player_name, 
+    game_event = display_name, 
+    segment_number, 
+    realtime_start_ms, 
+    segment_id = id,
+    run_id,
+    player_id,
+    everything()) %>% 
+  select(-contains("gametime"),
+         -contains("reduced"),
+         -contains("skipped"), -histories) 
+#> Error in eval(expr, envir, enclos): object 'sio_segments' not found
+```
+
+``` r
+usethis::use_data(sio_splits_df)
 ```
 
 ## fucking segment labels

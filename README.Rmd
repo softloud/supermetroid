@@ -223,7 +223,7 @@ update_date <- read_rds("data-raw/readme-updated.rds")
 
 This read me was last updated: `r update_date`.
 
-# Get data from speedrun.com
+# speedrun.com
 
 ## Load runs from 100% leaderboard
 
@@ -457,7 +457,7 @@ src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8')
 
 ```
 
-# Getting the data from splitsio
+# splits.io
 
 ## Load runs and runners  
 
@@ -466,25 +466,48 @@ src_run_df.assign(id_len = lambda x: x.player.str.len()).query('id_len != 8')
 # to minimise api calls
 
 # get 100% Category Super Metroid game data  
-hun_cat = splitsio.Category.from_id("279", historic=True)
-save_object(hun_cat, "data-raw/sio_hun_cat.pkl")
+sio_cat = splitsio.Category.from_id("279", historic=True)
+save_object(sio_cat, "data-raw/sio_cat.pkl")
 
 ```
 
 
 ```{python load splitsio dat}
 # load sio data
-with open('data-raw/sio_hun_cat.pkl', 'rb') as inp:
-    hun_cat = pickle.load(inp)
+with open('data-raw/sio_cat.pkl', 'rb') as inp:
+    sio_cat = pickle.load(inp)
 
 # extract runners and run from category
-sio_runners = hun_cat.runners()
+sio_runners = sio_cat.runners()
 
-sio_runs = hun_cat.runs()
+sio_runs = sio_cat.runs()
+
+
 
 ```
 
+# Try with converting to a dictionary much earlier
+
+```{python}
+sio_run_dict_max = 3
+
+sio_run_dicts = [sio_runs[x].to_dict() for x in range(sio_run_dict_max)]
+
+# each element of the list is a dictionary with keys
+sio_run_dicts[0].keys()
+
+```
+
+```{r}
+testing_index <- 3
+
+# find 
+
+```
+
+
 ## Inspect data
+
 
 ```{python}
 # take a look at a run
@@ -513,105 +536,68 @@ Objective: to wrangle a data frame with run data
 sio_run_df | description | splitsio 
 - | - | - 
 *run_id* | splits.io id | `id` | 
-date | timestamp of run upload | ? `'created_at', 'parsed_at', 'updated_at'` 
+date | timestamp of run upload | ? `'created_at', 'parsed_at', 'updated_at'` we'll use 'updated_at' for now, but should check splitsio docs for which
 run_time | total time of run in s or ms | `realtime_duration_ms`
 rank | "historical" if from previous record (nb only applies to speedrun.com); otherwise rank as int, list column | ?
 src_player_id | speedrun.com player id | `srdc_id`
 
-## Convert splitsio object to dataframe
+## Try with list of dictionaries
 
-```{python, eval=FALSE}
-# this chunk isn't evaluated
+```{python}
+sio_run_dicts = [sio_runs[x].to_dict() for x in range(len(sio_runs))]
 
-# this dataframe takes too long to create for knitting, save object
-sio_df = pd.DataFrame(sio_runs)
-
-save_object(sio_df, "data-raw/sio_df.pkl")
-
-
-
-```
-
-## Load splitsio data
-
-```{python load runners}
-
-# load runs df
-with open('data-raw/sio_df.pkl', 'rb') as inp:
-    sio_df = pickle.load(inp)
-
+# each element is a dictionary with keys
+sio_run_dicts[0].keys()
 
 ```
 
 ```{python}
-# take a look 
-sio_df.columns
+# run id
+sio_run_dicts[0].keys()
 
-sio_df.head()
-```
+# get id
+sio_run_dicts[0]['id']
 
-## 3 different fields for dates
-
-```{python}
-
-# three fields that look like dates
-# which should we intepret as the "date" of the run?
-sio_df[['created_at', 'parsed_at', 'updated_at']]
+# get realtime
+sio_run_dicts[0]['realtime_duration_ms']
 
 ```
 
-### Run id
-
 ```{python}
-# id is hopefully the run id
+# player data
+pd.json_normalize(sio_run_dicts[0]['runners'])['id'][0]
 
-# there are the same number of unique run 
-# ids as there are rows in the dataframe
-sio_df[['id']].drop_duplicates().shape[0] == sio_df.shape[0]
+sio_run_player_index = 10 # len(sio_run_dicts)
 
-# so we can assume id is run id
+run_runners_list = [pd.json_normalize(sio_run_dicts[x]['runners']).assign(run_id = sio_runs[x].id) for x in range(len(sio_runs))]
+
+run_runners_concat = pd.concat(run_runners)
+
+run_runners = run_runners_concat[['display_name', 'name', 'run_id','id']].rename(columns={'id':'player_id', 'name':'player_name'})
+
+len(run_runners) != len(sio_runs) # :( whyeee
+
+sio_run_dicts[0].keys()
+
+sio_runs_df = pd.DataFrame({
+  'run_id' : [sio_run_dicts[x]['id'] for x in range(len(sio_runs))],
+  't_ms' : [sio_run_dicts[x]['realtime_duration_ms'] for x in range(len(sio_runs))],
+  'date' : [sio_run_dicts[x]['updated_at'] for x in range(len(sio_runs))],
+  'image_url': [sio_run_dicts[x]['image_url'] for x in range(len(sio_runs))],
+  'video_url': [sio_run_dicts[x]['video_url'] for x in range(len(sio_runs))]
+}).merge(run_runners, on = "run_id", how = 'left').set_index('run_id')
+
+# get segments
+
+
 
 ```
 
-### speedrun.com player id
 
-```{python}
-# it would be super useful to have the srcom ids match
 
-# this many are not empty
-
-sio_df[['srdc_id']].dropna() 
-
-# that means we can only match this proportion of records, possibly we can use
-# play handle
-
-# why are some srdc ids duplicated? because historic=TRUE for these data,
-# so these must be speedrun.com player ids
-
-```
-
-Only 10% of records contain speedrun.com ids, though:
-
-```{python}
-src_splits_prop = sio_df[['id','srdc_id']].dropna().shape[0] / sio_df.shape[0]
-
-round(src_splits_prop, 2)
-
-```
-
-## srdc ids and player ids?
-
-### ids in speedrun.com
-
-```{python}
-src_run_df[['run_id', 'play_id']]
-
-```
-
-### ~10% ids in splits.io
-
-```{python}
-sio_df[['srdc_id']].dropna() 
+```{r}
+inspect_sio_runs <- py$sio_runs_df %>% select(-contains("url")) %>% 
+  select(display_name, everything())
 
 ```
 
@@ -640,8 +626,42 @@ segments_list = [pd.DataFrame(sio_df.segments[x]).assign(run_id = sio_df.id[x]) 
 segment_raw = pd.concat(segments_list)
 
 segment_raw.columns
+segment_raw.shape
+
+sio_segments_df = segment_raw.merge(
+  sio_runs_df[['player_name', 'player_id']], on = "run_id", how="left")
+
 
 ```
+
+```{r}
+# tidy it up in R before writing it
+
+sio_segments <- py$sio_segments_df
+
+
+sio_splits_df <- 
+sio_segments %>% 
+  select(
+    player_name, 
+    game_event = display_name, 
+    segment_number, 
+    realtime_start_ms, 
+    segment_id = id,
+    run_id,
+    player_id,
+    everything()) %>% 
+  select(-contains("gametime"),
+         -contains("reduced"),
+         -contains("skipped"), -histories) 
+
+```
+
+```{r eval=FALSE}
+usethis::use_data(sio_splits_df)
+
+```
+
 
 ## fucking segment labels
 

@@ -49,7 +49,7 @@ dhb_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1eWvJiXBav4cyCH0eN
 ```
 
 ```{r raw}
-sm_dat_raw <- read_csv("../data-raw/sm_dat.csv", col_types = cols(.default = "c"))
+sm_dat_raw <- read_csv("data-raw/sm_dat.csv", col_types = cols(.default = "c"))
 
 sm_dat <- sm_dat_raw %>% select(-comment)
 

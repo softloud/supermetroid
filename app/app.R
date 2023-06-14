@@ -171,7 +171,8 @@ ui <- dashboardPage(
 
     output$all_run_raincloud <- renderPlot({
       all_run_raincloud(xmin = input$runs_raincloud_lims[1],
-                        xmax = input$runs_raincloud_lims[2])
+                        xmax = input$runs_raincloud_lims[2],
+                        base_size = 25)
     })
 
 

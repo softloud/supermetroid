@@ -1,8 +1,8 @@
 ---
-title: "splitsio"
+title: "sio"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{splitsio}
+  %\VignetteIndexEntry{sio}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,5 +15,9 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-
+library(supermetroid)
 ```
+
+## Describes data frames in `supermetroid` 
+
+

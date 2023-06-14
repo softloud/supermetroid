@@ -1,0 +1,437 @@
+---
+title: "Making big data pretty"
+subtitle: "How Brazilian TikTok mobile gamers* pwn Super Metroid on speed runner leaderboards"
+author: "Charles T. Gray, Ph.D. (Statistics) & friends from Unity**"
+institute: "PyData Copenhagen (June 29, 2023) *Copenhagen's SYBO has a game, Subway Surfers, that dominates international speed runner leaderboards! **Across platforms, more games are made with Danish-now-global Unity than any other engine."
+# format: html
+server: shiny
+format: 
+  revealjs:
+    theme: night
+editor: visual
+mainfont: "Courier"
+# execute-dir: 'project'
+output-dir: 'file'
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(
+  echo=FALSE,
+  fig.align="center",
+  error=TRUE
+)
+
+```
+
+# When do Super Metroid speed runs get competitive?
+
+## What is Super Metroid?
+
+### Meet Super Metroid speed runner, `anatomecha`,
+
+Dave Hunt, Technical Artist at Unity
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7-cj22T2Yu4" title="YouTube video player" frameborder="0" allowfullscreen>
+
+</iframe>
+
+```{r fig.width=12, include=FALSE, eval=FALSE}
+library(knitr)
+
+include_graphics("https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Smetroidbox.jpg/220px-Smetroidbox.jpg")
+
+```
+
+## Data story time {.r-fit-text}
+
+::: columns
+::: {.column width="40%"}
+Enjoying this presentation:
+
+-   Code is there for demystification, not reading
+-   Get a feel for workflows
+-   Please interrupt and interact; let's code jam :)
+:::
+
+::: {.column width="60%"}
+::: {.tenor-gif-embed data-postid="13085361" data-share-method="host" data-aspect-ratio="1.33929" data-width="100%"}
+<a href="https://tenor.com/view/cute-pout-puss-adorable-please-talk-to-me-gif-13085361">Cute Pout GIF</a>from <a href="https://tenor.com/search/cute-gifs">Cute GIFs</a>
+:::
+
+```{=html}
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+```
+-   I talk too fast and I am sorry; but I will repeat myself happily if asked
+:::
+:::
+
+## It all started with that `.lss` file
+
+::: columns
+::: {.column width="20%"}
+```{bash, eval=FALSE}
+cp img/splits_screenshot.PNG vignettes/
+```
+
+![](splits_screenshot.PNG)
+
+```{r }
+knitr::include_graphics("https://imgur.com/XMQwsWm")
+```
+:::
+
+::: {.column width="70%"}
+```{r}
+
+knitr::include_graphics("img/splits_screenshot.PNG")
+#  width="480" height="258"
+knitr::include_graphics("https://i.imgur.com/XMQwsWm.png")
+
+```
+
+<iframe src="https://giphy.com/embed/6pUBXVTai18Iw" width="960" height="516" frameBorder="0" class="giphy-embed" allowFullScreen>
+
+</iframe>
+
+<p><a href="https://giphy.com/gifs/headlikeanorange-meerkat-bbc-the-meerkats-6pUBXVTai18Iw">via GIPHY</a></p>
+:::
+:::
+
+## Load packaged analysis
+
+```{r pkg, echo=TRUE}
+# analysis
+library(supermetroid)
+
+```
+
+### Presentation helpers
+
+```{r echo=TRUE}
+# datasci tools
+library(shinyWidgets)
+library(tidyverse)
+library(plotly)
+library(tidyverse)
+library(ggdendro)
+library(knitr)
+
+```
+
+## Player data apis (Python!)
+
+```{r}
+# width="480" height="270"
+```
+
+<iframe src="https://giphy.com/embed/26xBJxMEGnfzEzWjS" width="960" height="516" frameBorder="0" class="giphy-embed" allowFullScreen>
+
+</iframe>
+
+<p><a href="https://giphy.com/gifs/pbs-meerkat-26xBJxMEGnfzEzWjS">via GIPHY</a></p>
+
+------------------------------------------------------------------------
+
+Tools to extract Super Metroid speed runners' data
+
+### splits.io
+
+```{python, echo=TRUE}
+# splits.io 
+# time-series Super Metroid speed runner observations
+# pip install splitsio
+import splitsio
+```
+
+Mange tak to maintainer [`@jeremander`](https://github.com/jeremander/splitsio) for assistance with `splitsio`.
+
+### speedrun.com
+
+```{python, echo=TRUE}
+# speedrun.com 
+# most popular leaderboard for total run times
+# pip install srcomapi
+import srcomapi 
+```
+
+------------------------------------------------------------------------
+
+But what about the other players?
+
+```{python, eval=FALSE, echo=TRUE}
+
+src_api = srcomapi.SpeedrunCom(); src_api.debug = 1
+src_api.search(srcomapi.datatypes.Game, {"name": "super metroid"})
+game = _[0]
+
+```
+
+This slide is from `splitsio`'s README.
+
+```{python, eval=FALSE, echo=TRUE}
+
+src_runs = {}
+for category in game.categories:
+  if not category.name in src_runs:
+    src_runs[category.name] = {}
+  if category.type == 'per-level':
+    for level in game.levels:
+      src_runs[category.name][level.name] = 
+        dt.Leaderboard(api,
+        data=src_api.get(
+          "leaderboards/{}/level/{}/{}?embed=variables".format(
+            game.id, level.id, category.id)))
+  else:
+    src_runs[category.name] = dt.Leaderboard(api, data=
+      (src_api.get("leaderboards/{}/category/{}?embed=variables"
+        .format(game.id, category.id))))
+```
+
+------------------------------------------------------------------------
+
+Hacking the data
+
+::: panel-tabset
+### runs
+
+```{python, eval=FALSE, echo=TRUE}
+### 100% Super Metroid leaderboard
+### speedrun.com
+
+leaderboard = src_runs['100%']
+
+# display keys of dictionary
+leaderboard.__dict__.keys()
+
+# get the data as a nested dictionary
+leaderboard_data = leaderboard.__dict__['data']
+runs = leaderboard_data['runs']
+
+```
+
+### dicts
+
+```{python, echo=TRUE, eval=FALSE}
+# hacking the data as best I can
+
+# get list of nested dictionaries of runs
+sio_run_dicts = [sio_runs[x].to_dict() for x in range(len(sio_runs))]
+```
+
+### df
+
+I was this project old when I learnt about list comprehension.
+
+```{python, echo=TRUE, eval=FALSE}
+# extract list of nested dictionaries into a tidy dataframe
+# one row represents one run recorded by one speed runner
+
+n_obs = len(src_runs)
+
+# extract elements with list comprehension
+src_run_df = pd.DataFrame({
+  'run_id' : [src_runs[x]['run']['id'] for x in range(n_obs)],
+  # need to inspect what happens to historical ranking
+  'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
+  't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
+  'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
+  'player' : [(pd.DataFrame(src_runs[x]['run']['players'])
+    .iloc[0,1]) for x in range(n_obs)]
+})
+
+```
+
+### pkg dat
+
+::: columns
+::: {.column width="50%"}
+Save data
+
+```{r eval=FALSE, echo=TRUE}
+usethis::use_data(
+  "src_run_df")
+# doc R/src_run_df.R
+devtools::document()
+devtools::build()
+```
+:::
+
+::: {.column width="50%"}
+Load data
+
+```{r echo=TRUE}
+data("src_run_df")
+
+# speedrun.com 
+# leaderboard df
+src_run_df %>% 
+  head()
+
+```
+:::
+:::
+:::
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+### ui
+
+```{r echo=TRUE}
+# raincloud x-axis limits
+raincloud_xmin <- 
+  round(min(src_run_df$t_s)/60/60,2)
+raincloud_xmax <- 
+  round(max(src_run_df$t_s)/60/60,2)
+
+# slider styling
+chooseSliderSkin("Simple", 
+                 color=sm_cols$orange)
+
+# slider
+raincloud_slider <- 
+  sliderInput(
+    inputId = "runs_raincloud_lims",
+    label = "Set range of run times inspected",
+    value = c(raincloud_xmin,
+              raincloud_xmax),
+    min = raincloud_xmin,
+    max = raincloud_xmax
+  )
+
+```
+
+### server
+
+```{r echo=TRUE}
+#| echo: true # this doesn't work, doesn't display
+#| context: server
+output$all_run_raincloud <- renderPlot({
+  
+  # load supermetroid
+  library(supermetroid)
+  
+  # load speedrun.com leaderboard data
+  data("src_run_df")
+  
+  # generate raincloud plot
+  supermetroid::all_run_raincloud(
+    xmin = input$runs_raincloud_lims[1],
+    xmax = input$runs_raincloud_lims[2],
+    base_size = 25
+  )
+})
+
+```
+
+```{r eval=FALSE, echo=TRUE}
+output$all_run_raincloud <- renderPlot({
+  
+  # load supermetroid
+  library(supermetroid)
+  
+  # load speedrun.com leaderboard data
+  data("src_run_df")
+  
+  # generate raincloud plot
+  supermetroid::all_run_raincloud(
+    xmin = input$runs_raincloud_lims[1],
+    xmax = input$runs_raincloud_lims[2],
+    base_size = 25
+  )
+})
+
+```
+
+```{r echo=TRUE, eval=FALSE}
+#| output-location: slide
+raincloud_ui
+#| output-location: slide
+plotOutput("all_run_raincloud")
+
+```
+:::
+
+------------------------------------------------------------------------
+
+::: columns
+::: {.column width="70%"}
+```{r}
+raincloud_ui
+
+```
+:::
+
+::: {.column width="30%"}
+```{r}
+plotOutput("all_run_raincloud")
+
+
+```
+:::
+:::
+
+# Splits & game events
+
+-   [ ] import and wrangle data
+-   [ ] port to function when functional
+-   [ ] turn into dashboard
+-   [ ] slider for y
+
+```{r all splits, eval=FALSE}
+cum_t_ylim <- range(sio_df$realtime_end_ms)
+
+# slider
+cum_t_slider <- 
+  sliderInput(
+    inputId = "realtime_lims",
+    label = "Set realtime completion (y-axis) range",
+    value = c(cum_t_ylim[1],
+              cum_t_ylim[1]),
+    min = cum_t_ylim[1],
+    max = cum_t_ylim[1]
+  )
+
+
+cum_t_route_vis()
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+# Coda
+
+## How was this presentation made?
+
+### On GitHub
+
+The source `.qmd` for this presentation, and associated files can be found at [todo link]()
+
+### Shiny Documents
+
+> This Quarto document is made interactive using Shiny. Interactive documents allow readers to modify parameters and see the results immediately. Learn more about Shiny interactive documents at <https://quarto.org/docs/interactive/shiny/> (from the .qmd template).
+
+# I'm unemployed! Tell your friends :)
+
+## Looking for
+
+Mid-level data science positions in ML, EDA, and modelling.
+
+### Priorities
+
+-   Copenahgen
+-   Data science
+-   Swing dancing
+
+### Hard no
+
+-   Most-senior data scientist at organisation

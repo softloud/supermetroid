@@ -1,0 +1,181 @@
+---
+title: "route-matching"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{route-matching}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup,message=FALSE}
+library(supermetroid)
+library(tidyverse)
+
+set.seed(306)
+
+```
+
+# Identify number of routes
+
+```{r out.width="80%"}
+knitr::include_graphics("route_math.jpg")
+```
+
+
+```{r}
+# get routes
+run_routes <- 
+  sio_df %>% 
+    # ensure data is arranged by run, ordered by segment time
+    arrange(run_id, realtime_end_ms) %>% 
+    # why is player name a list?
+    mutate(player_name = as.character(player_name)) %>% 
+    # filter to common splits shared by players
+    filter(!is.na(supermetroid_label)) %>%
+    select(player_name, supermetroid_label, run_id) %>% 
+    group_by(run_id) %>% 
+    # create a list-column of label dataframes
+    nest(data = supermetroid_label) %>% 
+    rename(route = data) 
+
+head(run_routes)
+
+# get distinct routes and their corresponding run_ids
+distinct_routes <-
+  run_routes %>%
+  group_by(route) %>% 
+  nest(.key = "run_id") %>% 
+  ungroup() %>% 
+  mutate(route_id = paste("route ", 1:n())) %>% 
+  select(route_id, route, run_id)
+
+
+head(distinct_routes)
+
+```
+
+In these data we have `r nrow(run_routes)` runs that use `r nrow(distinct_routes)` routes, but subroutes are considered separate routes. Which isn't quite what I want, i.e., a route containing a single label is considered distinct from every other route that it is a label from.  
+
+We want to know the number of classes of route, that contain every subroute. Single labels can't be considered (except via classification, I'm thinking some kind of centroid thing). 
+
+- [ ] todo single label analysis to classify by routes
+
+But here we are to do the easy routes, i.e., route = a,b,d, should be considered the same as route a,b,c,d, instead of different, which the `r nrow(distinct_routes)` routes counts. So, how many actual routes are represented, and how many runs can we not classify?
+
+```{r}
+viable_routes <-
+  # filter out routes of length 1
+  distinct_routes %>% 
+  mutate(route_length = map_int(route, nrow)) %>% 
+  filter(route_length > 1) %>% 
+  ungroup()
+
+head(viable_routes)
+```
+
+Filtering by routes greater than 1, we have `r nrow(viable_routes)` different routes and subroutes.
+
+## Identifying if one route is a subset and same permutation of another
+
+We want to compare two arbitrary routes, $r_1$ and $r_2$, and ask is $r_1$ a subroute of $r_2$? 
+
+Choose two routes. We know that two runs with routes the same size and with the same size are already collapsed by the `nest`.  
+
+```{r}
+(two_routes <-
+  viable_routes %>% 
+  sample_n(2))
+
+```
+
+Now assign the first of the longest route to primary route, and the other route to the possible subroute of the comparison route. 
+
+```{r}
+
+(comparison_route <- two_routes %>% 
+  filter(route_length == max(route_length)) %>% 
+  head(1) %>% 
+  pull(route_id))
+
+(possible_subroute <- two_routes %>% 
+  filter(route != comparison_route) %>% 
+  pull(route_id))
+
+```
+
+
+If the two routes are the same length, but in a different order, they are considered distinct routes, that is, $r_1$ is not a subroute of $r_2$.
+
+```{r}
+# check if the two routes are the same length
+two_routes$route_length[1] == two_routes$route_length[2]
+
+```
+
+Since the routes are not of the same length, we need to check if $r_1$, that is `possible_subroute` is a subroute of $r_2$, `comparison_route`. 
+
+Let's inspect the routes.
+
+```{r}
+two_routes %>% pull(route)
+```
+
+## Check if routes are in the same order
+
+```{r}
+# figure out comparable ordering of routes
+
+pivoted_routes <- 
+  two_routes %>% 
+    arrange(desc(route_length)) %>% 
+    unnest(route) %>% 
+    select(route_id, supermetroid_label) %>% 
+    group_by(route_id) %>% 
+    mutate(route_order = 1:n()) %>% 
+    mutate(route_label = if_else(route_id == comparison_route, 
+                                 "comparison_route", "possible_subroute")) %>%
+    ungroup() %>% 
+    select(-route_id) %>% 
+    pivot_wider(names_from = route_label, values_from = route_order)
+
+# inspect
+pivoted_routes
+
+# now filter for overlapping events
+compared_routes <- pivoted_routes %>% 
+    # filter 
+    filter(!is.na(comparison_route) & !is.na(possible_subroute)) %>% 
+    # arrange by possible subroute 
+    arrange(possible_subroute) %>% 
+    # and assign order
+    mutate(possible_order = 1:n()) %>% 
+    # arrange by comparison route order
+    arrange(comparison_route) %>% 
+    mutate(comparison_order = 1:n(),
+           order_eq = possible_order == comparison_order)
+
+# inspect
+compared_routes
+
+
+# now check to see if they're all true
+all(pivoted_routes$order_eq)
+
+# check to see if all elements of possible subroute are in compared route
+# otherwise, could match one to many for route classes
+
+
+```
+
+Now we know if they have the same overlapping subroutes, and if `possible_subroute`
+
+```{r out.width="80%"}
+knitr::include_graphics("route_many_to_one.jpg")
+```

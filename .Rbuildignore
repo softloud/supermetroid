@@ -3,3 +3,8 @@
 ^data-raw$
 ^img$
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
+^talks$

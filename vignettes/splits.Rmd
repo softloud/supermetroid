@@ -1,0 +1,532 @@
+---
+title: "splits"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{splits}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  error=TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 8,
+  fig.align = 'center'
+)
+```
+
+```{r setup, message=FALSE}
+library(supermetroid)
+library(tidyverse)
+library(gt)
+
+```
+
+## This document updates splitsio df for the analysis
+
+## Get segment labels
+
+Splits, or segments, measure at what time a game event happens, and how long a player took to get there from their previous segment. 
+
+### Unique split id?
+
+Although segments are chosen by a program, so far we've only found the player labels for each split or segment. Players can define their own segments and labels, too, so we don't want to confuse those points with others. 
+
+On the other hand we don't want to keep `bomb` and throw out all the `bombs` with the bathwater. 
+
+```{r}
+labels_dat <- 
+  # pull columns for this analysis from splits data
+  sio_splits_df %>% 
+  select(player_name, game_event, name, segment_number, run_id, player_id) %>% 
+  mutate(
+    # create a lower-case label 
+    label = tolower(game_event)
+    )
+labels_dat %>% head()
+
+```
+
+
+## Most common labels
+
+```{r}
+label_counts <- 
+labels_dat %>% 
+  mutate(
+    starts_with = str_sub(label, 1, 1)
+  ) %>% 
+  count(starts_with, label) %>% 
+  arrange(starts_with, desc(n))
+
+```
+
+```{r}
+label_counts %>% 
+  ungroup() %>% 
+  select(-starts_with) %>%  
+  arrange(desc(n)) %>% 
+  head(30) %>% 
+  gt()
+
+```
+
+
+```{r eval=FALSE}
+
+# write labels to sheet for labelling 
+# https://docs.google.com/spreadsheets/d/1FRHsS7WQvVhI5_yP-twHCJW2YRJRbeKg4P42EY3Jzrk/edit#gid=1079532092
+
+
+write_csv(label_counts, "data-raw/sio-label-counts.csv")
+
+relabels <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1FRHsS7WQvVhI5_yP-twHCJW2YRJRbeKg4P42EY3Jzrk/edit#gid=1079532092")
+
+write_csv(relabels, "data-raw/sio-relabels.csv")
+
+```
+
+## Add labels
+
+```{r}
+relabels <- read_csv("data-raw/sio-relabels.csv") %>% 
+  select(label, supermetroid_label) %>% 
+  distinct()
+
+```
+
+```{r}
+
+sio_relabelled <- 
+sio_splits_df %>% 
+  mutate(
+    label = tolower(game_event)
+  ) %>% 
+  left_join(relabels, by = "label")
+
+
+```
+
+
+
+```{r}
+# check out counts now
+sio_relabelled %>% 
+  ungroup() %>% 
+  count(supermetroid_label) %>% 
+  arrange(desc(n)) %>% 
+  head(30) %>% 
+  gt()
+
+```
+
+```{r}
+sio_df <- sio_relabelled %>% 
+  select(-name) %>% 
+  select(supermetroid_label, everything(), split_player = label)
+
+sio_df %>% head()
+
+```
+
+```{r eval=FALSE}
+usethis::use_data(sio_df)
+
+```
+
+
+## What routes do people take?
+
+```{r}
+routes_raw <- 
+sio_df %>% 
+  select(supermetroid_label, player_name, split_order = segment_number, realtime_end_ms, run_id, player_id) %>% 
+  # get just the universal splits
+  filter(!is.na(supermetroid_label))
+
+
+```
+
+
+```{r}
+splits_orders <- 
+routes_raw %>% 
+  select(supermetroid_label, split_order, run_id)
+
+nested_splits <- 
+splits_orders %>% 
+  arrange(run_id, split_order) %>% 
+  select(-split_order) %>% 
+  group_by(run_id) %>% 
+  nest(splits = supermetroid_label) %>% 
+  ungroup() %>% 
+  group_by(splits) %>% 
+  nest(runs = run_id) %>% 
+  ungroup() %>% 
+  mutate(
+    route_length = map_int(splits, nrow),
+    route_id = str_c("route ", 1:n())
+  ) %>% 
+  arrange(desc(route_length))
+  
+nested_splits %>%
+  head() %>% 
+  gt()
+
+```
+
+
+
+```{r}
+anatomecha_splits <-
+  # get standard order
+  sio_df %>%
+  filter(player_name == "anatomecha",!is.na(supermetroid_label)) %>%
+  arrange(segment_number) %>%
+  # should really filter to last date
+  # will need to fix this when there's more than one anatomecha run
+  select(supermetroid_label) %>%
+  mutate(split_anatomecha = 1:n())
+
+levels(sio_df$split) <- anatomecha_splits$split
+
+
+```
+
+```{r eval=FALSE}
+
+usethis::use_data(anatomecha_splits)
+
+```
+
+
+
+```{r}
+routes <- 
+nested_splits %>%
+  # head() %>% 
+  mutate(event = map(splits, \(df) left_join(df, anatomecha_splits, by = "supermetroid_label")),
+         route_anatomecha = map(event, \(df) df %>% filter(!is.na(split_anatomecha)) %>%  pull(split_anatomecha)),
+         route_standard = map_lgl(route_anatomecha,
+                                  \(x) all(sort(x) == x))
+         )
+
+ 
+
+```
+
+
+
+## time vs cumulative time by splits
+
+
+```{r}
+# dashboard this for y axis
+# dashboard this for x axis, too selector tool with tick boxes, select all, clear
+
+# plot <- 
+  sio_df %>% 
+  left_join(anatomecha_splits, by = "supermetroid_label") %>% 
+  filter(!is.na(supermetroid_label)) %>% 
+  mutate(split_anatomecha = as_factor(split_anatomecha),
+         t_h = realtime_end_ms/1000/60
+         ) %>% 
+  ggplot(aes(x = split_anatomecha, y = t_h, group=run_id)) +
+  geom_line(colour=sm_cols$orange, alpha = 0.2) +
+  geom_point(colour=sm_cols$orange, alpha = 0.2) +
+  theme_sm(base_size = 30) +
+  labs(
+    title = "Players take different routes",
+    subtitle = "Real time completion of each game event would be 
+      always increasing if all players took the same route as anatomecha" %>% str_wrap(60),
+    x = "Game event (loot, boss, etc.)" %>% str_wrap(12),
+    y = "Real time completion (minutes)" %>% str_wrap(20),
+    caption = "splits.io"
+  ) +
+  theme(
+    axis.text.x = element_text(angle=90)
+  ) +
+  scale_x_discrete(labels=c("start", anatomecha_splits$supermetroid_label)) +
+  facet_grid(route_standard ~. ) 
+
+# ggplotly(plot)
+
+
+```
+
+```{r}
+# selected_split <- "ice beam" 
+selected_split <- "ice beam"# sample(anatomecha_splits$supermetroid_label, 1)
+rank <- c(1,25)
+
+#xlim <- c(0.8, 1.2)
+
+plt_dat <- 
+  sio_df %>% 
+  left_join(anatomecha_splits, by = "supermetroid_label") %>% 
+  filter(!is.na(supermetroid_label)) %>% 
+  mutate(split_anatomecha = as_factor(split_anatomecha),
+         t_h = realtime_end_ms/1000/60/60
+         ) %>% 
+  filter(t_h < 3) 
+
+plt_dat %>% 
+  ggplot(aes(x = t_h, y = run_id)) +
+  geom_line(colour=sm_cols$teal, alpha=0.2) +
+  geom_point(colour=sm_cols$teal, alpha=0.3) +
+  geom_point(colour=sm_cols$orange,
+             data=plt_dat %>% filter(split == selected_split),
+             size=2,
+             alpha = 0.5
+             ) +
+  geom_point(colour="deepskyblue3",
+             data=plt_dat %>% filter(split == selected_split, 
+                                     player_name == "anatomecha"),
+             size=3) +
+  theme_sm(base_size = 40) +
+  labs(
+    title = "Time of split in each run",
+    subtitle = sprintf("Split: %s", selected_split),
+    x = "Time (hrs)",
+    y = "Run",
+    caption="anatomecha is the pale blue dot"
+  ) +
+  theme(
+    axis.text.y = element_blank()
+  )
+
+# +
+#   xlim(xlim[1], xlim[2])
+
+
+
+```
+
+# Towards the best route 
+
+## identifying clusters
+
+### Try [knn](https://stats.stackexchange.com/questions/318968/knn-and-k-folding-in-r)
+
+Wide-form array: 
+  - columns as events 
+  - rows as routes 
+  - values as mean event time 
+
+I think this should work on individual observations. 
+
+1. Get an array of segments
+2. Set an n-fold cross validation
+3. Evaluated the accuracy of the KNn classifer with different values of k by cross validation
+
+```{r}
+# get an array of segments
+```
+
+```{r}
+```
+
+
+
+## identifying clusters
+
+Try taking the mean value of each event of each route, then imputing the missing values from local means. How to impute via local mean? That is, need to impute, conditional on the other values in the array. Need to read about imputation. Perhaps I should just write my own imputation, I think I could calculate that. Then apply hierarchical clustering to find out which. 
+
+
+```{r}
+# create wideform array
+routes_wide <- 
+  routes_raw %>% 
+    rename(game_event = supermetroid_label) %>% 
+    group_by(run_id) %>% 
+    filter(realtime_end_ms == max(realtime_end_ms),
+           game_event %in% anatomecha_splits$supermetroid_label
+           ) %>% 
+    ungroup() %>% 
+    distinct() %>% 
+    # dplyr::group_by(run_id, game_event) %>%
+    # dplyr::summarise(n = dplyr::n(), .groups = "drop") %>%
+    # dplyr::filter(n > 1L) 
+    pivot_wider(id_cols = "run_id", 
+                names_from = "game_event", 
+                values_from = "realtime_end_ms") 
+
+  
+```
+
+
+```{r}
+library(caret)
+
+trControl <- trainControl(method  = "cv",
+                          number  = 5)
+
+
+fit <- train(supermetroid_label ~ realtime_end_ms,
+             method     = "knn",
+             tuneGrid   = expand.grid(k = 1:10),
+             trControl  = trControl,
+             metric     = "Accuracy",
+             data       = routes_raw)
+
+
+```
+
+```{r}
+routes_wide <- 
+routes %>% 
+  select(route_id, runs) %>% 
+  unnest(runs) %>% 
+  left_join(sio_df %>% 
+              filter(split %in% anatomecha_splits$supermetroid_label) %>% 
+              select(run_id,
+                     realtime_end_ms, split) %>% 
+              group_by(run_id, split) %>% 
+              filter(realtime_end_ms==max(realtime_end_ms)), 
+            by = "run_id") %>% 
+  group_by(route_id, run_id) %>% 
+  # 0 entries must be corrupt?
+  filter(realtime_end_ms != 0) %>% 
+  pivot_wider(names_from = "split", values_from = "realtime_end_ms") %>% 
+  janitor::clean_names()
+
+```
+
+```{r}
+
+
+
+
+library(caret)
+
+preProcValues <-
+  preProcess(routes_wide %>% ungroup() %>% select(-c(run_id, route_id)))
+
+trControl <- trainControl(method  = "cv",
+                          number  = 5)
+
+# routes_wide %>% names() %>% paste(collapse ="+") %>%  cat()
+fit <-
+  train(
+    route_id ~ morph_ball + bombs +
+      charge_beam + varia_suit + speed_booster +
+      wave_beam + grapple_beam + ice_beam + gravity_suit +
+      space_jump + spring_ball +
+      plasma_beam + screw_attack + spazer +
+      hi_jump_boots + phantoon + draygon +
+      ridley + kraid + x_ray + mother_brain + escape,
+    method     = "knn",
+    tuneGrid   = expand.grid(k = 1:10),
+    trControl  = trControl,
+    metric     = "Accuracy",
+    data       = routes_wide
+  )
+
+
+predict(preProcValues)
+
+
+```
+
+
+```{r}
+ice_beam <- 
+routes_wide %>% 
+  select(route_id, route_id, ice_beam) %>% 
+  group_by(route_id) %>% 
+  summarise(
+    ice_beam = mean(ice_beam)
+  ) %>% 
+  ungroup() %>% 
+  filter(!is.na(ice_beam)) 
+
+clusters <- dist(ice_beam) %>% hclust()
+
+plot(clusters, labels = ice_beam$route_id)
+
+
+
+```
+
+```{r}
+library(ggdendro)
+
+ggdendrogram(clusters)
+
+# fuckit write csv
+write_csv(routes_wide, "dev/routes_wide.csv")
+
+```
+
+
+```{python}
+import numpy as np
+from sklearn.impute import KNNImputer
+
+routes_wide = pd.read_csv("dev/routes_wide.csv")
+
+imputer = KNNImputer()
+
+df_knn_imputed = pd.DataFrame(imputer.fit_transform(routes_wide.drop(columns = ['run_id', 'route_id'])))
+
+```
+
+```{r}
+# set up df of imputed data in R
+x_event = py$df_knn_imputed
+
+colnames(x_event) <- routes_wide %>% ungroup() %>%  select(-c(route_id, run_id)) %>% colnames()
+
+routes_imputed = 
+  routes_wide %>% select(route_id, run_id) %>% bind_cols(x_event)
+
+
+```
+
+
+```{r}
+
+# try using caret to do knn classification
+
+routes_imputed %>% View()
+
+routes_scaled <- 
+  routes_imputed %>%  
+    ungroup() %>% 
+    select(-c(route_id, run_id)) %>% 
+    mutate(across(everything(), scale)) %>% 
+  bind_cols(routes_imputed %>% select(route_id, run_id)) %>% 
+  select(route_id, run_id, everything())
+
+# https://rpubs.com/pmtam/knn
+
+# Run algorithms using 10-fold cross validation
+trainControl <- trainControl(method="repeatedcv", number=10, repeats=3)
+metric <- "Accuracy"
+
+grid <- expand.grid(.k=seq(1,20,by=1))
+
+fit.knn <- train(route_id  # ~ ice_beam,
+                 ~ # run_id 
+                   + morph_ball + bombs +
+      charge_beam + varia_suit + speed_booster +
+      wave_beam + grapple_beam + ice_beam + gravity_suit +
+      space_jump + spring_ball +
+      plasma_beam + screw_attack + spazer +
+      hi_jump_boots + phantoon + draygon +
+      ridley + kraid + x_ray + mother_brain + escape, 
+      data=routes_scaled %>% select(-run_id), method="knn",
+                 metric=metric ,trControl=trainControl, tuneGrid=grid)
+
+
+knn.k1 <- fit.knn$bestTune # keep this Initial k for testing with knn() function in next section
+print(fit.knn)
+
+
+```
+
