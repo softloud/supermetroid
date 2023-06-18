@@ -20,8 +20,10 @@
 
 #' Speedrun.com leaderboard smdata
 #'
+#' Player and run data joined. See src vignette.
+#'
 #' @family smdata
-"src_run_df"
+"src_df"
 
 #' Distinct routes
 #'

@@ -24,6 +24,8 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/data-schema.html">data-schema</a>
+    <a class="dropdown-item" href="../articles/player-rank.html">player-rank</a>
     <a class="dropdown-item" href="../articles/route-graph.html">route-graph</a>
     <a class="dropdown-item" href="../articles/route-matching.html">route-matching</a>
     <a class="dropdown-item" href="../articles/sio.html">sio</a>
@@ -54,29 +56,29 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">all_run_raincloud</span><span class="op">(</span></span>
 <span>  run_df <span class="op">=</span> <span class="va">src_run_df</span>,</span>
-<span>  xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">src_run_df</span><span class="op">$</span><span class="va">t_s</span><span class="op">)</span>,</span>
-<span>  xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">src_run_df</span><span class="op">$</span><span class="va">t_s</span><span class="op">)</span>,</span>
-<span>  base_size <span class="op">=</span> <span class="fl">15</span>,</span>
-<span>  source <span class="op">=</span> <span class="st">"speedrun.com"</span></span>
+<span>  xmin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">src_run_df</span><span class="op">$</span><span class="va">t_s</span><span class="op">)</span><span class="op">/</span><span class="fl">60</span>,</span>
+<span>  xmax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">src_run_df</span><span class="op">$</span><span class="va">t_s</span><span class="op">)</span><span class="op">/</span><span class="fl">60</span>,</span>
+<span>  base_size <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  source <span class="op">=</span> <span class="st">"speedrun.com via srcomapi"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>run_df</dt>
-<dd><p>Dataframe of column of run times <code>t_s</code> in seconds</p></dd>
+<dd><p>Dataframe of column of run times in seconds.</p></dd>
 
 
 <dt>xmin</dt>
-<dd><p>Set limits of x axis (for shiny slider input)</p></dd>
+<dd><p>Set limits of x axis, for shiny slider input, in minutes.</p></dd>
 
 
 <dt>xmax</dt>
-<dd><p>Set max of x axis (shiny slider)</p></dd>
+<dd><p>Set max of x axis, shiny slider, in minutes.</p></dd>
 
 
 <dt>base_size</dt>
-<dd><p>For theme_minimal</p></dd>
+<dd><p>For theme minimal</p></dd>
 
 
 <dt>source</dt>

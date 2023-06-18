@@ -18,3 +18,7 @@ can update them.
 ### Old data, probably should delete
 
 splitio-io.*.json attempts to use curl, but were curtailed to 25?
+
+### src vignette
+
+

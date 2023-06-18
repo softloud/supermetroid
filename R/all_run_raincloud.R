@@ -1,21 +1,21 @@
 #' Raincloud plot of speedrun.com run times
 #'
-#' @param run_df Dataframe of column of run times `t_s` in seconds
-#' @param xmin Set limits of x axis (for shiny slider input)
-#' @param xmax Set max of x axis (shiny slider)
-#' @param base_size For theme_minimal
+#' @param run_df Dataframe of column of run times in seconds.
+#' @param xmin Set limits of x axis, for shiny slider input, in minutes.
+#' @param xmax Set max of x axis, shiny slider, in minutes.
+#' @param base_size For theme minimal
 #' @param source Caption provenance
 #'
 #' @export
 
 all_run_raincloud <- function(run_df = src_run_df,
-                              xmin = min(src_run_df$t_s),
-                              xmax = max(src_run_df$t_s),
-                              base_size = 15,
-                              source = "speedrun.com") {
+                              xmin = min(src_run_df$t_s) / 60,
+                              xmax = max(src_run_df$t_s) / 60,
+                              base_size = 20,
+                              source = "speedrun.com via srcomapi") {
   run_df %>%
     # convert milliseconds to hours, for now
-    dplyr::mutate(t_m = t_s / 60 / 60) %>%
+    dplyr::mutate(t_m = t_s / 60) %>%
 
     # exclude runs > 3 hours
 
@@ -64,9 +64,9 @@ all_run_raincloud <- function(run_df = src_run_df,
 
     ggplot2::labs(
       title = "Super Metroid 100% speed run times" %>%
-        stringr::str_wrap(40),
+        stringr::str_wrap(base_size * 2),
       subtitle = "Duration of speedrun distribution",
-      y = "time (hrs)",
+      y = "Time (minutes)",
       x = '',
       caption = source
     ) +

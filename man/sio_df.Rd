@@ -17,7 +17,7 @@ smdata included in the supermetroid package.
 Other smdata: 
 \code{\link{anatomecha_splits}},
 \code{\link{distinct_routes}},
-\code{\link{src_run_df}}
+\code{\link{src_df}()}
 }
 \concept{smdata}
 \concept{smdata

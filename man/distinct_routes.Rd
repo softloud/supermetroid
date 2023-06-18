@@ -17,7 +17,7 @@ Used in route-graph and route-matching vignettes
 Other smdata: 
 \code{\link{anatomecha_splits}},
 \code{\link{sio_df}},
-\code{\link{src_run_df}}
+\code{\link{src_df}()}
 }
 \concept{smdata}
 \keyword{datasets}

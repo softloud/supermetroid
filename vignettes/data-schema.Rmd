@@ -1,0 +1,142 @@
+---
+title: "data-schema"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{data-schema}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(supermetroid)
+library(gt)
+library(tidyverse)
+
+```
+
+
+
+# Getting the data
+
+## Sources
+
+There are several sites where players upload Super Metroid speed running data.
+
+site | api | description (why we're interested, these assumptions should be checked) | runs | players
+- | - | - 
+[speedrun](https://www.speedrun.com/supermetroid?h=Any&x=9d8v96lk)| [python](https://github.com/blha303/srcomapi)(how to get historical?) & [curl](https://github.com/glacials/splits-io/blob/master/docs/api.md) | most complete list of speed runs
+[splitio](https://splits.io/) | [python](https://github.com/splitio/python-api) | by-segment times for each run, but for a smaller number of runners than speedrun.com
+[deertier](https://deertier.com/) | there is an api, but I think we can get everything we need with `rvest` | super metroid game-specific speed running site 
+
+```{r}
+
+tribble(
+  ~source, ~runs, ~players,
+  "speedrun.com", nrow(src_run_df), NA,
+  "splits.io", NA, NA,
+  "deertier", NA, NA
+) %>% 
+  gt()
+
+```
+
+
+
+## Desired output: `ggplot`-friendly/tidy data
+
+Dataframes that describe runs, runners, and, eventually, categories. Ideally, aggregated across the datasets. 
+
+However, this will results in missing data, so specific analyses need to take that into account, or use source-specific datasets from the aggregated set with caveats. Linking ids are in italics.
+
+Either way, we need to know what we have in each dataset, and have a universal schema across datasets.
+
+### Runs 
+
+Each row describes one speed run; a player may have multiple runs in a database. 
+
+run_df | description 
+- | - 
+date | timestamp of run upload
+*run_id* | unique identifier of run
+run_time | total time of run in s or ms
+*player_id* | unique identifier of player
+rank | rank of player
+
+To build a speed run leaderboard across datasets, we'd need to do some fancy engineering, so we will focus on source-specific analyses for now. Each leaderboard comprises runs.
+
+run_df | description 
+- | - 
+date | timestamp of run upload
+*run_id* | unique identifier of run
+run_time | total time of run in s or ms
+*player_id* | unique identifier of player
+rank | rank of player
+*src_id* | speedrun.com id
+*sio_id* | splits.io id
+*deertier_id* | deertier id
+historical | if a historical ranking, need to inspect data to see how this should be recorded, possibly a bool, or putting NA in rank   
+
+### Location of players on speedrun.com
+
+player_df | description
+- | -
+*player_id* | unique identifier of player
+player_handle | human-readable **unique** tag
+location | geographic location of player
+
+### Segments for each run from splitsio
+
+segment_df | description
+- | - 
+*run_id* | unique identifier of run
+segment_id | unique identifier of segment
+t_s | time in seconds, measured to millisecond precision
+
+# Import pkg & helper functions
+
+```{python py pkg}
+import srcomapi, srcomapi.datatypes as dt
+import pandas as pd
+import pickle
+import splitsio
+
+```
+
+```{r r pkg, message=FALSE}
+library(tidyquant)
+library(ggdist) # for rainclouds
+library(reticulate) # Python <-> R
+
+# load r functions for this analysis
+library(supermetroid)
+
+
+```
+
+
+```{python, eval=FALSE}
+# helper function: saving an anonymous object in python 
+# https://stackoverflow.com/questions/4529815/saving-an-object-data-persistence
+
+def save_object(obj, filename):
+    with open(filename, 'wb') as outp:  # Overwrites any existing file.
+        pickle.dump(obj, outp, pickle.HIGHEST_PROTOCOL)
+
+```
+
+
+
+# deertier
+
+- [ ] port code 
+
+# speedrunslive
+
+Have enough from `splitsio` and `srdcom` for analyses.

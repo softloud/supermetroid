@@ -2,8 +2,10 @@ import srcomapi, srcomsrc_api.datatypes as dt
 import pickle
 
 
-# call api
+# this code from
+# https://github.com/blha303/srcomapi
 
+# call api
 src_api = srcomapi.SpeedrunCom(); src_api.debug = 1
 
 # It's recommended to cache the game ID and use it for future requests.
@@ -13,13 +15,7 @@ src_api = srcomapi.SpeedrunCom(); src_api.debug = 1
 src_api.search(srcomapi.datatypes.Game, {"name": "super metroid"})
 
 # can we add a historical == true to this?
-
 game = _[0]
-
-# Unfortunately, couldn't save game object with pickle, was too nested, 
-# had to move the save object down to where the many-level-deep dictionary was
-
-# https://github.com/blha303/srcomapi#getting-a-dict-containing-all-runs-from-a-game
 
 src_runs = {}
 for category in game.categories:

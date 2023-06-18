@@ -4,7 +4,19 @@
     <loc>https://softloud.github.io/supermetroid/404.html</loc>
   </url>
   <url>
+    <loc>https://softloud.github.io/supermetroid/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://softloud.github.io/supermetroid/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://softloud.github.io/supermetroid/articles/data-schema.html</loc>
+  </url>
+  <url>
     <loc>https://softloud.github.io/supermetroid/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://softloud.github.io/supermetroid/articles/player-rank.html</loc>
   </url>
   <url>
     <loc>https://softloud.github.io/supermetroid/articles/route-graph.html</loc>
@@ -56,6 +68,9 @@
   </url>
   <url>
     <loc>https://softloud.github.io/supermetroid/reference/sm_cols_look.html</loc>
+  </url>
+  <url>
+    <loc>https://softloud.github.io/supermetroid/reference/src_df.html</loc>
   </url>
   <url>
     <loc>https://softloud.github.io/supermetroid/reference/src_run_df.html</loc>

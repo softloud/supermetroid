@@ -17,7 +17,7 @@ See vignette splits
 Other smdata: 
 \code{\link{distinct_routes}},
 \code{\link{sio_df}},
-\code{\link{src_run_df}}
+\code{\link{src_df}()}
 }
 \concept{smdata}
 \keyword{datasets}

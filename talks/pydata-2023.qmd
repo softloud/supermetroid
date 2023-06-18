@@ -414,11 +414,17 @@ cum_t_route_vis()
 
 ### All-important colour palette
 
+```{r}
+knitr::include_graphics("https://i.stack.imgur.com/MzYzZ.jpg")
+```
+
+
+### All-important colour palette
+
 ```{r echo=TRUE}
 sm_cols_look()
 
 ```
-
 
 ## On GitHub
 
@@ -428,15 +434,15 @@ The source `.qmd` for this presentation, and associated files can be found at [t
 
 > This Quarto document is made interactive using Shiny. Interactive documents allow readers to modify parameters and see the results immediately. Learn more about Shiny interactive documents at <https://quarto.org/docs/interactive/shiny/> (from the .qmd template).
 
-# I'm looking for a data science position in Copenhagen 
+# I'm looking for a data science position in Copenhagen
 
 ## Looking for
 
-Mid-level data science positions in ML, EDA, and modelling. 
+Mid-level data science positions in ML, exploratoray data analysis, and modelling.
 
 ### Priorities
 
--   Copenahgen
+-   Copenhagen
 -   Data science
 -   Swing dancing
 

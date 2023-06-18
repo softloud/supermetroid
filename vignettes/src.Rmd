@@ -1,6 +1,8 @@
 ---
 title: "src"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{src}
   %\VignetteEngine{knitr::rmarkdown}
@@ -10,10 +12,391 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  error=TRUE,
+  warning=FALSE,
+  eval=FALSE,
+  fig.width = 8,
+  fig.height = 6
 )
 ```
 
-```{r setup}
+
+```{r setup, message=FALSE, eval=TRUE}
+# most chunks in this vignette are not evaluated because I'm not sure how to
+# save nested dictionaries yet, and calling the api borks in knitting but
+# not in console.
+
+# load R analysis package
 library(supermetroid)
+
+# other tools
+library(tidyverse)
+# so R can talk to Python
+library(reticulate)
+# for html tables
+library(gt)
+
 ```
+
+# speedrun.com
+
+Speedrun.com is (according to the the two speed runners I've spoken to) the 
+canonical leaderboard for speed runners on the internet. Because it is
+believed to be the most complete set (I'd like to check this with data) of 
+speed runs, the canonical ranking of players amongst the community is their
+Speedrun.com ranking.
+
+```{r eval=TRUE}
+data(src_df)
+
+all_run_raincloud(src_run_df)
+
+```
+
+The code below is how these data were extracted and cleaned for the 
+visualisation above.
+
+```{r eval=TRUE}
+src_df %>% head() %>% gt()
+
+```
+
+
+## api
+
+There is a Python module for accessing speedrun.com 
+(many thanks to maintainer...).  
+
+```{python}
+# this chunk is only evaluated when data is updated
+
+# this code from
+# https://github.com/blha303/srcomapi
+
+# load Python module 
+import srcomapi, srcomapi.datatypes as dt
+import pandas as pd # for wrangling into df
+
+
+# call api
+src_api = srcomapi.SpeedrunCom(); src_api.debug = 1
+
+# It's recommended to cache the game ID and use it for future requests.
+# Data is cached for the current session by classname/id so future
+# requests for the same game are instantaneous.
+
+src_api.search(srcomapi.datatypes.Game, {"name": "super metroid"})
+
+# can we add a historical == true to this?
+game = _[0]
+
+srcomapi_runs = {}
+for category in game.categories:
+  if not category.name in srcomapi_runs:
+    srcomapi_runs[category.name] = {}
+  if category.type == 'per-level':
+    for level in game.levels:
+      srcomapi_runs[category.name][level.name] = dt.Leaderboard(src_api, data=src_api.get("leaderboards/{}/level/{}/{}?embed=variables".format(game.id, level.id, category.id)))
+  else:
+    srcomapi_runs[category.name] = dt.Leaderboard(src_api, data=src_api.get("leaderboards/{}/category/{}?embed=variables".format(game.id, category.id)))
+
+
+### 100% Super Metroid leaderboard
+leaderboard = srcomapi_runs['100%']
+
+```
+
+```{python}
+# this chunk is only evaluated when data is updated
+
+# Now to inspect what I have; I'm pretty new to python, so this is a bit of an exploration.
+
+# this gives an error, hmm
+leaderboard.keys()
+
+# what is leaderboard?
+type(leaderboard) # hmm not so helpful
+
+# experimenting with what I can get out of the object
+
+# oooh leaderboard has an attribute that gives a nested dictionary
+type(leaderboard.data)
+
+# what else can I get out?
+leaderboard.embeds 
+leaderboard.category # returns 100%
+# can't seem to get much more out of leaderboard 
+
+# inspect leaderboard dictionary
+leaderboard.data.keys()
+leaderboard.data['game']
+leaderboard.data['runs']
+
+src_runs = leaderboard.data['runs']
+# list of 
+type(src_runs)
+# dictionaries
+type(src_runs[1])
+
+
+# extracting specific values
+src_runs[0].keys()
+
+# rank
+src_runs[0]['place']
+
+# run as a nested dictionary
+src_runs[0]['run'].keys()
+
+
+```
+
+
+## Run dataframe
+
+src_run_df | description | from
+- | - | - 
+date | timestamp of run upload | `runs[index]['run']['date']`
+*run_id* | unique identifier of run | `runs[index]['run']['date']`
+run_time | total time of run in s or ms | `runs[index]['run']['times']['realtime_t']`
+*player_id* | unique identifier of player | player id == run id, debug extraction
+rank | rank, empty if historical, currently don't have historical obs | `src_runs[x]['place']`
+ 
+```{python}
+
+n_obs = len(src_runs)
+
+# how to get splits? [src_runs][x]['run']['splits']
+
+# extract elements with list comprehension (new tool for me)
+src_run_df = pd.DataFrame({
+  'run_id' : [src_runs[x]['run']['id'] for x in range(n_obs)],
+  # need to inspect what happens to historical ranking
+  'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
+  't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
+  'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
+  'player_id' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] 
+    for x in range(n_obs)]
+})
+
+# inspect runs dataframe
+src_run_df.head()
+src_run_df.shape
+
+
+```
+
+
+## Player data
+
+layer_df | description | srcomapi 
+- | - | 
+*player_id* | unique identifier of player 
+player_handle | human-readable **unique** tag | api.get_user -> user.name
+location | geographic location of player | api.get_user -> user.location
+
+```{python}
+# this loop fails because not all ids are valid
+
+
+# get a list of player records for each valid player id
+src_players = []
+for player in src_run_df.player_id.unique():
+  print("loop index")
+  print(len(src_players))
+  print(player)
+  user = src_api.get_user(player)
+  src_players.append(user)
+
+
+```
+
+
+```{python}
+# curiously this works on first three records but not on all
+
+# get a list of player records for each valid player id
+src_players = []
+for player in src_run_df.player[0:3]:
+  print("loop index")
+  print(len(src_players))
+  print(player)
+  user = src_api.get_user(player)
+  src_players.append(user)
+
+```
+
+```{python}
+
+# not all ids work when passed to thingy
+# try-catch to identify which users' ids I can call
+src_valid_players = []
+src_invalid_players = []
+src_users = []
+
+for src_player in src_run_df.player_id.unique():
+  try: 
+    user = src_api.get_user(src_player)
+    src_users.append(user)
+    src_valid_players.append(src_player)
+  except:
+    src_invalid_players.append(src_player)
+
+len(src_players)
+    
+# this many records failed
+len(src_invalid_players)
+
+# this many records succeeded
+len(src_valid_players)
+
+```
+
+### Player dataframe
+
+```{python}
+# extract for single
+
+src_users[0].data['id']
+# each user has an attribute that is a dictionary
+src_users[0].data.keys()
+# for matching back
+src_users[1].data['id']
+src_users[1].data['names']['international']
+src_users[1].data['location']['country']['names']['international']
+
+
+```
+
+### Location of players on speedrun.com
+
+
+```{python}
+
+# extract list of player locations and locations separately
+valid_player_locations = []
+invalid_player_locations = []
+player_locations = []
+
+for src_user in range(len(src_users)):
+  print("loop index")
+  print(len(valid_player_locations) + len(invalid_player_locations))
+  try: 
+    player_location = src_users[src_user].data['location']['country']['names']['international']
+    valid_player_locations.append(src_user)
+    player_locations.append(player_location)
+  except:
+    invalid_player_locations.append(src_user)
+    player_locations.append("missing")
+    
+len(valid_player_locations)
+len(invalid_player_locations)
+len(player_locations)
+
+
+```
+
+
+```{python, error=TRUE}
+# extract player data into dataframe    
+src_player_df = pd.DataFrame({
+  'player_name' : [src_users[x].data['names']['international']
+    for x in range(len(src_users))],
+  'location' : player_locations,
+  'player_id' : [src_users[x].data['id'] for x in range(len(src_users))]
+
+})
+
+src_player_df.head()
+
+```
+
+```{python}
+
+# join runs with player data
+src_run_player_df = src_player_df.merge(src_run_df, how = "right", on = "player_id")
+
+
+
+
+```
+
+```{r}
+# bring it over into sweet, sweet easier R
+src_df_all_obs <- py$src_run_player_df %>% 
+  mutate(
+    player_name = ifelse(is.na(player_name), player_id, player_name)
+  ) %>% select(rank, player_name, date, t_s, location, contains("id")) 
+
+```
+
+
+## Visualise runs
+
+Now we have the data from speedrun.com leaderboard, we can plot the distribution of runs. 
+
+```{r}
+# get the data from python into R
+
+all_run_raincloud(src_df_all_obs)
+
+
+```
+
+We have a handful of 0 entries and some > 3 hours. 
+
+```{r}
+# how many runs are really low?
+src_df_all_obs %>% 
+  filter(t_s < 4000 | t_s > 3 * 60 * 60)
+
+```
+
+The 0 entries are run times where `gametime` was captured, but `realtime` was not by the tool the player used to record the run. Our analyses are on `realtime`, so we will exclude these observations. 
+
+We are also interest in comparing _speed runners_, as opposed to those logging playing through the game, which takes some hours. 
+
+```{r}
+(prop_greater_3hrs <- sum(src_df_all_obs$t_s > 3 * 60 * 60) / 
+   nrow(src_df_all_obs))
+
+```
+
+Since only {r round(prop_greater_3hrs, 2) * 100}% of runs are greater than 3 hours, these are negligible, and arguably not _speed_ runs. We will define a Super Metroid speed run, for this analysis, to be a Super Metroid 100% run that takes under 3 hours. 
+
+## Raincloud
+
+```{r}
+src_df_all_obs %>%
+  filter(
+    # remove 0 length runs
+    t_s > 0, 
+    # exclude runs > 3 hours
+    t_s < 3 * 60 * 60) %>%  
+  all_run_raincloud()
+
+```
+
+
+## Write run data from speedrun.com to supermetroid
+
+```{r eval=FALSE}
+# this chunk is evaluated when data is updated
+src_df <- 
+  src_df_all_obs %>% 
+  # filter runs to less than 3 hours, and weird 0 length records
+  # we won't consider these speed runs
+  filter(t_s > 0, t_s < 3 * 60 * 60) %>% 
+  mutate(
+    rank = as.integer(rank),
+    player_name = as.character(player_name),
+    date = ymd(date),
+    location = as.character(location)
+  )
+
+
+usethis::use_data(src_df, overwrite=TRUE)
+
+```
+

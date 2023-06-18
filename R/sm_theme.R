@@ -78,10 +78,10 @@ theme_sm <- function(base_size = 15# , hmm how to add captino
   ) +
     ggplot2::theme(
       # background
-      plot.background=ggplot2::element_rect(fill=sm_cols$night),
+      plot.background=ggplot2::element_rect(fill=sm_cols$black),
       panel.background = ggplot2::element_rect(
         colour=sm_cols$night,
-        fill=sm_cols$black
+        fill=sm_cols$night
       ),
       panel.grid = ggplot2::element_line(colour=sm_cols$oxford_blue,
                                          linetype="dotted"),
