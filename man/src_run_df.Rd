@@ -3,7 +3,7 @@
 \docType{data}
 \name{src_run_df}
 \alias{src_run_df}
-\title{Speedrun.com leaderboard data}
+\title{Speedrun.com leaderboard smdata}
 \format{
 An object of class \code{data.frame} with 582 rows and 4 columns.
 }
@@ -11,12 +11,13 @@ An object of class \code{data.frame} with 582 rows and 4 columns.
 src_run_df
 }
 \description{
-Speedrun.com leaderboard data
+Speedrun.com leaderboard smdata
 }
 \seealso{
-Other data: 
+Other smdata: 
 \code{\link{anatomecha_splits}},
+\code{\link{distinct_routes}},
 \code{\link{sio_df}}
 }
-\concept{data}
+\concept{smdata}
 \keyword{datasets}

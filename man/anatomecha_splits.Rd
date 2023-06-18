@@ -3,7 +3,7 @@
 \docType{data}
 \name{anatomecha_splits}
 \alias{anatomecha_splits}
-\title{Splitsio data: anatomecha's splits}
+\title{Splitsio smdata: anatomecha's splits}
 \format{
 An object of class \code{data.frame} with 22 rows and 2 columns.
 }
@@ -14,9 +14,10 @@ anatomecha_splits
 See vignette splits
 }
 \seealso{
-Other data: 
+Other smdata: 
+\code{\link{distinct_routes}},
 \code{\link{sio_df}},
 \code{\link{src_run_df}}
 }
-\concept{data}
+\concept{smdata}
 \keyword{datasets}

@@ -1,0 +1,218 @@
+---
+title: "route-graph"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{route-graph}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error=TRUE,
+  out.width = "\\textwidth",
+  fig.height = 8,
+  fig.width = 8
+)
+```
+
+```{r setup}
+library(supermetroid)
+library(tidyverse)
+library(ggraph)
+library(tidygraph)
+
+```
+
+## Route graph
+
+Create a digraph to represent all routes taken by players.
+
+## extract bits I need
+
+```{r}
+long_routes <- 
+  sio_df %>% 
+  select(run_id, supermetroid_label, realtime_end_ms, realtime_start_ms)
+
+head(long_routes)
+
+
+```
+
+```{r}
+# take a look at a dataset from ggraph
+highschool %>% head()
+
+```
+
+Need to use `realtime_start_ms` and `realtime_end_ms` to figure out which one is from and to? Hmmm, or just use itself.
+
+```{r}
+# take a look at one run
+run_events <- 
+long_routes  %>% 
+  filter(run_id == last(run_id),
+         !is.na(supermetroid_label)) %>% 
+  arrange(realtime_start_ms) %>% 
+  pull(supermetroid_label)
+
+# and create a from, to df
+tibble(
+  from = c("start", run_events),
+  to = c(run_events, "end")
+)
+
+
+```
+
+## Create a from-to dataframe for each route
+
+```{r}
+route_from_to_df <- function(this_route, this_route_id) {
+  route_events <- this_route$supermetroid_label
+  
+  # and create a from, to df
+  tibble(from = c("start", route_events),
+         to = c(route_events, "end"))
+}
+
+route_from_to_df(distinct_routes$route[[3]], distinct_routes$route_id[[3]])
+
+# now can apply to df
+from_to_df <-
+  distinct_routes %>%
+  mutate(
+    runs = map_int(run_id, nrow),
+    from_to = map2(route, route_id, route_from_to_df)
+  ) %>%
+  select(from_to, route_id, runs) %>%
+  unnest(from_to)
+
+head(from_to_df)
+```
+
+
+
+
+## Create a digraph that answers my question
+
+> What routes do players take through Super Metroid
+
+```{r}
+from_to_gg <- 
+  from_to_df %>% 
+  head(1000) %>% 
+  as_tbl_graph()
+
+anatomecha_gg <-
+    from_to_df %>% 
+  filter(route == "route  1") %>% 
+  as_tbl_graph()
+
+```
+
+### Too messy
+
+```{r}
+from_to_gg %>% 
+  ggraph() +
+  geom_edge_fan(aes(size = runs))
+  
+
+```
+
+### Need order
+
+
+```{r}
+from_to_gg %>%
+  ggraph(layout = "linear", circular = TRUE) +
+  geom_edge_fan(aes(size = runs), alpha = 0.2) +
+  geom_node_point(aes(colour = ))
+
+
+```
+
+
+### Need direction
+
+
+```{r}
+from_to_gg %>%
+  ggraph(layout = "linear") +
+  geom_edge_fan(aes(size = runs), alpha = 0.2) +
+  geom_node_point()
+
+
+```
+
+
+
+### Too many nodes for EDA
+
+```{r}
+from_to_gg %>% 
+  ggraph(layout = "linear") +
+  geom_edge_arc(arrow = arrow(), aes(alpha = runs)) 
+
+
+```
+
+## Strats
+
+Discussed with  `@anatomecha` which game events are most important to gamer strategies he is interested in, *strats*.
+
+```{r}
+bosses <- c("kraid", "phantoon", "draygon", "ridley")
+loot <- c("ice beam", "grapple beam")
+
+
+selected_splits <- c("kraid","ice beam", "gravity suit", "draygon", "ridley", "varia suit", "space jump")
+
+```
+
+```{r}
+from_to_df %>%
+  filter(from %in% selected_splits,
+         to %in% selected_splits) %>%
+  # filter(from %in% c(bosses, loot),
+  #        to %in% c(bosses, loot)) %>%
+  # mutate(from = str_wrap(from, 7),
+  #         to = str_wrap(from, 7)) %>% 
+  as_tbl_graph() %>% 
+  ggraph(layout = "linear") +
+  geom_edge_arc(arrow = arrow(), aes(alpha = runs),
+                colour= sm_cols$orange) +
+  geom_edge_fan(colour= sm_cols$resolution_blue, alpha = 0.2) +
+  geom_node_text(
+    aes(label=name), 
+    colour=sm_cols$text_green,
+    family="courier", 
+    size = 4,
+    angle = 45) +
+  labs(
+    title = "Recorded but incomplete player routes and strats",
+    subtitle = "Players choose which events to record",
+    x = "Order of event determined by ggraph",
+    y = ""
+  ) +
+  theme_sm(base_size = 20) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank()
+  )
+
+
+
+```
+
+```{r}
+
+
+
+```
+
+

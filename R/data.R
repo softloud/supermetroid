@@ -22,3 +22,10 @@
 #'
 #' @family smdata
 "src_run_df"
+
+#' Distinct routes
+#'
+#' Used in route-graph and route-matching vignettes
+#'
+#' @family smdata
+"distinct_routes"

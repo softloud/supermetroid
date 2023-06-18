@@ -1,6 +1,8 @@
 ---
 title: "route-matching"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{route-matching}
   %\VignetteEngine{knitr::rmarkdown}
@@ -60,6 +62,13 @@ distinct_routes <-
 head(distinct_routes)
 
 ```
+
+```{r eval=FALSE}
+# will use these data in route-graph vignette
+usethis::use_data(distinct_routes)
+
+```
+
 
 In these data we have `r nrow(run_routes)` runs that use `r nrow(distinct_routes)` routes, but subroutes are considered separate routes. Which isn't quite what I want, i.e., a route containing a single label is considered distinct from every other route that it is a label from.  
 
@@ -174,8 +183,63 @@ all(pivoted_routes$order_eq)
 
 ```
 
-Now we know if they have the same overlapping subroutes, and if `possible_subroute`
+Now we know if they have the same overlapping subroutes, and if `possible_subroute` has elements that `comparison_route` has.
+
+## Identify the one to many subroutes
 
 ```{r out.width="80%"}
 knitr::include_graphics("route_many_to_one.jpg")
 ```
+
+If a subroute maps one to many, we need to disregard it. 
+
+Need a list of a every combinatorial pairing. 
+
+```{r}
+viable_route_id <- viable_routes %>% 
+  pull(route_id)
+
+comparison_id_df <- expand.grid(viable_route_id, viable_route_id) %>% 
+  rename(comparison_route = Var1, possible_subroute = Var2) %>% 
+  filter(comparison_route != possible_subroute) %>%
+  arrange(comparison_route) %>% 
+  mutate(
+    comparison_id = str_c(
+      "c ", str_extract(comparison_route, "\\d+"),
+      " p ", str_extract(possible_subroute, "\\d+") 
+    )
+  )
+
+# take a look at combinations
+comparison_id_df %>% head()
+
+
+# how many combinations would we expect?
+# number of routes * 1 less number of routes 
+# because we won't compare a route with itself
+length(viable_route_id) * (length(viable_route_id) - 1) 
+
+# comfirm number of comparisons
+comparison_id_df %>% 
+  nrow()
+
+# whoa combinatorics! 
+
+```
+
+
+Now we need to compare each route. We want to apply a function that calls each 
+route and applies a comparison. We need to return a few pieces of information.
+
+Probably some kind of `map_df` that returns:
+  1. if `possible_classroute` (because it might not be a subroute) 
+  2. lengths of two routes
+  3. if `possible_classroute` is an absolute subroute 
+  4. if `possible_classroute` 
+  
+We need to find out if `possible_classroute` 
+
+```{r}
+
+```
+

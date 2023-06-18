@@ -3,7 +3,7 @@
 \docType{data}
 \name{sio_df}
 \alias{sio_df}
-\title{Datasets}
+\title{smdatasets}
 \format{
 An object of class \code{data.frame} with 19815 rows and 14 columns.
 }
@@ -11,16 +11,17 @@ An object of class \code{data.frame} with 19815 rows and 14 columns.
 sio_df
 }
 \description{
-Data included in the supermetroid package.
+smdata included in the supermetroid package.
 }
 \seealso{
-Other data: 
+Other smdata: 
 \code{\link{anatomecha_splits}},
+\code{\link{distinct_routes}},
 \code{\link{src_run_df}}
 }
-\concept{data}
-\concept{data
-Splitsio data: time series observations
+\concept{smdata}
+\concept{smdata
+Splitsio smdata: time series observations
 
 See vignette splits}
 \keyword{datasets}
