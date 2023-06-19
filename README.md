@@ -63,15 +63,17 @@ to youtube.
 
 - [ ] interpretable x axis
 
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
 ### Where are Super Metroid players?
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ## Super Metroid and speed running
 
 ### Super Metroid is the top SNES speed runner game
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 - [ ] convert to coloured barchart, grouped by game, coloured by
   category
@@ -79,4 +81,4 @@ to youtube.
 
 ### Subway Surfers TikTok phenomenon or good upload interface?
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />

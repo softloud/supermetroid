@@ -70,6 +70,20 @@ all_run_raincloud(base_size = 15)
 
 - [ ] interpretable x axis
 
+```{r}
+data("src_df")
+
+top_100 <- src_df %>% 
+  filter(rank <= 100) 
+
+top_100 %>% 
+  all_run_raincloud(xmin = min(top_100$t_s) / 60, xmax = max(top_100$t_s)/ 60) +
+  labs(title = "Top 100 Super Metroid 100% speed run times" %>% str_wrap(40))
+
+
+```
+
+
 
 ### Where are Super Metroid players?
 
@@ -121,7 +135,7 @@ top_five_vis(base_size = 10)
 
 ### Subway Surfers TikTok phenomenon or good upload interface?
 
-```{r}
+```{r }
 top_games_vis(base_size = 10)
 ```
 

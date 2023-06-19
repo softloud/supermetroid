@@ -52,13 +52,13 @@ top_five_vis <- function(base_size = 10) {
     geom_segment(
       aes(x = 0, xend = count, y = game, yend=game),
       colour=sm_cols$persian_indigo,
-      size=base_size*1.2
+      linewidth=base_size*1.2
     ) +
     theme_sm(base_size = base_size) +
     geom_text(
       aes(x = 0.75 * count, y = game, label = count),
       family="courier",
-      size = base_size/2,
+      linewidth = base_size/2,
       colour = sm_cols$ice_blue
     ) +
     facet_wrap(
@@ -118,18 +118,18 @@ tribble(
   geom_segment(
     aes(x = 0, xend = count + 0.01*count, y = game, yend=game),
     colour=sm_cols$ice_blue,
-    size=22
+    linewidth=base_size * 1.1
   ) +
   geom_segment(
     aes(x = 0, xend = count, y = game, yend=game),
     colour=sm_cols$persian_indigo,
-    size=20
+    linewidth=base_size * 1
   ) +
   theme_sm(base_size = base_size) +
   geom_text(
     aes(x = 0.75 * count, y = game, label = count),
     family="courier",
-    size = 8,
+    linewidth = base_size / 2,
     colour = sm_cols$ice_blue
   ) +
   facet_wrap(
