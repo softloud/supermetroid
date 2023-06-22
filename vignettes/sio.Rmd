@@ -19,10 +19,13 @@ knitr::opts_chunk$set(
 library(supermetroid)
 ```
 
-## Describes data frames in `supermetroid` 
+```{python}
+import pandas as pd
+import splitsio
+```
 
 
-# splits.io
+# splits.io data
 
 ## Load runs and runners  
 
@@ -31,7 +34,7 @@ library(supermetroid)
 # to minimise api calls
 
 # get 100% Category Super Metroid game data  
-sio_cat = splitsio.Category.from_id("279", historic=True)
+sio_cat = splitsio.Category.from_id("279", historic=False)
 save_object(sio_cat, "data-raw/sio_cat.pkl")
 
 ```
@@ -51,7 +54,18 @@ sio_runs = sio_cat.runs()
 
 ```
 
+
 # Try with converting to a dictionary much earlier
+
+
+```{python}
+type(sio_runs)
+sio_runs.__dict__.keys()
+
+sio_runs.__dict__.keys()
+
+```
+
 
 ```{python}
 sio_run_dict_max = 3
@@ -218,7 +232,9 @@ sio_segments %>%
     everything()) %>% 
   select(-contains("gametime"),
          -contains("reduced"),
-         -contains("skipped"), -histories) 
+         -contains("skipped"), -histories) %>% 
+  mutate(
+    player_id = as.character(player_id))
 
 ```
 

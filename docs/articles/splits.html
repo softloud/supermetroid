@@ -42,7 +42,9 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/data-schema.html">data-schema</a>
-    <a class="dropdown-item" href="../articles/player-rank.html">player-rank</a>
+    <a class="dropdown-item" href="../articles/identifying-routes.html">identifying-routes</a>
+    <a class="dropdown-item" href="../articles/player-locations.html">player-locations</a>
+    <a class="dropdown-item" href="../articles/player-rank.html">sio-player-rank</a>
     <a class="dropdown-item" href="../articles/route-graph.html">route-graph</a>
     <a class="dropdown-item" href="../articles/route-matching.html">route-matching</a>
     <a class="dropdown-item" href="../articles/sio.html">sio</a>
@@ -142,23 +144,23 @@ out all the <code>bombs</code> with the bathwater.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="ggumjqfjhu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ggumjqfjhu table {
+<div id="tmiktwyxio" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tmiktwyxio table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ggumjqfjhu thead, #ggumjqfjhu tbody, #ggumjqfjhu tfoot, #ggumjqfjhu tr, #ggumjqfjhu td, #ggumjqfjhu th {
+#tmiktwyxio thead, #tmiktwyxio tbody, #tmiktwyxio tfoot, #tmiktwyxio tr, #tmiktwyxio td, #tmiktwyxio th {
   border-style: none;
 }
 
-#ggumjqfjhu p {
+#tmiktwyxio p {
   margin: 0;
   padding: 0;
 }
 
-#ggumjqfjhu .gt_table {
+#tmiktwyxio .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -184,12 +186,12 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-left-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_caption {
+#tmiktwyxio .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ggumjqfjhu .gt_title {
+#tmiktwyxio .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -201,7 +203,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-width: 0;
 }
 
-#ggumjqfjhu .gt_subtitle {
+#tmiktwyxio .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -213,7 +215,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-top-width: 0;
 }
 
-#ggumjqfjhu .gt_heading {
+#tmiktwyxio .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -225,13 +227,13 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_bottom_border {
+#tmiktwyxio .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_col_headings {
+#tmiktwyxio .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -246,7 +248,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_col_heading {
+#tmiktwyxio .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -266,7 +268,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   overflow-x: hidden;
 }
 
-#ggumjqfjhu .gt_column_spanner_outer {
+#tmiktwyxio .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -278,15 +280,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 4px;
 }
 
-#ggumjqfjhu .gt_column_spanner_outer:first-child {
+#tmiktwyxio .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ggumjqfjhu .gt_column_spanner_outer:last-child {
+#tmiktwyxio .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ggumjqfjhu .gt_column_spanner {
+#tmiktwyxio .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -298,11 +300,11 @@ out all the <code>bombs</code> with the bathwater.</p>
   width: 100%;
 }
 
-#ggumjqfjhu .gt_spanner_row {
+#tmiktwyxio .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ggumjqfjhu .gt_group_heading {
+#tmiktwyxio .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -328,7 +330,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   text-align: left;
 }
 
-#ggumjqfjhu .gt_empty_group_heading {
+#tmiktwyxio .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -343,15 +345,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   vertical-align: middle;
 }
 
-#ggumjqfjhu .gt_from_md > :first-child {
+#tmiktwyxio .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ggumjqfjhu .gt_from_md > :last-child {
+#tmiktwyxio .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ggumjqfjhu .gt_row {
+#tmiktwyxio .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -370,7 +372,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   overflow-x: hidden;
 }
 
-#ggumjqfjhu .gt_stub {
+#tmiktwyxio .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -383,7 +385,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#ggumjqfjhu .gt_stub_row_group {
+#tmiktwyxio .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -397,15 +399,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   vertical-align: top;
 }
 
-#ggumjqfjhu .gt_row_group_first td {
+#tmiktwyxio .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ggumjqfjhu .gt_row_group_first th {
+#tmiktwyxio .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ggumjqfjhu .gt_summary_row {
+#tmiktwyxio .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -415,16 +417,16 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#ggumjqfjhu .gt_first_summary_row {
+#tmiktwyxio .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_first_summary_row.thick {
+#tmiktwyxio .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ggumjqfjhu .gt_last_summary_row {
+#tmiktwyxio .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -434,7 +436,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_grand_summary_row {
+#tmiktwyxio .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -444,7 +446,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#ggumjqfjhu .gt_first_grand_summary_row {
+#tmiktwyxio .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -454,7 +456,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-top-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_last_grand_summary_row_top {
+#tmiktwyxio .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -464,11 +466,11 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_striped {
+#tmiktwyxio .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ggumjqfjhu .gt_table_body {
+#tmiktwyxio .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -477,7 +479,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_footnotes {
+#tmiktwyxio .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -491,7 +493,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_footnote {
+#tmiktwyxio .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -500,7 +502,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#ggumjqfjhu .gt_sourcenotes {
+#tmiktwyxio .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -514,7 +516,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#ggumjqfjhu .gt_sourcenote {
+#tmiktwyxio .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -522,63 +524,63 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#ggumjqfjhu .gt_left {
+#tmiktwyxio .gt_left {
   text-align: left;
 }
 
-#ggumjqfjhu .gt_center {
+#tmiktwyxio .gt_center {
   text-align: center;
 }
 
-#ggumjqfjhu .gt_right {
+#tmiktwyxio .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ggumjqfjhu .gt_font_normal {
+#tmiktwyxio .gt_font_normal {
   font-weight: normal;
 }
 
-#ggumjqfjhu .gt_font_bold {
+#tmiktwyxio .gt_font_bold {
   font-weight: bold;
 }
 
-#ggumjqfjhu .gt_font_italic {
+#tmiktwyxio .gt_font_italic {
   font-style: italic;
 }
 
-#ggumjqfjhu .gt_super {
+#tmiktwyxio .gt_super {
   font-size: 65%;
 }
 
-#ggumjqfjhu .gt_footnote_marks {
+#tmiktwyxio .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ggumjqfjhu .gt_asterisk {
+#tmiktwyxio .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ggumjqfjhu .gt_indent_1 {
+#tmiktwyxio .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ggumjqfjhu .gt_indent_2 {
+#tmiktwyxio .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ggumjqfjhu .gt_indent_3 {
+#tmiktwyxio .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ggumjqfjhu .gt_indent_4 {
+#tmiktwyxio .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ggumjqfjhu .gt_indent_5 {
+#tmiktwyxio .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -820,23 +822,23 @@ out all the <code>bombs</code> with the bathwater.</p>
 <span><span class="va">nested_splits</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="bfdgcfdpvl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bfdgcfdpvl table {
+<div id="fdgmveyieu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fdgmveyieu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bfdgcfdpvl thead, #bfdgcfdpvl tbody, #bfdgcfdpvl tfoot, #bfdgcfdpvl tr, #bfdgcfdpvl td, #bfdgcfdpvl th {
+#fdgmveyieu thead, #fdgmveyieu tbody, #fdgmveyieu tfoot, #fdgmveyieu tr, #fdgmveyieu td, #fdgmveyieu th {
   border-style: none;
 }
 
-#bfdgcfdpvl p {
+#fdgmveyieu p {
   margin: 0;
   padding: 0;
 }
 
-#bfdgcfdpvl .gt_table {
+#fdgmveyieu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -862,12 +864,12 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-left-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_caption {
+#fdgmveyieu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bfdgcfdpvl .gt_title {
+#fdgmveyieu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -879,7 +881,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-width: 0;
 }
 
-#bfdgcfdpvl .gt_subtitle {
+#fdgmveyieu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -891,7 +893,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-top-width: 0;
 }
 
-#bfdgcfdpvl .gt_heading {
+#fdgmveyieu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -903,13 +905,13 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_bottom_border {
+#fdgmveyieu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_col_headings {
+#fdgmveyieu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -924,7 +926,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_col_heading {
+#fdgmveyieu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -944,7 +946,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   overflow-x: hidden;
 }
 
-#bfdgcfdpvl .gt_column_spanner_outer {
+#fdgmveyieu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -956,15 +958,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 4px;
 }
 
-#bfdgcfdpvl .gt_column_spanner_outer:first-child {
+#fdgmveyieu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bfdgcfdpvl .gt_column_spanner_outer:last-child {
+#fdgmveyieu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bfdgcfdpvl .gt_column_spanner {
+#fdgmveyieu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -976,11 +978,11 @@ out all the <code>bombs</code> with the bathwater.</p>
   width: 100%;
 }
 
-#bfdgcfdpvl .gt_spanner_row {
+#fdgmveyieu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bfdgcfdpvl .gt_group_heading {
+#fdgmveyieu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1006,7 +1008,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   text-align: left;
 }
 
-#bfdgcfdpvl .gt_empty_group_heading {
+#fdgmveyieu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1021,15 +1023,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   vertical-align: middle;
 }
 
-#bfdgcfdpvl .gt_from_md > :first-child {
+#fdgmveyieu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bfdgcfdpvl .gt_from_md > :last-child {
+#fdgmveyieu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bfdgcfdpvl .gt_row {
+#fdgmveyieu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1048,7 +1050,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   overflow-x: hidden;
 }
 
-#bfdgcfdpvl .gt_stub {
+#fdgmveyieu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1061,7 +1063,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#bfdgcfdpvl .gt_stub_row_group {
+#fdgmveyieu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1075,15 +1077,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   vertical-align: top;
 }
 
-#bfdgcfdpvl .gt_row_group_first td {
+#fdgmveyieu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bfdgcfdpvl .gt_row_group_first th {
+#fdgmveyieu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bfdgcfdpvl .gt_summary_row {
+#fdgmveyieu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1093,16 +1095,16 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#bfdgcfdpvl .gt_first_summary_row {
+#fdgmveyieu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_first_summary_row.thick {
+#fdgmveyieu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bfdgcfdpvl .gt_last_summary_row {
+#fdgmveyieu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1112,7 +1114,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_grand_summary_row {
+#fdgmveyieu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1122,7 +1124,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#bfdgcfdpvl .gt_first_grand_summary_row {
+#fdgmveyieu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1132,7 +1134,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-top-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_last_grand_summary_row_top {
+#fdgmveyieu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1142,11 +1144,11 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_striped {
+#fdgmveyieu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bfdgcfdpvl .gt_table_body {
+#fdgmveyieu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1155,7 +1157,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_footnotes {
+#fdgmveyieu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1169,7 +1171,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_footnote {
+#fdgmveyieu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1178,7 +1180,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#bfdgcfdpvl .gt_sourcenotes {
+#fdgmveyieu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1192,7 +1194,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#bfdgcfdpvl .gt_sourcenote {
+#fdgmveyieu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1200,63 +1202,63 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#bfdgcfdpvl .gt_left {
+#fdgmveyieu .gt_left {
   text-align: left;
 }
 
-#bfdgcfdpvl .gt_center {
+#fdgmveyieu .gt_center {
   text-align: center;
 }
 
-#bfdgcfdpvl .gt_right {
+#fdgmveyieu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bfdgcfdpvl .gt_font_normal {
+#fdgmveyieu .gt_font_normal {
   font-weight: normal;
 }
 
-#bfdgcfdpvl .gt_font_bold {
+#fdgmveyieu .gt_font_bold {
   font-weight: bold;
 }
 
-#bfdgcfdpvl .gt_font_italic {
+#fdgmveyieu .gt_font_italic {
   font-style: italic;
 }
 
-#bfdgcfdpvl .gt_super {
+#fdgmveyieu .gt_super {
   font-size: 65%;
 }
 
-#bfdgcfdpvl .gt_footnote_marks {
+#fdgmveyieu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bfdgcfdpvl .gt_asterisk {
+#fdgmveyieu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bfdgcfdpvl .gt_indent_1 {
+#fdgmveyieu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bfdgcfdpvl .gt_indent_2 {
+#fdgmveyieu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bfdgcfdpvl .gt_indent_3 {
+#fdgmveyieu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bfdgcfdpvl .gt_indent_4 {
+#fdgmveyieu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bfdgcfdpvl .gt_indent_5 {
+#fdgmveyieu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1380,42 +1382,6 @@ out all the <code>bombs</code> with the bathwater.</p>
 <span></span>
 <span><span class="co">#xlim &lt;- c(0.8, 1.2)</span></span>
 <span></span>
-<span><span class="va">plt_dat</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">anatomecha_splits</span>, by <span class="op">=</span> <span class="st">"supermetroid_label"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>split_anatomecha <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">split_anatomecha</span><span class="op">)</span>,</span>
-<span>         t_h <span class="op">=</span> <span class="va">realtime_end_ms</span><span class="op">/</span><span class="fl">1000</span><span class="op">/</span><span class="fl">60</span><span class="op">/</span><span class="fl">60</span></span>
-<span>         <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">t_h</span> <span class="op">&lt;</span> <span class="fl">3</span><span class="op">)</span> </span>
-<span></span>
-<span><span class="va">plt_dat</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">t_h</span>, y <span class="op">=</span> <span class="va">run_id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour<span class="op">=</span><span class="va">sm_cols</span><span class="op">$</span><span class="va">teal</span>, alpha<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour<span class="op">=</span><span class="va">sm_cols</span><span class="op">$</span><span class="va">teal</span>, alpha<span class="op">=</span><span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour<span class="op">=</span><span class="va">sm_cols</span><span class="op">$</span><span class="va">orange</span>,</span>
-<span>             data<span class="op">=</span><span class="va">plt_dat</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">split</span> <span class="op">==</span> <span class="va">selected_split</span><span class="op">)</span>,</span>
-<span>             size<span class="op">=</span><span class="fl">2</span>,</span>
-<span>             alpha <span class="op">=</span> <span class="fl">0.5</span></span>
-<span>             <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour<span class="op">=</span><span class="st">"deepskyblue3"</span>,</span>
-<span>             data<span class="op">=</span><span class="va">plt_dat</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">split</span> <span class="op">==</span> <span class="va">selected_split</span>, </span>
-<span>                                     <span class="va">player_name</span> <span class="op">==</span> <span class="st">"anatomecha"</span><span class="op">)</span>,</span>
-<span>             size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_sm.html">theme_sm</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">40</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Time of split in each run"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Split: %s"</span>, <span class="va">selected_split</span><span class="op">)</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Time (hrs)"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Run"</span>,</span>
-<span>    caption<span class="op">=</span><span class="st">"anatomecha is the pale blue dot"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="splits_files/figure-html/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
 <span><span class="co"># +</span></span>
 <span><span class="co">#   xlim(xlim[1], xlim[2])</span></span></code></pre></div>
 </div>
@@ -1437,7 +1403,7 @@ mean event time</p>
 <li>Evaluated the accuracy of the KNn classifer with different values of
 k by cross validation</li>
 </ol>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get an array of segments</span></span></code></pre></div>
 </div>
 </div>
@@ -1450,7 +1416,7 @@ is, need to impute, conditional on the other values in the array. Need
 to read about imputation. Perhaps I should just write my own imputation,
 I think I could calculate that. Then apply hierarchical clustering to
 find out which.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create wideform array</span></span>
 <span><span class="va">routes_wide</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">routes_raw</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -1469,7 +1435,7 @@ find out which.</p>
 <span>                values_from <span class="op">=</span> <span class="st">"realtime_end_ms"</span><span class="op">)</span> </span>
 <span></span>
 <span>  </span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: lattice</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1488,7 +1454,7 @@ find out which.</p>
 <span>             trControl  <span class="op">=</span> <span class="va">trControl</span>,</span>
 <span>             metric     <span class="op">=</span> <span class="st">"Accuracy"</span>,</span>
 <span>             data       <span class="op">=</span> <span class="va">routes_raw</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">routes_wide</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">routes</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">route_id</span>, <span class="va">runs</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -1505,6 +1471,10 @@ find out which.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">realtime_end_ms</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="st">"split"</span>, values_from <span class="op">=</span> <span class="st">"realtime_end_ms"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">clean_names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sio_routes_wide</span> <span class="op">&lt;-</span> <span class="va">routes_wide</span></span>
+<span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">use_data</a></span><span class="op">(</span><span class="va">sio_routes_wide</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span></span>
@@ -1555,12 +1525,12 @@ find out which.</p>
 <span><span class="co">#&gt; Warning in dist(ice_beam): NAs introduced by coercion</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span>, labels <span class="op">=</span> <span class="va">ice_beam</span><span class="op">$</span><span class="va">route_id</span><span class="op">)</span></span></code></pre></div>
-<p><img src="splits_files/figure-html/unnamed-chunk-24-1.png" width="768" style="display: block; margin: auto;"></p>
+<p><img src="splits_files/figure-html/unnamed-chunk-25-1.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andrie/ggdendro" class="external-link">ggdendro</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ggdendro/man/ggdendrogram.html" class="external-link">ggdendrogram</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span></span></code></pre></div>
-<p><img src="splits_files/figure-html/unnamed-chunk-25-1.png" width="768" style="display: block; margin: auto;"></p>
+<p><img src="splits_files/figure-html/unnamed-chunk-26-1.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># fuckit write csv</span></span>

@@ -1,0 +1,73 @@
+---
+title: "player-locations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{player-locations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(supermetroid)
+data("src_df")
+
+library(tidyverse)
+library(gt)
+
+```
+
+# Player locations
+
+```{r}
+
+```
+
+## players by rank
+
+
+```{r}
+location_dat <- 
+  src_df %>% 
+    select(player_name, location, rank) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    mutate(location = if_else(
+      location %in% c("missing", "NaN"),
+      "*Missing*",
+      location
+    )) %>% 
+    group_by(location) %>% 
+    summarise(
+      players = n(),
+      highest_rank = min(rank),
+      median_rank = median(rank) %>% round(),
+      lowest_rank = max(rank)
+    ) 
+
+location_dat %>% 
+  arrange(highest_rank) %>% 
+  gt() %>% 
+  tab_header(title = "Best-ranked players ranks by location")
+  
+```
+
+## For dashboard, would be good to see where most players are
+
+```{r}
+location_dat %>% 
+  arrange(desc(players)) %>% 
+  gt() %>% 
+  tab_header(title = "Where the most players are")
+
+
+
+```
+
+## Todo leaflet

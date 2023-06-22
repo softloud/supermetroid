@@ -42,7 +42,9 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="articles/data-schema.html">data-schema</a>
-    <a class="dropdown-item" href="articles/player-rank.html">player-rank</a>
+    <a class="dropdown-item" href="articles/identifying-routes.html">identifying-routes</a>
+    <a class="dropdown-item" href="articles/player-locations.html">player-locations</a>
+    <a class="dropdown-item" href="articles/player-rank.html">sio-player-rank</a>
     <a class="dropdown-item" href="articles/route-graph.html">route-graph</a>
     <a class="dropdown-item" href="articles/route-matching.html">route-matching</a>
     <a class="dropdown-item" href="articles/sio.html">sio</a>
@@ -73,8 +75,16 @@
 <li>
 <a href="#analyses-work-in-progress">Analyses (work in progress)</a>
 <ul>
+<li><a href="#vignettes">Vignettes</a></li>
 <li><a href="#speed-run-times-from-speedruncom">Speed run times from speedrun.com</a></li>
 <li><a href="#where-are-super-metroid-players">Where are Super Metroid players?</a></li>
+<li>
+<a href="#routes-players-take">Routes players take</a>
+<ul>
+<li><a href="#different-routes">Different routes</a></li>
+<li><a href="#missingness-of-routes">Missingness of routes</a></li>
+</ul>
+</li>
 <li>
 <a href="#super-metroid-and-speed-running">Super Metroid and speed running</a>
 <ul>
@@ -116,19 +126,94 @@ source: wikipedia
 <h1 id="analyses-work-in-progress">Analyses (work in progress)<a class="anchor" aria-label="anchor" href="#analyses-work-in-progress"></a>
 </h1>
 <div class="section level3">
+<h3 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="18%">
+<col width="81%">
+</colgroup>
+<thead><tr class="header">
+<th>Vignette</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>data schema</td>
+<td>Plan for what data to extract for analysis</td>
+</tr>
+<tr class="even">
+<td>player-rank</td>
+<td>Combine speedrun.com and splits.io data</td>
+</tr>
+<tr class="odd">
+<td>src</td>
+<td>Scrape supermetroid.com data using <code>srcomapi</code>
+</td>
+</tr>
+<tr class="even">
+<td>sio</td>
+<td>Scrape splits.io data using <code>splitsio</code>; data is not labelled in this vignette. Raw data.</td>
+</tr>
+<tr class="odd">
+<td>splits</td>
+<td>Use anatomecha’s labels to update split strings</td>
+</tr>
+<tr class="even">
+<td>route-matching</td>
+<td>Explore the missingness of routes recorded by players</td>
+</tr>
+<tr class="odd">
+<td>route-graph</td>
+<td>Graphs of routes players take</td>
+</tr>
+<tr class="even">
+<td>identifying-routes</td>
+<td>Classifying routes players take</td>
+</tr>
+<tr class="odd">
+<td>player-locations</td>
+<td>Exploring differences in players across locations</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
 <h3 id="speed-run-times-from-speedruncom">Speed run times from speedrun.com<a class="anchor" aria-label="anchor" href="#speed-run-times-from-speedruncom"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
 <ul class="task-list">
 <li>
 <input type="checkbox">interpretable x axis</li>
 </ul>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="where-are-super-metroid-players">Where are Super Metroid players?<a class="anchor" aria-label="anchor" href="#where-are-super-metroid-players"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; Error in UseMethod("rename"): no applicable method for 'rename' applied to an object of class "function"</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="routes-players-take">Routes players take<a class="anchor" aria-label="anchor" href="#routes-players-take"></a>
+</h2>
+<div class="section level3">
+<h3 id="different-routes">Different routes<a class="anchor" aria-label="anchor" href="#different-routes"></a>
+</h3>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="missingness-of-routes">Missingness of routes<a class="anchor" aria-label="anchor" href="#missingness-of-routes"></a>
+</h3>
+<div class="section level4">
+<h4 id="exploratory-graphs">Exploratory graphs<a class="anchor" aria-label="anchor" href="#exploratory-graphs"></a>
+</h4>
+</div>
+<div class="section level4">
+<h4 id="analysis-graph">Analysis graph<a class="anchor" aria-label="anchor" href="#analysis-graph"></a>
+</h4>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;"></p>
+</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="super-metroid-and-speed-running">Super Metroid and speed running<a class="anchor" aria-label="anchor" href="#super-metroid-and-speed-running"></a>
@@ -136,7 +221,7 @@ source: wikipedia
 <div class="section level3">
 <h3 id="super-metroid-is-the-top-snes-speed-runner-game">Super Metroid is the top SNES speed runner game<a class="anchor" aria-label="anchor" href="#super-metroid-is-the-top-snes-speed-runner-game"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;"></p>
 <ul class="task-list">
 <li>
 <input type="checkbox">convert to coloured barchart, grouped by game, coloured by category</li>
@@ -147,7 +232,7 @@ source: wikipedia
 <div class="section level3">
 <h3 id="subway-surfers-tiktok-phenomenon-or-good-upload-interface">Subway Surfers TikTok phenomenon or good upload interface?<a class="anchor" aria-label="anchor" href="#subway-surfers-tiktok-phenomenon-or-good-upload-interface"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>

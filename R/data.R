@@ -4,6 +4,15 @@
 #'
 #' @family smdata
 
+#' Splits.io for segments with speedrun.com
+
+#' Splits.io data for segments
+#'
+#' Intermediary dataset from sio vignette.
+#' Each row is a split time (segment) for a specific run, created in sio. Use
+#' [sio_df] for analyses; this is the raw data before relabelling.
+#' @family smdata
+"sio_splits_df"
 
 #' Splitsio smdata: time series observations
 #'
@@ -31,3 +40,8 @@
 #'
 #' @family smdata
 "distinct_routes"
+
+#' Wide array of runtime at segment by run
+#'
+#' @family smdata
+"sio_routes_wide"

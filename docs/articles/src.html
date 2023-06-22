@@ -42,7 +42,9 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/data-schema.html">data-schema</a>
-    <a class="dropdown-item" href="../articles/player-rank.html">player-rank</a>
+    <a class="dropdown-item" href="../articles/identifying-routes.html">identifying-routes</a>
+    <a class="dropdown-item" href="../articles/player-locations.html">player-locations</a>
+    <a class="dropdown-item" href="../articles/player-rank.html">sio-player-rank</a>
     <a class="dropdown-item" href="../articles/route-graph.html">route-graph</a>
     <a class="dropdown-item" href="../articles/route-matching.html">route-matching</a>
     <a class="dropdown-item" href="../articles/sio.html">sio</a>
@@ -107,23 +109,23 @@ community is their Speedrun.com ranking.</p>
 visualisation above.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">src_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="luxxxemawf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#luxxxemawf table {
+<div id="rdfxrqchhk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rdfxrqchhk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#luxxxemawf thead, #luxxxemawf tbody, #luxxxemawf tfoot, #luxxxemawf tr, #luxxxemawf td, #luxxxemawf th {
+#rdfxrqchhk thead, #rdfxrqchhk tbody, #rdfxrqchhk tfoot, #rdfxrqchhk tr, #rdfxrqchhk td, #rdfxrqchhk th {
   border-style: none;
 }
 
-#luxxxemawf p {
+#rdfxrqchhk p {
   margin: 0;
   padding: 0;
 }
 
-#luxxxemawf .gt_table {
+#rdfxrqchhk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -149,12 +151,12 @@ visualisation above.</p>
   border-left-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_caption {
+#rdfxrqchhk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#luxxxemawf .gt_title {
+#rdfxrqchhk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -166,7 +168,7 @@ visualisation above.</p>
   border-bottom-width: 0;
 }
 
-#luxxxemawf .gt_subtitle {
+#rdfxrqchhk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -178,7 +180,7 @@ visualisation above.</p>
   border-top-width: 0;
 }
 
-#luxxxemawf .gt_heading {
+#rdfxrqchhk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -190,13 +192,13 @@ visualisation above.</p>
   border-right-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_bottom_border {
+#rdfxrqchhk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_col_headings {
+#rdfxrqchhk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -211,7 +213,7 @@ visualisation above.</p>
   border-right-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_col_heading {
+#rdfxrqchhk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -231,7 +233,7 @@ visualisation above.</p>
   overflow-x: hidden;
 }
 
-#luxxxemawf .gt_column_spanner_outer {
+#rdfxrqchhk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -243,15 +245,15 @@ visualisation above.</p>
   padding-right: 4px;
 }
 
-#luxxxemawf .gt_column_spanner_outer:first-child {
+#rdfxrqchhk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#luxxxemawf .gt_column_spanner_outer:last-child {
+#rdfxrqchhk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#luxxxemawf .gt_column_spanner {
+#rdfxrqchhk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -263,11 +265,11 @@ visualisation above.</p>
   width: 100%;
 }
 
-#luxxxemawf .gt_spanner_row {
+#rdfxrqchhk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#luxxxemawf .gt_group_heading {
+#rdfxrqchhk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -293,7 +295,7 @@ visualisation above.</p>
   text-align: left;
 }
 
-#luxxxemawf .gt_empty_group_heading {
+#rdfxrqchhk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -308,15 +310,15 @@ visualisation above.</p>
   vertical-align: middle;
 }
 
-#luxxxemawf .gt_from_md > :first-child {
+#rdfxrqchhk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#luxxxemawf .gt_from_md > :last-child {
+#rdfxrqchhk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#luxxxemawf .gt_row {
+#rdfxrqchhk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -335,7 +337,7 @@ visualisation above.</p>
   overflow-x: hidden;
 }
 
-#luxxxemawf .gt_stub {
+#rdfxrqchhk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -348,7 +350,7 @@ visualisation above.</p>
   padding-right: 5px;
 }
 
-#luxxxemawf .gt_stub_row_group {
+#rdfxrqchhk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -362,15 +364,15 @@ visualisation above.</p>
   vertical-align: top;
 }
 
-#luxxxemawf .gt_row_group_first td {
+#rdfxrqchhk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#luxxxemawf .gt_row_group_first th {
+#rdfxrqchhk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#luxxxemawf .gt_summary_row {
+#rdfxrqchhk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -380,16 +382,16 @@ visualisation above.</p>
   padding-right: 5px;
 }
 
-#luxxxemawf .gt_first_summary_row {
+#rdfxrqchhk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_first_summary_row.thick {
+#rdfxrqchhk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#luxxxemawf .gt_last_summary_row {
+#rdfxrqchhk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -399,7 +401,7 @@ visualisation above.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_grand_summary_row {
+#rdfxrqchhk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -409,7 +411,7 @@ visualisation above.</p>
   padding-right: 5px;
 }
 
-#luxxxemawf .gt_first_grand_summary_row {
+#rdfxrqchhk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -419,7 +421,7 @@ visualisation above.</p>
   border-top-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_last_grand_summary_row_top {
+#rdfxrqchhk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -429,11 +431,11 @@ visualisation above.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_striped {
+#rdfxrqchhk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#luxxxemawf .gt_table_body {
+#rdfxrqchhk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -442,7 +444,7 @@ visualisation above.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_footnotes {
+#rdfxrqchhk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -456,7 +458,7 @@ visualisation above.</p>
   border-right-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_footnote {
+#rdfxrqchhk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -465,7 +467,7 @@ visualisation above.</p>
   padding-right: 5px;
 }
 
-#luxxxemawf .gt_sourcenotes {
+#rdfxrqchhk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -479,7 +481,7 @@ visualisation above.</p>
   border-right-color: #D3D3D3;
 }
 
-#luxxxemawf .gt_sourcenote {
+#rdfxrqchhk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -487,63 +489,63 @@ visualisation above.</p>
   padding-right: 5px;
 }
 
-#luxxxemawf .gt_left {
+#rdfxrqchhk .gt_left {
   text-align: left;
 }
 
-#luxxxemawf .gt_center {
+#rdfxrqchhk .gt_center {
   text-align: center;
 }
 
-#luxxxemawf .gt_right {
+#rdfxrqchhk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#luxxxemawf .gt_font_normal {
+#rdfxrqchhk .gt_font_normal {
   font-weight: normal;
 }
 
-#luxxxemawf .gt_font_bold {
+#rdfxrqchhk .gt_font_bold {
   font-weight: bold;
 }
 
-#luxxxemawf .gt_font_italic {
+#rdfxrqchhk .gt_font_italic {
   font-style: italic;
 }
 
-#luxxxemawf .gt_super {
+#rdfxrqchhk .gt_super {
   font-size: 65%;
 }
 
-#luxxxemawf .gt_footnote_marks {
+#rdfxrqchhk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#luxxxemawf .gt_asterisk {
+#rdfxrqchhk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#luxxxemawf .gt_indent_1 {
+#rdfxrqchhk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#luxxxemawf .gt_indent_2 {
+#rdfxrqchhk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#luxxxemawf .gt_indent_3 {
+#rdfxrqchhk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#luxxxemawf .gt_indent_4 {
+#rdfxrqchhk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#luxxxemawf .gt_indent_5 {
+#rdfxrqchhk .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -628,33 +630,34 @@ maintainer…).</p>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># load Python module </span></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="im">import</span> srcomapi, srcomapi.datatypes <span class="im">as</span> dt</span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd <span class="co"># for wrangling into df</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co"># call api</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>src_api <span class="op">=</span> srcomapi.SpeedrunCom()<span class="op">;</span> src_api.debug <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co"># It's recommended to cache the game ID and use it for future requests.</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># Data is cached for the current session by classname/id so future</span></span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co"># requests for the same game are instantaneous.</span></span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>src_api.search(srcomapi.datatypes.Game, {<span class="st">"name"</span>: <span class="st">"super metroid"</span>})</span>
-<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co"># can we add a historical == true to this?</span></span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>game <span class="op">=</span> _[<span class="dv">0</span>]</span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>srcomapi_runs <span class="op">=</span> {}</span>
-<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> game.categories:</span>
-<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> category.name <span class="kw">in</span> srcomapi_runs:</span>
-<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>    srcomapi_runs[category.name] <span class="op">=</span> {}</span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>  <span class="cf">if</span> category.<span class="bu">type</span> <span class="op">==</span> <span class="st">'per-level'</span>:</span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>    <span class="cf">for</span> level <span class="kw">in</span> game.levels:</span>
-<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>      srcomapi_runs[category.name][level.name] <span class="op">=</span> dt.Leaderboard(src_api, data<span class="op">=</span>src_api.get(<span class="st">"leaderboards/</span><span class="sc">{}</span><span class="st">/level/</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">?embed=variables"</span>.<span class="bu">format</span>(game.<span class="bu">id</span>, level.<span class="bu">id</span>, category.<span class="bu">id</span>)))</span>
-<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>  <span class="cf">else</span>:</span>
-<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>    srcomapi_runs[category.name] <span class="op">=</span> dt.Leaderboard(src_api, data<span class="op">=</span>src_api.get(<span class="st">"leaderboards/</span><span class="sc">{}</span><span class="st">/category/</span><span class="sc">{}</span><span class="st">?embed=variables"</span>.<span class="bu">format</span>(game.<span class="bu">id</span>, category.<span class="bu">id</span>)))</span>
-<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># call api</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>src_api <span class="op">=</span> srcomapi.SpeedrunCom()<span class="op">;</span> src_api.debug <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># It's recommended to cache the game ID and use it for future requests.</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co"># Data is cached for the current session by classname/id so future</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co"># requests for the same game are instantaneous.</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>src_api.search(srcomapi.datatypes.Game, {<span class="st">"name"</span>: <span class="st">"super metroid"</span>})</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co"># can we add a historical == true to this?</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>game <span class="op">=</span> _[<span class="dv">0</span>]</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>srcomapi_runs <span class="op">=</span> {}</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> game.categories:</span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> category.name <span class="kw">in</span> srcomapi_runs:</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>    srcomapi_runs[category.name] <span class="op">=</span> {}</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>  <span class="cf">if</span> category.<span class="bu">type</span> <span class="op">==</span> <span class="st">'per-level'</span>:</span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>    <span class="cf">for</span> level <span class="kw">in</span> game.levels:</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>      srcomapi_runs[category.name][level.name] <span class="op">=</span> dt.Leaderboard(src_api, data<span class="op">=</span>src_api.get(<span class="st">"leaderboards/</span><span class="sc">{}</span><span class="st">/level/</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">?embed=variables"</span>.<span class="bu">format</span>(game.<span class="bu">id</span>, level.<span class="bu">id</span>, category.<span class="bu">id</span>)))</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>  <span class="cf">else</span>:</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>    srcomapi_runs[category.name] <span class="op">=</span> dt.Leaderboard(src_api, data<span class="op">=</span>src_api.get(<span class="st">"leaderboards/</span><span class="sc">{}</span><span class="st">/category/</span><span class="sc">{}</span><span class="st">?embed=variables"</span>.<span class="bu">format</span>(game.<span class="bu">id</span>, category.<span class="bu">id</span>)))</span>
 <span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">### 100% Super Metroid leaderboard</span></span>
-<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>leaderboard <span class="op">=</span> srcomapi_runs[<span class="st">'100%'</span>]</span></code></pre></div>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">### 100% Super Metroid leaderboard</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>leaderboard <span class="op">=</span> srcomapi_runs[<span class="st">'100%'</span>]</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># this chunk is only evaluated when data is updated</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># Now to inspect what I have; I'm pretty new to python, so this is a bit of an exploration.</span></span>
@@ -786,7 +789,7 @@ maintainer…).</p>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># get a list of player records for each valid player id</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>src_players <span class="op">=</span> []</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="cf">for</span> player <span class="kw">in</span> src_run_df.player_id.unique():</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="cf">for</span> player <span class="kw">in</span> <span class="bu">list</span>(src_run_df.player_id.unique()):</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"loop index"</span>)</span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  <span class="bu">print</span>(<span class="bu">len</span>(src_players))</span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  <span class="bu">print</span>(player)</span>
@@ -809,21 +812,22 @@ maintainer…).</p>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>src_invalid_players <span class="op">=</span> []</span>
 <span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>src_users <span class="op">=</span> []</span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="cf">for</span> src_player <span class="kw">in</span> src_run_df.player_id.unique():</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="cf">for</span> src_player <span class="kw">in</span> <span class="bu">list</span>(src_run_df.player_id.unique()):</span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  <span class="cf">try</span>: </span>
 <span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>    user <span class="op">=</span> src_api.get_user(src_player)</span>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    src_users.append(user)</span>
 <span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>    src_valid_players.append(src_player)</span>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="cf">except</span>:</span>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    src_invalid_players.append(src_player)</span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="bu">len</span>(src_players)</span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>    </span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co"># this many records failed</span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="bu">len</span>(src_invalid_players)</span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co"># this many records succeeded</span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="bu">len</span>(src_valid_players)</span></code></pre></div>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>  time.sleep(<span class="dv">3</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="bu">len</span>(src_players)</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>    </span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co"># this many records failed</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="bu">len</span>(src_invalid_players)</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co"># this many records succeeded</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="bu">len</span>(src_valid_players)</span></code></pre></div>
 <div class="section level4">
 <h4 id="player-dataframe">Player dataframe<a class="anchor" aria-label="anchor" href="#player-dataframe"></a>
 </h4>
@@ -935,7 +939,7 @@ a Super Metroid 100% run that takes under 3 hours.</p>
 <span>    rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">rank</span><span class="op">)</span>,</span>
 <span>    player_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span>,</span>
 <span>    date <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
-<span>    location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span></span>
+<span>    country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span></span>

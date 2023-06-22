@@ -1,8 +1,8 @@
 ---
-title: "player-rank"
+title: "sio-player-rank"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{player-rank}
+  %\VignetteIndexEntry{sio-player-rank}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,9 +17,35 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(supermetroid)
 
-# other packages
+# other tools
 library(tidyverse)
 
 ```
 
+# Create a dataframe with `splitsio` observations of game events, with `srcomapi` rank and location.  
+
+We will join theses elements from speedrun.com data to splits.io data. 
+
+```{r error=TRUE}
+
+# speedrun.com, each row is a player
+src_join_df <-
+  src_df %>%
+  group_by(player_name) %>%
+  filter(rank == max(rank)) %>%
+  rename_with( ~ paste0("src_", .x))
+
+head(src_join_df)
+
+# need to debug player id types
+splits_df <- left_join(sio_df, src_join_df, 
+          by = c("player_id" = "src_player_id"))
+
+
+```
+
+```{r eval=FALSE}
+usethis::use_data(splits_df)
+
+```
 

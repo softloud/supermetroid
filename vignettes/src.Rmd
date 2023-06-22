@@ -77,6 +77,7 @@ There is a Python module for accessing speedrun.com
 # load Python module 
 import srcomapi, srcomapi.datatypes as dt
 import pandas as pd # for wrangling into df
+import time
 
 
 # call api
@@ -202,7 +203,7 @@ location | geographic location of player | api.get_user -> user.location
 
 # get a list of player records for each valid player id
 src_players = []
-for player in src_run_df.player_id.unique():
+for player in list(src_run_df.player_id.unique()):
   print("loop index")
   print(len(src_players))
   print(player)
@@ -235,13 +236,14 @@ src_valid_players = []
 src_invalid_players = []
 src_users = []
 
-for src_player in src_run_df.player_id.unique():
+for src_player in list(src_run_df.player_id.unique()):
   try: 
     user = src_api.get_user(src_player)
     src_users.append(user)
     src_valid_players.append(src_player)
   except:
     src_invalid_players.append(src_player)
+  time.sleep(3)
 
 len(src_players)
     
@@ -392,7 +394,7 @@ src_df <-
     rank = as.integer(rank),
     player_name = as.character(player_name),
     date = ymd(date),
-    location = as.character(location)
+    country = as.character(location)
   )
 
 

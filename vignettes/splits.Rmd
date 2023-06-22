@@ -266,40 +266,6 @@ rank <- c(1,25)
 
 #xlim <- c(0.8, 1.2)
 
-plt_dat <- 
-  sio_df %>% 
-  left_join(anatomecha_splits, by = "supermetroid_label") %>% 
-  filter(!is.na(supermetroid_label)) %>% 
-  mutate(split_anatomecha = as_factor(split_anatomecha),
-         t_h = realtime_end_ms/1000/60/60
-         ) %>% 
-  filter(t_h < 3) 
-
-plt_dat %>% 
-  ggplot(aes(x = t_h, y = run_id)) +
-  geom_line(colour=sm_cols$teal, alpha=0.2) +
-  geom_point(colour=sm_cols$teal, alpha=0.3) +
-  geom_point(colour=sm_cols$orange,
-             data=plt_dat %>% filter(split == selected_split),
-             size=2,
-             alpha = 0.5
-             ) +
-  geom_point(colour="deepskyblue3",
-             data=plt_dat %>% filter(split == selected_split, 
-                                     player_name == "anatomecha"),
-             size=3) +
-  theme_sm(base_size = 40) +
-  labs(
-    title = "Time of split in each run",
-    subtitle = sprintf("Split: %s", selected_split),
-    x = "Time (hrs)",
-    y = "Run",
-    caption="anatomecha is the pale blue dot"
-  ) +
-  theme(
-    axis.text.y = element_blank()
-  )
-
 # +
 #   xlim(xlim[1], xlim[2])
 
@@ -396,6 +362,14 @@ routes %>%
   janitor::clean_names()
 
 ```
+
+```{r eval=FALSE}
+sio_routes_wide <- routes_wide
+
+usethis::use_data(sio_routes_wide)
+
+```
+
 
 ```{r}
 

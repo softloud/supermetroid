@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
   error = TRUE,
   echo=FALSE,
   message=FALSE,
-  warning=FALSE
+  warning=FALSE,
+  fig.align = 'center'
 )
 
 # put next to heading when have logo
@@ -56,9 +57,23 @@ library(supermetroid) # analysis code
 library(tidyverse) # data science tools
 library(knitr) # for html tables
 
+data("src_df")
 
 ```
 
+### Vignettes
+
+Vignette|Description|Output data
+-|-
+data schema | Plan for what data to extract for analysis |
+player-rank | Combine speedrun.com and splits.io data | `splits_df`
+src | Scrape supermetroid.com data using `srcomapi` | `src_df`
+sio | Scrape splits.io data using `splitsio`; data is not labelled in this vignette. Raw data. | `sio_splits_df`
+splits | Use anatomecha's labels to update split strings | `sio_df`, `anatomecha_splist`, `sio_routes_wide`
+route-matching | Explore the missingness of routes recorded by players | `distinct_routes`
+route-graph | Graphs of routes players take | 
+identifying-routes | Classifying routes players take | 
+player-locations | Exploring differences in players across locations | 
 
 ### Speed run times from speedrun.com
 
@@ -88,32 +103,33 @@ top_100 %>%
 ### Where are Super Metroid players?
 
 ```{r}
+sm_world()
 
-# create data for world coordinates using
-# map_data() function
-world_coordinates <- map_data("world")
-data("src_df")
+```
 
+## Routes players take
 
-src_df %>%
-  count(location) %>%
-  inner_join(world_coordinates, by = c("location" = "region")) %>%
-  ggplot() +
-  geom_map(map = world_coordinates,
-           aes(long, lat, map_id = location, fill = n)) +
-  theme_sm() +
-  labs(x = "",
-       y = "",
-       title = "Where are Super Metroid speed runners located?" %>% 
-         str_wrap(30)) +
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        legend.position = "bottom") +
-  scale_fill_gradient("Number of players", high = sm_cols$orange, low = sm_cols$wine)
+### Different routes
+
+```{r}
+cum_t_route_vis(base_size = 10)
+
+```
+
+### Missingness of routes
+
+#### Exploratory graphs
+
+```{r fig.width=5, fig.height=5}
 
 
-# plotly fails on this map, need to switch to leaflet
-# ggplotly(player_map)
+```
+
+#### Analysis graph
+
+
+```{r}
+ranked_runs("ice beam", base_size = 10)
 
 ```
 

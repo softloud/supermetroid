@@ -5,7 +5,7 @@
 \alias{src_df}
 \title{Speedrun.com leaderboard smdata}
 \format{
-An object of class \code{data.frame} with 585 rows and 7 columns.
+An object of class \code{data.frame} with 586 rows and 7 columns.
 }
 \usage{
 src_df
@@ -17,7 +17,9 @@ Player and run data joined. See src vignette.
 Other smdata: 
 \code{\link{anatomecha_splits}},
 \code{\link{distinct_routes}},
-\code{\link{sio_df}}
+\code{\link{sio_df}},
+\code{\link{sio_routes_wide}},
+\code{\link{sio_splits_df}}
 }
 \concept{smdata}
 \keyword{datasets}

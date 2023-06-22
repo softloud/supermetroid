@@ -42,7 +42,9 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/data-schema.html">data-schema</a>
-    <a class="dropdown-item" href="../articles/player-rank.html">player-rank</a>
+    <a class="dropdown-item" href="../articles/identifying-routes.html">identifying-routes</a>
+    <a class="dropdown-item" href="../articles/player-locations.html">player-locations</a>
+    <a class="dropdown-item" href="../articles/player-rank.html">sio-player-rank</a>
     <a class="dropdown-item" href="../articles/route-graph.html">route-graph</a>
     <a class="dropdown-item" href="../articles/route-matching.html">route-matching</a>
     <a class="dropdown-item" href="../articles/sio.html">sio</a>
@@ -78,59 +80,61 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://softloud.github.io/supermetroid/">supermetroid</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="describes-data-frames-in-supermetroid">Describes data frames in <code>supermetroid</code><a class="anchor" aria-label="anchor" href="#describes-data-frames-in-supermetroid"></a>
-</h3>
-</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="im">import</span> splitsio</span></code></pre></div>
 <div class="section level2">
-<h2 id="splits-io">splits.io<a class="anchor" aria-label="anchor" href="#splits-io"></a>
+<h2 id="splits-io-data">splits.io data<a class="anchor" aria-label="anchor" href="#splits-io-data"></a>
 </h2>
 <div class="section level3">
 <h3 id="load-runs-and-runners">Load runs and runners<a class="anchor" aria-label="anchor" href="#load-runs-and-runners"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># this chunk is not evaluated </span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># to minimise api calls</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># get 100% Category Super Metroid game data  </span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>sio_cat <span class="op">=</span> splitsio.Category.from_id(<span class="st">"279"</span>, historic<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>save_object(sio_cat, <span class="st">"data-raw/sio_cat.pkl"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># load sio data</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data-raw/sio_cat.pkl'</span>, <span class="st">'rb'</span>) <span class="im">as</span> inp:</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    sio_cat <span class="op">=</span> pickle.load(inp)</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># extract runners and run from category</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>sio_runners <span class="op">=</span> sio_cat.runners()</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>sio_runs <span class="op">=</span> sio_cat.runs()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># this chunk is not evaluated </span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># to minimise api calls</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># get 100% Category Super Metroid game data  </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>sio_cat <span class="op">=</span> splitsio.Category.from_id(<span class="st">"279"</span>, historic<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>save_object(sio_cat, <span class="st">"data-raw/sio_cat.pkl"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># load sio data</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data-raw/sio_cat.pkl'</span>, <span class="st">'rb'</span>) <span class="im">as</span> inp:</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    sio_cat <span class="op">=</span> pickle.load(inp)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co"># extract runners and run from category</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>sio_runners <span class="op">=</span> sio_cat.runners()</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>sio_runs <span class="op">=</span> sio_cat.runs()</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="try-with-converting-to-a-dictionary-much-earlier">Try with converting to a dictionary much earlier<a class="anchor" aria-label="anchor" href="#try-with-converting-to-a-dictionary-much-earlier"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>sio_run_dict_max <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>sio_run_dicts <span class="op">=</span> [sio_runs[x].to_dict() <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(sio_run_dict_max)]</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co"># each element of the list is a dictionary with keys</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="bu">type</span>(sio_runs)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>sio_runs.__dict__.keys()</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>sio_runs.__dict__.keys()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>sio_run_dict_max <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>sio_run_dicts <span class="op">=</span> [sio_runs[x].to_dict() <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(sio_run_dict_max)]</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># each element of the list is a dictionary with keys</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">testing_index</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
 <span></span>
 <span><span class="co"># find </span></span></code></pre></div>
 <div class="section level3">
 <h3 id="inspect-data">Inspect data<a class="anchor" aria-label="anchor" href="#inspect-data"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># take a look at a run</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>sio_runs[<span class="dv">0</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># can we call nested elements by index and key?</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="bu">type</span>(sio_runs[<span class="dv">0</span>])</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># I think this is a series object?</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(sio_runs[<span class="dv">1</span>:<span class="dv">3</span>]))</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(sio_runs[<span class="dv">1</span>:<span class="dv">3</span>]).columns)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># take a look at a runner</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>sio_runners[<span class="dv">0</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># take a look at a run</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>sio_runs[<span class="dv">0</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># can we call nested elements by index and key?</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="bu">type</span>(sio_runs[<span class="dv">0</span>])</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># I think this is a series object?</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(sio_runs[<span class="dv">1</span>:<span class="dv">3</span>]))</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(sio_runs[<span class="dv">1</span>:<span class="dv">3</span>]).columns)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># take a look at a runner</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>sio_runners[<span class="dv">0</span>]</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="run-dataframe">Run dataframe<a class="anchor" aria-label="anchor" href="#run-dataframe"></a>
@@ -181,43 +185,43 @@ speedrun.com); otherwise rank as int, list column</td>
 <div class="section level3">
 <h3 id="try-with-list-of-dictionaries">Try with list of dictionaries<a class="anchor" aria-label="anchor" href="#try-with-list-of-dictionaries"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>sio_run_dicts <span class="op">=</span> [sio_runs[x].to_dict() <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))]</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># each element is a dictionary with keys</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># run id</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># get id</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>][<span class="st">'id'</span>]</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co"># get realtime</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>][<span class="st">'realtime_duration_ms'</span>]</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># player data</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>pd.json_normalize(sio_run_dicts[<span class="dv">0</span>][<span class="st">'runners'</span>])[<span class="st">'id'</span>][<span class="dv">0</span>]</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>sio_run_player_index <span class="op">=</span> <span class="dv">10</span> <span class="co"># len(sio_run_dicts)</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>run_runners_list <span class="op">=</span> [pd.json_normalize(sio_run_dicts[x][<span class="st">'runners'</span>]).assign(run_id <span class="op">=</span> sio_runs[x].<span class="bu">id</span>) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))]</span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>run_runners_concat <span class="op">=</span> pd.concat(run_runners)</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>run_runners <span class="op">=</span> run_runners_concat[[<span class="st">'display_name'</span>, <span class="st">'name'</span>, <span class="st">'run_id'</span>,<span class="st">'id'</span>]].rename(columns<span class="op">=</span>{<span class="st">'id'</span>:<span class="st">'player_id'</span>, <span class="st">'name'</span>:<span class="st">'player_name'</span>})</span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="bu">len</span>(run_runners) <span class="op">!=</span> <span class="bu">len</span>(sio_runs) <span class="co"># :( whyeee</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>sio_runs_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>  <span class="st">'run_id'</span> : [sio_run_dicts[x][<span class="st">'id'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>  <span class="st">'t_ms'</span> : [sio_run_dicts[x][<span class="st">'realtime_duration_ms'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>  <span class="st">'date'</span> : [sio_run_dicts[x][<span class="st">'updated_at'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>  <span class="st">'image_url'</span>: [sio_run_dicts[x][<span class="st">'image_url'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>  <span class="st">'video_url'</span>: [sio_run_dicts[x][<span class="st">'video_url'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))]</span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>}).merge(run_runners, on <span class="op">=</span> <span class="st">"run_id"</span>, how <span class="op">=</span> <span class="st">'left'</span>).set_index(<span class="st">'run_id'</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a><span class="co"># get segments</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>sio_run_dicts <span class="op">=</span> [sio_runs[x].to_dict() <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))]</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># each element is a dictionary with keys</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># run id</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co"># get id</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>][<span class="st">'id'</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co"># get realtime</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>][<span class="st">'realtime_duration_ms'</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># player data</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>pd.json_normalize(sio_run_dicts[<span class="dv">0</span>][<span class="st">'runners'</span>])[<span class="st">'id'</span>][<span class="dv">0</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>sio_run_player_index <span class="op">=</span> <span class="dv">10</span> <span class="co"># len(sio_run_dicts)</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>run_runners_list <span class="op">=</span> [pd.json_normalize(sio_run_dicts[x][<span class="st">'runners'</span>]).assign(run_id <span class="op">=</span> sio_runs[x].<span class="bu">id</span>) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))]</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>run_runners_concat <span class="op">=</span> pd.concat(run_runners)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>run_runners <span class="op">=</span> run_runners_concat[[<span class="st">'display_name'</span>, <span class="st">'name'</span>, <span class="st">'run_id'</span>,<span class="st">'id'</span>]].rename(columns<span class="op">=</span>{<span class="st">'id'</span>:<span class="st">'player_id'</span>, <span class="st">'name'</span>:<span class="st">'player_name'</span>})</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="bu">len</span>(run_runners) <span class="op">!=</span> <span class="bu">len</span>(sio_runs) <span class="co"># :( whyeee</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>sio_run_dicts[<span class="dv">0</span>].keys()</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>sio_runs_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>  <span class="st">'run_id'</span> : [sio_run_dicts[x][<span class="st">'id'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>  <span class="st">'t_ms'</span> : [sio_run_dicts[x][<span class="st">'realtime_duration_ms'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>  <span class="st">'date'</span> : [sio_run_dicts[x][<span class="st">'updated_at'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>  <span class="st">'image_url'</span>: [sio_run_dicts[x][<span class="st">'image_url'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))],</span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>  <span class="st">'video_url'</span>: [sio_run_dicts[x][<span class="st">'video_url'</span>] <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(sio_runs))]</span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>}).merge(run_runners, on <span class="op">=</span> <span class="st">"run_id"</span>, how <span class="op">=</span> <span class="st">'left'</span>).set_index(<span class="st">'run_id'</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="co"># get segments</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">inspect_sio_runs</span> <span class="op">&lt;-</span> <span class="va">py</span><span class="op">$</span><span class="va">sio_runs_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"url"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">display_name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -244,25 +248,25 @@ speedrun.com); otherwise rank as int, list column</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># first level of segments</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="bu">type</span>(sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>])</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="bu">len</span>(sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>])</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co"># second level of segments</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="bu">type</span>(sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>][<span class="dv">0</span>])</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>][<span class="dv">2</span>].keys()</span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>segments_list <span class="op">=</span> [pd.DataFrame(sio_df.segments[x]).assign(run_id <span class="op">=</span> sio_df.<span class="bu">id</span>[x]) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(sio_df.shape[<span class="dv">0</span>]) ]</span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>segment_raw <span class="op">=</span> pd.concat(segments_list)</span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>segment_raw.columns</span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>segment_raw.shape</span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>sio_segments_df <span class="op">=</span> segment_raw.merge(</span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>  sio_runs_df[[<span class="st">'player_name'</span>, <span class="st">'player_id'</span>]], on <span class="op">=</span> <span class="st">"run_id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># first level of segments</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="bu">type</span>(sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="bu">len</span>(sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>])</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co"># second level of segments</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="bu">type</span>(sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>][<span class="dv">0</span>])</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>sio_df[<span class="st">'segments'</span>][<span class="dv">0</span>][<span class="dv">2</span>].keys()</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>segments_list <span class="op">=</span> [pd.DataFrame(sio_df.segments[x]).assign(run_id <span class="op">=</span> sio_df.<span class="bu">id</span>[x]) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(sio_df.shape[<span class="dv">0</span>]) ]</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>segment_raw <span class="op">=</span> pd.concat(segments_list)</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>segment_raw.columns</span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>segment_raw.shape</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>sio_segments_df <span class="op">=</span> segment_raw.merge(</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>  sio_runs_df[[<span class="st">'player_name'</span>, <span class="st">'player_id'</span>]], on <span class="op">=</span> <span class="st">"run_id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tidy it up in R before writing it</span></span>
 <span></span>
 <span><span class="va">sio_segments</span> <span class="op">&lt;-</span> <span class="va">py</span><span class="op">$</span><span class="va">sio_segments_df</span></span>
@@ -281,8 +285,10 @@ speedrun.com); otherwise rank as int, list column</td>
 <span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"gametime"</span><span class="op">)</span>,</span>
 <span>         <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"reduced"</span><span class="op">)</span>,</span>
-<span>         <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"skipped"</span><span class="op">)</span>, <span class="op">-</span><span class="va">histories</span><span class="op">)</span> </span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<span>         <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"skipped"</span><span class="op">)</span>, <span class="op">-</span><span class="va">histories</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    player_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">use_data</a></span><span class="op">(</span><span class="va">sio_splits_df</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>

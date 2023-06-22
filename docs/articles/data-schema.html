@@ -42,7 +42,9 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/data-schema.html">data-schema</a>
-    <a class="dropdown-item" href="../articles/player-rank.html">player-rank</a>
+    <a class="dropdown-item" href="../articles/identifying-routes.html">identifying-routes</a>
+    <a class="dropdown-item" href="../articles/player-locations.html">player-locations</a>
+    <a class="dropdown-item" href="../articles/player-rank.html">sio-player-rank</a>
     <a class="dropdown-item" href="../articles/route-graph.html">route-graph</a>
     <a class="dropdown-item" href="../articles/route-matching.html">route-matching</a>
     <a class="dropdown-item" href="../articles/sio.html">sio</a>
@@ -133,23 +135,23 @@ than speedrun.com</td>
 <span>  <span class="st">"deertier"</span>, <span class="cn">NA</span>, <span class="cn">NA</span></span>
 <span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="bvgecnhshu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bvgecnhshu table {
+<div id="xdhvkjwwxt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xdhvkjwwxt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bvgecnhshu thead, #bvgecnhshu tbody, #bvgecnhshu tfoot, #bvgecnhshu tr, #bvgecnhshu td, #bvgecnhshu th {
+#xdhvkjwwxt thead, #xdhvkjwwxt tbody, #xdhvkjwwxt tfoot, #xdhvkjwwxt tr, #xdhvkjwwxt td, #xdhvkjwwxt th {
   border-style: none;
 }
 
-#bvgecnhshu p {
+#xdhvkjwwxt p {
   margin: 0;
   padding: 0;
 }
 
-#bvgecnhshu .gt_table {
+#xdhvkjwwxt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -175,12 +177,12 @@ than speedrun.com</td>
   border-left-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_caption {
+#xdhvkjwwxt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bvgecnhshu .gt_title {
+#xdhvkjwwxt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -192,7 +194,7 @@ than speedrun.com</td>
   border-bottom-width: 0;
 }
 
-#bvgecnhshu .gt_subtitle {
+#xdhvkjwwxt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -204,7 +206,7 @@ than speedrun.com</td>
   border-top-width: 0;
 }
 
-#bvgecnhshu .gt_heading {
+#xdhvkjwwxt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -216,13 +218,13 @@ than speedrun.com</td>
   border-right-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_bottom_border {
+#xdhvkjwwxt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_col_headings {
+#xdhvkjwwxt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -237,7 +239,7 @@ than speedrun.com</td>
   border-right-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_col_heading {
+#xdhvkjwwxt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -257,7 +259,7 @@ than speedrun.com</td>
   overflow-x: hidden;
 }
 
-#bvgecnhshu .gt_column_spanner_outer {
+#xdhvkjwwxt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -269,15 +271,15 @@ than speedrun.com</td>
   padding-right: 4px;
 }
 
-#bvgecnhshu .gt_column_spanner_outer:first-child {
+#xdhvkjwwxt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bvgecnhshu .gt_column_spanner_outer:last-child {
+#xdhvkjwwxt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bvgecnhshu .gt_column_spanner {
+#xdhvkjwwxt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -289,11 +291,11 @@ than speedrun.com</td>
   width: 100%;
 }
 
-#bvgecnhshu .gt_spanner_row {
+#xdhvkjwwxt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bvgecnhshu .gt_group_heading {
+#xdhvkjwwxt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -319,7 +321,7 @@ than speedrun.com</td>
   text-align: left;
 }
 
-#bvgecnhshu .gt_empty_group_heading {
+#xdhvkjwwxt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -334,15 +336,15 @@ than speedrun.com</td>
   vertical-align: middle;
 }
 
-#bvgecnhshu .gt_from_md > :first-child {
+#xdhvkjwwxt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bvgecnhshu .gt_from_md > :last-child {
+#xdhvkjwwxt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bvgecnhshu .gt_row {
+#xdhvkjwwxt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -361,7 +363,7 @@ than speedrun.com</td>
   overflow-x: hidden;
 }
 
-#bvgecnhshu .gt_stub {
+#xdhvkjwwxt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -374,7 +376,7 @@ than speedrun.com</td>
   padding-right: 5px;
 }
 
-#bvgecnhshu .gt_stub_row_group {
+#xdhvkjwwxt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -388,15 +390,15 @@ than speedrun.com</td>
   vertical-align: top;
 }
 
-#bvgecnhshu .gt_row_group_first td {
+#xdhvkjwwxt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bvgecnhshu .gt_row_group_first th {
+#xdhvkjwwxt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bvgecnhshu .gt_summary_row {
+#xdhvkjwwxt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -406,16 +408,16 @@ than speedrun.com</td>
   padding-right: 5px;
 }
 
-#bvgecnhshu .gt_first_summary_row {
+#xdhvkjwwxt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_first_summary_row.thick {
+#xdhvkjwwxt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bvgecnhshu .gt_last_summary_row {
+#xdhvkjwwxt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -425,7 +427,7 @@ than speedrun.com</td>
   border-bottom-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_grand_summary_row {
+#xdhvkjwwxt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -435,7 +437,7 @@ than speedrun.com</td>
   padding-right: 5px;
 }
 
-#bvgecnhshu .gt_first_grand_summary_row {
+#xdhvkjwwxt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -445,7 +447,7 @@ than speedrun.com</td>
   border-top-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_last_grand_summary_row_top {
+#xdhvkjwwxt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -455,11 +457,11 @@ than speedrun.com</td>
   border-bottom-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_striped {
+#xdhvkjwwxt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bvgecnhshu .gt_table_body {
+#xdhvkjwwxt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -468,7 +470,7 @@ than speedrun.com</td>
   border-bottom-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_footnotes {
+#xdhvkjwwxt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -482,7 +484,7 @@ than speedrun.com</td>
   border-right-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_footnote {
+#xdhvkjwwxt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -491,7 +493,7 @@ than speedrun.com</td>
   padding-right: 5px;
 }
 
-#bvgecnhshu .gt_sourcenotes {
+#xdhvkjwwxt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -505,7 +507,7 @@ than speedrun.com</td>
   border-right-color: #D3D3D3;
 }
 
-#bvgecnhshu .gt_sourcenote {
+#xdhvkjwwxt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -513,63 +515,63 @@ than speedrun.com</td>
   padding-right: 5px;
 }
 
-#bvgecnhshu .gt_left {
+#xdhvkjwwxt .gt_left {
   text-align: left;
 }
 
-#bvgecnhshu .gt_center {
+#xdhvkjwwxt .gt_center {
   text-align: center;
 }
 
-#bvgecnhshu .gt_right {
+#xdhvkjwwxt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bvgecnhshu .gt_font_normal {
+#xdhvkjwwxt .gt_font_normal {
   font-weight: normal;
 }
 
-#bvgecnhshu .gt_font_bold {
+#xdhvkjwwxt .gt_font_bold {
   font-weight: bold;
 }
 
-#bvgecnhshu .gt_font_italic {
+#xdhvkjwwxt .gt_font_italic {
   font-style: italic;
 }
 
-#bvgecnhshu .gt_super {
+#xdhvkjwwxt .gt_super {
   font-size: 65%;
 }
 
-#bvgecnhshu .gt_footnote_marks {
+#xdhvkjwwxt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bvgecnhshu .gt_asterisk {
+#xdhvkjwwxt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bvgecnhshu .gt_indent_1 {
+#xdhvkjwwxt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bvgecnhshu .gt_indent_2 {
+#xdhvkjwwxt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bvgecnhshu .gt_indent_3 {
+#xdhvkjwwxt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bvgecnhshu .gt_indent_4 {
+#xdhvkjwwxt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bvgecnhshu .gt_indent_5 {
+#xdhvkjwwxt .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

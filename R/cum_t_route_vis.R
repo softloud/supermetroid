@@ -11,7 +11,10 @@
 #'
 #' @export
 
-cum_t_route_vis <- function(ylim = range(sio_df$realtime_end_ms) / 1000 / 60) {
+cum_t_route_vis <- function(
+    ylim = range(sio_df$realtime_end_ms) / 1000 / 60,
+    base_size = 10
+    ) {
 
   sio_df %>%
     left_join(anatomecha_splits, by = "supermetroid_label") %>%
@@ -22,7 +25,7 @@ cum_t_route_vis <- function(ylim = range(sio_df$realtime_end_ms) / 1000 / 60) {
     ggplot(aes(x = split_anatomecha, y = t_h, group = run_id)) +
     geom_line(colour = sm_cols$orange, alpha = 0.2) +
     geom_point(colour = sm_cols$orange, alpha = 0.2) +
-    theme_sm(base_size = 20) +
+    theme_sm(base_size = base_size) +
     labs(
       title = "Players take different routes",
       subtitle = "Real time completion of each game event would be

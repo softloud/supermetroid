@@ -418,7 +418,6 @@ cum_t_route_vis()
 knitr::include_graphics("https://i.stack.imgur.com/MzYzZ.jpg")
 ```
 
-
 ### All-important colour palette
 
 ```{r echo=TRUE}

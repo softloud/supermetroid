@@ -3,9 +3,13 @@
 - [What is Super Metroid?](#what-is-super-metroid)
   - [Super Metroid speed running](#super-metroid-speed-running)
 - [Analyses (work in progress)](#analyses-work-in-progress)
+  - [Vignettes](#vignettes)
   - [Speed run times from
     speedrun.com](#speed-run-times-from-speedruncom)
   - [Where are Super Metroid players?](#where-are-super-metroid-players)
+  - [Routes players take](#routes-players-take)
+    - [Different routes](#different-routes)
+    - [Missingness of routes](#missingness-of-routes)
   - [Super Metroid and speed running](#super-metroid-and-speed-running)
     - [Super Metroid is the top SNES speed runner
       game](#super-metroid-is-the-top-snes-speed-runner-game)
@@ -57,23 +61,51 @@ to youtube.
 
 # Analyses (work in progress)
 
+### Vignettes
+
+| Vignette           | Description                                                                              |
+|--------------------|------------------------------------------------------------------------------------------|
+| data schema        | Plan for what data to extract for analysis                                               |
+| player-rank        | Combine speedrun.com and splits.io data                                                  |
+| src                | Scrape supermetroid.com data using `srcomapi`                                            |
+| sio                | Scrape splits.io data using `splitsio`; data is not labelled in this vignette. Raw data. |
+| splits             | Use anatomecha’s labels to update split strings                                          |
+| route-matching     | Explore the missingness of routes recorded by players                                    |
+| route-graph        | Graphs of routes players take                                                            |
+| identifying-routes | Classifying routes players take                                                          |
+| player-locations   | Exploring differences in players across locations                                        |
+
 ### Speed run times from speedrun.com
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" />
 
 - [ ] interpretable x axis
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
 
 ### Where are Super Metroid players?
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+    #> Error in UseMethod("rename"): no applicable method for 'rename' applied to an object of class "function"
+
+## Routes players take
+
+### Different routes
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;" />
+
+### Missingness of routes
+
+#### Exploratory graphs
+
+#### Analysis graph
+
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;" />
 
 ## Super Metroid and speed running
 
 ### Super Metroid is the top SNES speed runner game
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" />
 
 - [ ] convert to coloured barchart, grouped by game, coloured by
   category
@@ -81,4 +113,4 @@ to youtube.
 
 ### Subway Surfers TikTok phenomenon or good upload interface?
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />

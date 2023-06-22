@@ -1,0 +1,53 @@
+---
+title: "identifying-routes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{identifying-routes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error=TRUE
+)
+```
+
+```{r setup}
+library(supermetroid)
+library(tidyverse)
+
+```
+
+
+```{r}
+# load wide array of 
+data("sio_routes_wide")
+data("sio_df")
+
+```
+
+> visualisation of icebeam
+
+```{r}
+ranked_runs(selected_split = "ice beam")
+
+
+```
+
+> visualisation of missingness
+
+```{r}
+skimr::skim(sio_routes_wide %>% ungroup())
+
+
+```
+
+```{r}
+
+
+
+```
+

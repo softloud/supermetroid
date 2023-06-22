@@ -4,7 +4,7 @@
 \alias{cum_t_route_vis}
 \title{Players take different routes}
 \usage{
-cum_t_route_vis(ylim = range(sio_df$realtime_end_ms)/1000/60)
+cum_t_route_vis(ylim = range(sio_df$realtime_end_ms)/1000/60, base_size = 10)
 }
 \arguments{
 \item{ylim}{Set y min and max (shiny slider input).}
