@@ -11,12 +11,13 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval=FALSE
+  error=TRUE
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE}
 library(supermetroid)
+library(tidyverse)
 ```
 
 ```{python}
@@ -29,83 +30,30 @@ import splitsio
 
 ## Load runs and runners  
 
-```{python eval=FALSE}
+```{python}
 # this chunk is not evaluated 
 # to minimise api calls
 
 # get 100% Category Super Metroid game data  
-sio_cat = splitsio.Category.from_id("279", historic=False)
-save_object(sio_cat, "data-raw/sio_cat.pkl")
-
+sio_cat = splitsio.Category.from_id("279", historic=True)
+type(sio_cat)
 ```
+
+This module has its own types. 
 
 
 ```{python load splitsio dat}
-# load sio data
-with open('data-raw/sio_cat.pkl', 'rb') as inp:
-    sio_cat = pickle.load(inp)
-
-# extract runners and run from category
+# extract runners from category  
 sio_runners = sio_cat.runners()
-
-sio_runs = sio_cat.runs()
-
-
-
-```
-
-
-# Try with converting to a dictionary much earlier
-
-
-```{python}
-type(sio_runs)
-sio_runs.__dict__.keys()
-
-sio_runs.__dict__.keys()
-
-```
-
-
-```{python}
-sio_run_dict_max = 3
-
-sio_run_dicts = [sio_runs[x].to_dict() for x in range(sio_run_dict_max)]
-
-# each element of the list is a dictionary with keys
-sio_run_dicts[0].keys()
-
-```
-
-```{r}
-testing_index <- 3
-
-# find 
-
-```
-
-
-## Inspect data
-
-
-```{python}
-# take a look at a run
-sio_runs[0]
-
-# can we call nested elements by index and key?
-type(sio_runs[0])
-# I think this is a series object?
-print(pd.DataFrame(sio_runs[1:3]))
-
-print(pd.DataFrame(sio_runs[1:3]).columns)
-
-```
-
-
-```{python }
-# take a look at a runner
+type(sio_runners)
 sio_runners[0]
+sio_runners[-1]
 
+# extract run from category
+sio_runs = sio_cat.runs()
+type(sio_runs)
+sio_runs[0]
+sio_runs[-1]
 ```
 
 ## Run dataframe
@@ -123,6 +71,8 @@ src_player_id | speedrun.com player id | `srdc_id`
 ## Try with list of dictionaries
 
 ```{python}
+
+# convert the run objects to disctionaries
 sio_run_dicts = [sio_runs[x].to_dict() for x in range(len(sio_runs))]
 
 # each element is a dictionary with keys
@@ -150,24 +100,41 @@ sio_run_player_index = 10 # len(sio_run_dicts)
 
 run_runners_list = [pd.json_normalize(sio_run_dicts[x]['runners']).assign(run_id = sio_runs[x].id) for x in range(len(sio_runs))]
 
-run_runners_concat = pd.concat(run_runners)
+run_runners_concat = pd.concat(run_runners_list)
 
-run_runners = run_runners_concat[['display_name', 'name', 'run_id','id']].rename(columns={'id':'player_id', 'name':'player_name'})
-
-len(run_runners) != len(sio_runs) # :( whyeee
+run_runners = run_runners_concat[['name', 'run_id','id']].rename(columns={'id':'player_id', 'name':'player_name'})
 
 sio_run_dicts[0].keys()
+
+# this
+
+
+
+```
+
+```{python}
+# create a dataframe
 
 sio_runs_df = pd.DataFrame({
   'run_id' : [sio_run_dicts[x]['id'] for x in range(len(sio_runs))],
   't_ms' : [sio_run_dicts[x]['realtime_duration_ms'] for x in range(len(sio_runs))],
-  'date' : [sio_run_dicts[x]['updated_at'] for x in range(len(sio_runs))],
-  'image_url': [sio_run_dicts[x]['image_url'] for x in range(len(sio_runs))],
-  'video_url': [sio_run_dicts[x]['video_url'] for x in range(len(sio_runs))]
-}).merge(run_runners, on = "run_id", how = 'left').set_index('run_id')
+  'date' : [sio_run_dicts[x]['updated_at'] for x in range(len(sio_runs))]
+  # ,
+ #  'image_url': [sio_run_dicts[x]['image_url'] for x in range(len(sio_runs))],
+  # 'video_url': [sio_run_dicts[x]['video_url'] for x in range(len(sio_runs))]
+})
 
-# get segments
 
+sio_runs_df.head()
+
+
+```
+
+```{r}
+# need to merge with run runners
+run_runners.head()
+
+sio_df = sio_runs_df.merge(run_runners, on = "run_id", how = 'left')
 
 
 ```
@@ -175,8 +142,12 @@ sio_runs_df = pd.DataFrame({
 
 
 ```{r}
-inspect_sio_runs <- py$sio_runs_df %>% select(-contains("url")) %>% 
-  select(display_name, everything())
+# take a look 
+
+py$sio_runs_df %>% select(-contains("url")) %>% 
+  select(display_name, everything()) %>% sample_n()
+
+# argh something is bad 
 
 ```
 

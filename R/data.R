@@ -4,8 +4,6 @@
 #'
 #' @family smdata
 
-#' Splits.io for segments with speedrun.com
-
 #' Splits.io data for segments
 #'
 #' Intermediary dataset from sio vignette.
@@ -45,3 +43,8 @@
 #'
 #' @family smdata
 "sio_routes_wide"
+
+#' Dataframe for graphing routes
+#'
+#' @family smdata
+"from_to_df"

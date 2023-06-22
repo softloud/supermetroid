@@ -58,6 +58,9 @@
     <loc>https://softloud.github.io/supermetroid/reference/distinct_routes.html</loc>
   </url>
   <url>
+    <loc>https://softloud.github.io/supermetroid/reference/from_to_df.html</loc>
+  </url>
+  <url>
     <loc>https://softloud.github.io/supermetroid/reference/index.html</loc>
   </url>
   <url>
@@ -65,6 +68,9 @@
   </url>
   <url>
     <loc>https://softloud.github.io/supermetroid/reference/ranked_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://softloud.github.io/supermetroid/reference/route_graph.html</loc>
   </url>
   <url>
     <loc>https://softloud.github.io/supermetroid/reference/sio_df.html</loc>

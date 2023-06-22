@@ -17,13 +17,13 @@ smdata included in the supermetroid package.
 Other smdata: 
 \code{\link{anatomecha_splits}},
 \code{\link{distinct_routes}},
+\code{\link{from_to_df}},
 \code{\link{sio_df}},
 \code{\link{sio_routes_wide}},
 \code{\link{src_df}()}
 }
 \concept{smdata}
 \concept{smdata
-Splits.io for segments with speedrun.com
 Splits.io data for segments
 
 Intermediary dataset from sio vignette.

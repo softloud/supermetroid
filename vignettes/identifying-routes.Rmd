@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE}
 library(supermetroid)
 library(tidyverse)
 
@@ -31,8 +31,8 @@ data("sio_df")
 
 > visualisation of icebeam
 
-```{r}
-ranked_runs(selected_split = "ice beam")
+```{r fig.width=12, fig.height=8}
+ranked_runs(selected_split = "ice beam", base_size = 15)
 
 
 ```
@@ -45,9 +45,29 @@ skimr::skim(sio_routes_wide %>% ungroup())
 
 ```
 
+## Try imputing values using KNN
+
+```{r}
+library(caret)
+
+imputed_route_obs <- 
+  preProcess(sio_routes_wide, 
+             method="knnImpute", 
+             k = 5)
+
+imputed_route_obs$data
+
+
+```
+
+How many clusters do we get over different values of k? 
+
+
 ```{r}
 
 
 
 ```
+
+
 

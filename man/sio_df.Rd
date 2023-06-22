@@ -17,6 +17,7 @@ See vignette splits
 Other smdata: 
 \code{\link{anatomecha_splits}},
 \code{\link{distinct_routes}},
+\code{\link{from_to_df}},
 \code{\link{sio_routes_wide}},
 \code{\link{sio_splits_df}},
 \code{\link{src_df}()}

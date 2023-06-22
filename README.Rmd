@@ -56,8 +56,12 @@ As part of the verification of their speed run results, many players upload a [v
 library(supermetroid) # analysis code
 library(tidyverse) # data science tools
 library(knitr) # for html tables
+library(ggraph) # graphs
+library(tidygraph) # graphs
+
 
 data("src_df")
+data("from_to_df")
 
 ```
 
@@ -71,7 +75,7 @@ src | Scrape supermetroid.com data using `srcomapi` | `src_df`
 sio | Scrape splits.io data using `splitsio`; data is not labelled in this vignette. Raw data. | `sio_splits_df`
 splits | Use anatomecha's labels to update split strings | `sio_df`, `anatomecha_splist`, `sio_routes_wide`
 route-matching | Explore the missingness of routes recorded by players | `distinct_routes`
-route-graph | Graphs of routes players take | 
+route-graph | Graphs of routes players take | `from_to_df` 
 identifying-routes | Classifying routes players take | 
 player-locations | Exploring differences in players across locations | 
 
@@ -92,12 +96,11 @@ top_100 <- src_df %>%
   filter(rank <= 100) 
 
 top_100 %>% 
-  all_run_raincloud(xmin = min(top_100$t_s) / 60, xmax = max(top_100$t_s)/ 60) +
+  all_run_raincloud(xmin = min(top_100$t_s) / 60, xmax = max(top_100$t_s)/ 60, base_size =  15) +
   labs(title = "Top 100 Super Metroid 100% speed run times" %>% str_wrap(40))
 
 
 ```
-
 
 
 ### Where are Super Metroid players?
@@ -120,16 +123,91 @@ cum_t_route_vis(base_size = 10)
 
 #### Exploratory graphs
 
-```{r fig.width=5, fig.height=5}
+```{r}
+from_to_gg <- 
+  from_to_df %>% 
+  as_tbl_graph()
+
+```
+
+##### Too messy
+
+```{r fig.width=8, fig.height=8}
+from_to_gg %>% 
+  ggraph() +
+  geom_edge_fan(aes(size = runs))
+  
+
+```
+
+##### Need order
+
+
+```{r fig.width=8, fig.height=8}
+from_to_gg %>%
+  ggraph(layout = "linear", circular = TRUE) +
+  geom_edge_fan(aes(size = runs), alpha = 0.2) +
+  geom_node_point(aes(colour = ))
 
 
 ```
 
+
+##### Need direction
+
+
+```{r fig.width=8, fig.height=8}
+from_to_gg %>%
+  ggraph(layout = "linear") +
+  geom_edge_fan(aes(size = runs), alpha = 0.2) +
+  geom_node_point()
+
+
+```
+
+##### Too many nodes for EDA
+
+```{r fig.width=8, fig.height=8} 
+from_to_gg %>% 
+  ggraph(layout = "linear") +
+  geom_edge_arc(arrow = arrow(), aes(alpha = runs)) 
+
+
+```
+
+
 #### Analysis graph
 
+```{r fig.width=8, fig.height=8}
+route_graph(base_size = 15)
+
+
+```
+
+
+## All the tuns
 
 ```{r}
-ranked_runs("ice beam", base_size = 10)
+ranked_runs("ice beam", base_size = 15)
+
+```
+
+```{r}
+ranked_runs("grapple beam", base_size = 15)
+
+
+```
+
+```{r}
+
+# restrict runs
+ranked_runs("grapple beam", base_size = 15) +
+  xlim(0.2, 0.6) +
+  labs(
+    x = "Time (hrs) restricted to most grapple beam observations" %>% 
+      str_wrap()
+  )
+
 
 ```
 

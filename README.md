@@ -10,6 +10,7 @@
   - [Routes players take](#routes-players-take)
     - [Different routes](#different-routes)
     - [Missingness of routes](#missingness-of-routes)
+  - [All the tuns](#all-the-tuns)
   - [Super Metroid and speed running](#super-metroid-and-speed-running)
     - [Super Metroid is the top SNES speed runner
       game](#super-metroid-is-the-top-snes-speed-runner-game)
@@ -97,15 +98,39 @@ to youtube.
 
 #### Exploratory graphs
 
-#### Analysis graph
+##### Too messy
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;" />
+
+##### Need order
+
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" />
+
+##### Need direction
+
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />
+
+##### Too many nodes for EDA
+
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" />
+
+#### Analysis graph
+
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;" />
+
+## All the tuns
+
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" />
+
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" />
+
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" />
 
 ## Super Metroid and speed running
 
 ### Super Metroid is the top SNES speed runner game
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" />
 
 - [ ] convert to coloured barchart, grouped by game, coloured by
   category
@@ -113,4 +138,4 @@ to youtube.
 
 ### Subway Surfers TikTok phenomenon or good upload interface?
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;" />
