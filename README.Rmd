@@ -30,11 +30,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-This packaged analysis accompanies [PyData Copenhagen June 2023](https://www.meetup.com/pydata-copenhagen/events/294210771/). 
+This packaged analysis accompanies [PyData Copenhagen June 2023](https://www.meetup.com/pydata-copenhagen/events/294210771/)  is best viewed on the [package site](https://softloud.github.io/supermetroid).
 
 Super Metroid speed run data is captured from leaderboards, and analysed to answer the following question, posed by `anatomecha`, a Super Metroid speed runner. 
 
-> At what times do Super Metroid 100% speed runs get competitive?
+> `anatomecha`: At what times do Super Metroid 100% speed runs get competitive?
 
 # What is Super Metroid?
 
@@ -49,7 +49,7 @@ knitr::include_graphics("https://upload.wikimedia.org/wikipedia/en/e/e4/Smetroid
 
 ## Super Metroid speed running
 
-As part of the verification of their speed run results, many players upload a [video of the run](https://www.youtube.com/embed/7-cj22T2Yu4) to youtube.
+As part of the verification of their speed run results, many players upload a video of the run to youtube. Here is `anatomecha` speed running Super Metroid and capturing time points. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hNglm3KxCHQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -62,16 +62,90 @@ knitr::include_graphics("https://metroid.retropixel.net/games/metroid3/metroid3_
 
 ```
 
-Speed runners hone their skills by mastering techniques to improve their speed in collecting all loot and defeating all bosses in a 100% run through the game. 
+Speed runners hone their skills by mastering techniques to improve their speed in collecting all loot and defeating all bosses in a 100% run through of the game. 
 
-In addition to ranking data from [speedrun.com](https://speedrun.com/)'s leaderboards, this analysis incorporates timepoints observed for game events (of the player's choosing, frustratingly). 
+## Example: Load speedrun.com leaderboard data and visualise distribution
 
-Speed runners use this open source plugin for the open source emulator favoured by SNES Super Metroid (1994) speed runners. These observations are captured in a .lss file that can be uploaded to [splitsio](https://splits.io/).  
+```{r eval=FALSE, echo=TRUE}
+# install R-packaged analysis
+install.packages("devtools")
+devtools::install_github("softloud/supermetroid")
 
 
-```{r out.width="40%"}
+
+```
+
+```{r echo=TRUE}
+# example: access speedrun.com leaderboard
+library(supermetroid) # analysis code
+
+# access leaderboard data
+data("src_df")
+
+# take a look at observations
+src_df %>% head()
+
+# visualise observations in a raincloud plot
+src_df %>% 
+  all_run_raincloud(
+    base_size = 15 # set font size
+  )
+
+# how to do all this in Python?
+# so much to learn
+
+```
+
+## Tools used in this analysis
+
+
+```{r message=FALSE, echo=TRUE}
+# Other R packages used in this document
+library(tidyverse) # data science tools
+library(gt) # for html tables
+library(ggraph) # graphs
+library(tidygraph) # graphs
+
+
+```
+
+## The data
+
+```{r}
+# load datasets from supermetroid
+
+# key datasets
+data("src_df") # speedrun.com leaderboard
+data("sio_df") # splits.io player timepoints
+
+# engineered data
+data("from_to_df") # tidygraph format
+
+```
+
+Player rankings are sourced from [speedrun.com](https://speedrun.com/)'s leaderboard.
+
+```{r echo=TRUE}
+src_df %>% head()
+
+```
+
+In addition to ranking data from speedrun.com's leaderboards, this analysis incorporates timepoints observed for game events (of the player's choosing, frustratingly). 
+
+Speed runners use an open source plugin for the open source emulator favoured by SNES Super Metroid (1994) speed runners. 
+
+```{r out.width="40%", echo=TRUE}
+# whyfor error?
 knitr::include_graphics("vignettes/splits_screenshot.PNG")
 ```
+
+These observations are captured in a .lss file that can be uploaded to [splitsio](https://splits.io/).  
+
+```{r echo=TRUE}
+sio_df %>% head()
+
+```
+
 
 ### Open Python speed runner API implementations
 
@@ -79,31 +153,11 @@ Jeremy Silver maintains a Python implentation [`splitsio`](https://github.com/je
 
 Player ranks from speedrun.com were accessed via the Python implementation [`srcomapi`](https://github.com/blha303/srcomapi) of the [REST API](https://github.com/speedruncomorg/api) for [speedrun.com](https://speedrun.com/). 
 
-# Analyses (work in progress)
-
-## Colour palette is in experimental/grab whatever colours phase
-
-<div class="tenor-gif-embed" data-postid="10436793" data-share-method="host" data-aspect-ratio="1.3369" data-width="100%"><a href="https://tenor.com/view/no-sir-i-dont-like-it-horse-gif-10436793">No Sir I Dont Like It GIF</a>from <a href="https://tenor.com/search/no+sir-gifs">No Sir GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-
-```{r message=FALSE}
-# R packages
-library(supermetroid) # analysis code
-library(tidyverse) # data science tools
-library(knitr) # for html tables
-library(ggraph) # graphs
-library(tidygraph) # graphs
-
-
-data("src_df")
-data("from_to_df")
-
-```
-
-### Vignettes
+# Articles
 
 Vignette|Description|Output data
 -|-
-data schema | Plan for what data to extract for analysis |
+[data schema](#data-schema) | Plan for what data to extract for analysis |
 player-rank | Combine speedrun.com and splits.io data | `splits_df`
 src | Scrape supermetroid.com data using `srcomapi` | `src_df`
 sio | Scrape splits.io data using `splitsio`; data is not labelled in this vignette. Raw data. | `sio_splits_df`
@@ -113,7 +167,14 @@ route-graph | Graphs of routes players take | `from_to_df`
 identifying-routes | Classifying routes players take | 
 player-locations | Exploring differences in players across locations | 
 
-### Speed run times from speedrun.com
+# Analyses (work in progress)
+
+## Colour palette is in experimental/grab whatever colours phase
+
+<div class="tenor-gif-embed" data-postid="10436793" data-share-method="host" data-aspect-ratio="1.3369" data-width="100%"><a href="https://tenor.com/view/no-sir-i-dont-like-it-horse-gif-10436793">No Sir I Dont Like It GIF</a>from <a href="https://tenor.com/search/no+sir-gifs">No Sir GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+
+## Speed run times from speedrun.com
 
 ```{r }
 
@@ -134,6 +195,16 @@ top_100 %>%
   labs(title = "Top 100 Super Metroid 100% speed run times" %>% str_wrap(40))
 
 
+```
+
+
+```{r}
+src_df %>% 
+  head() %>% 
+  gt() %>% 
+  tab_header(
+    title = "speedrun.com leaderboard data"
+  )
 ```
 
 
