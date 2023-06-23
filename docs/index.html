@@ -69,15 +69,25 @@
 <li>
 <a href="#what-is-super-metroid">What is Super Metroid?</a>
 <ul>
-<li><a href="#super-metroid-speed-running">Super Metroid speed running</a></li>
+<li>
+<a href="#super-metroid-speed-running">Super Metroid speed running</a>
+<ul>
+<li><a href="#open-python-speed-runner-api-implementations">Open Python speed runner API implementations</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
 <a href="#analyses-work-in-progress">Analyses (work in progress)</a>
 <ul>
+<li>
+<a href="#colour-palette-is-in-experimentalgrab-whatever-colours-phase">Colour palette is in experimental/grab whatever colours phase</a>
+<ul>
 <li><a href="#vignettes">Vignettes</a></li>
 <li><a href="#speed-run-times-from-speedruncom">Speed run times from speedrun.com</a></li>
 <li><a href="#where-are-super-metroid-players">Where are Super Metroid players?</a></li>
+</ul>
+</li>
 <li>
 <a href="#routes-players-take">Routes players take</a>
 <ul>
@@ -85,7 +95,7 @@
 <li><a href="#missingness-of-routes">Missingness of routes</a></li>
 </ul>
 </li>
-<li><a href="#all-the-tuns">All the tuns</a></li>
+<li><a href="#all-the-runs">All the runs</a></li>
 <li>
 <a href="#super-metroid-and-speed-running">Super Metroid and speed running</a>
 <ul>
@@ -101,7 +111,8 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>This is an analysis repository accompanies <a href="https://www.meetup.com/pydata-copenhagen/events/294210771/" class="external-link">PyData Copenhagen June 2023</a>. Super Metroid speed run data is captured from leaderboards, and analysed to answer the following question, posed by a player, that is, a Super Metroid speed runner.</p>
+<p>This packaged analysis accompanies <a href="https://www.meetup.com/pydata-copenhagen/events/294210771/" class="external-link">PyData Copenhagen June 2023</a>.</p>
+<p>Super Metroid speed run data is captured from leaderboards, and analysed to answer the following question, posed by <code>anatomecha</code>, a Super Metroid speed runner.</p>
 <blockquote>
 <p>At what times do Super Metroid 100% speed runs get competitive?</p>
 </blockquote>
@@ -121,12 +132,37 @@ source: wikipedia
 <h2 id="super-metroid-speed-running">Super Metroid speed running<a class="anchor" aria-label="anchor" href="#super-metroid-speed-running"></a>
 </h2>
 <p>As part of the verification of their speed run results, many players upload a <a href="https://www.youtube.com/embed/7-cj22T2Yu4" class="external-link">video of the run</a> to youtube.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hNglm3KxCHQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+<p>This analysis focuses on 100% speedruns wherein players traverse a map using different routes to collect all loot and defeat all bosses. Speed runners try to do this as fast as possible, and log their results on leaderboards such as <a href="https://www.speedrun.com/supermetroid?h=100&amp;x=xd1mpewd" class="external-link">speedrun.com</a> or splitsio.</p>
+<p>A core feature of the game is that there are many routes through the map. These routes are often hidden in seemingly impassable walls, or require solving a puzzle.</p>
+<div class="figure" style="text-align: center">
+<img src="https://metroid.retropixel.net/games/metroid3/metroid3_map.gif" alt="image source: metroid.retropixel.net" width="100%"><p class="caption">
+image source: metroid.retropixel.net
+</p>
+</div>
+<p>Speed runners hone their skills by mastering techniques to improve their speed in collecting all loot and defeating all bosses in a 100% run through the game.</p>
+<p>In addition to ranking data from <a href="https://speedrun.com/" class="external-link">speedrun.com</a>’s leaderboards, this analysis incorporates timepoints observed for game events (of the player’s choosing, frustratingly).</p>
+<p>Speed runners use this open source plugin for the open source emulator favoured by SNES Super Metroid (1994) speed runners. These observations are captured in a .lss file that can be uploaded to <a href="https://splits.io/" class="external-link">splitsio</a>.</p>
+<p><img src="articles/splits_screenshot.PNG" width="40%" style="display: block; margin: auto;"></p>
+<div class="section level3">
+<h3 id="open-python-speed-runner-api-implementations">Open Python speed runner API implementations<a class="anchor" aria-label="anchor" href="#open-python-speed-runner-api-implementations"></a>
+</h3>
+<p>Jeremy Silver maintains a Python implentation <a href="https://github.com/jeremander/splitsio" class="external-link"><code>splitsio</code></a> of the <a href="https://github.com/glacials/splits-io/blob/master/docs/api.md" class="external-link">REST API</a> that provides players’ timepoint observations of game events from <a href="https://splits.io/" class="external-link">splitsio</a>. @jeremander’s consultation on this analysis provided key answers to questions of <a href="https://github.com/jeremander/splitsio/issues/1" class="external-link">what was and was not possible with the data</a>.</p>
+<p>Player ranks from speedrun.com were accessed via the Python implementation <a href="https://github.com/blha303/srcomapi" class="external-link"><code>srcomapi</code></a> of the <a href="https://github.com/speedruncomorg/api" class="external-link">REST API</a> for <a href="https://speedrun.com/" class="external-link">speedrun.com</a>.</p>
+</div>
 </div>
 </div>
 <div class="section level1">
 <h1 id="analyses-work-in-progress">Analyses (work in progress)<a class="anchor" aria-label="anchor" href="#analyses-work-in-progress"></a>
 </h1>
-<div class="section level3">
+<div class="section level2">
+<h2 id="colour-palette-is-in-experimentalgrab-whatever-colours-phase">Colour palette is in experimental/grab whatever colours phase<a class="anchor" aria-label="anchor" href="#colour-palette-is-in-experimentalgrab-whatever-colours-phase"></a>
+</h2>
+<div class="tenor-gif-embed" data-postid="10436793" data-share-method="host" data-aspect-ratio="1.3369" data-width="100%">
+<p><a href="https://tenor.com/view/no-sir-i-dont-like-it-horse-gif-10436793" class="external-link">No Sir I Dont Like It GIF</a>from <a href="https://tenor.com/search/no+sir-gifs" class="external-link">No Sir GIFs</a></p>
+</div>
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script><div class="section level3">
 <h3 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
 </h3>
 <table class="table">
@@ -182,17 +218,18 @@ source: wikipedia
 <div class="section level3">
 <h3 id="speed-run-times-from-speedruncom">Speed run times from speedrun.com<a class="anchor" aria-label="anchor" href="#speed-run-times-from-speedruncom"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;"></p>
 <ul class="task-list">
 <li>
 <input type="checkbox">interpretable x axis</li>
 </ul>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="where-are-super-metroid-players">Where are Super Metroid players?<a class="anchor" aria-label="anchor" href="#where-are-super-metroid-players"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; Error in UseMethod("rename"): no applicable method for 'rename' applied to an object of class "function"</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="routes-players-take">Routes players take<a class="anchor" aria-label="anchor" href="#routes-players-take"></a>
@@ -200,7 +237,7 @@ source: wikipedia
 <div class="section level3">
 <h3 id="different-routes">Different routes<a class="anchor" aria-label="anchor" href="#different-routes"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="missingness-of-routes">Missingness of routes<a class="anchor" aria-label="anchor" href="#missingness-of-routes"></a>
@@ -211,37 +248,37 @@ source: wikipedia
 <div class="section level5">
 <h5 id="too-messy">Too messy<a class="anchor" aria-label="anchor" href="#too-messy"></a>
 </h5>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level5">
 <h5 id="need-order">Need order<a class="anchor" aria-label="anchor" href="#need-order"></a>
 </h5>
-<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level5">
 <h5 id="need-direction">Need direction<a class="anchor" aria-label="anchor" href="#need-direction"></a>
 </h5>
-<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level5">
 <h5 id="too-many-nodes-for-eda">Too many nodes for EDA<a class="anchor" aria-label="anchor" href="#too-many-nodes-for-eda"></a>
 </h5>
-<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level4">
 <h4 id="analysis-graph">Analysis graph<a class="anchor" aria-label="anchor" href="#analysis-graph"></a>
 </h4>
-<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="all-the-tuns">All the tuns<a class="anchor" aria-label="anchor" href="#all-the-tuns"></a>
+<h2 id="all-the-runs">All the runs<a class="anchor" aria-label="anchor" href="#all-the-runs"></a>
 </h2>
-<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;"></p>
-<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="super-metroid-and-speed-running">Super Metroid and speed running<a class="anchor" aria-label="anchor" href="#super-metroid-and-speed-running"></a>
@@ -249,7 +286,7 @@ source: wikipedia
 <div class="section level3">
 <h3 id="super-metroid-is-the-top-snes-speed-runner-game">Super Metroid is the top SNES speed runner game<a class="anchor" aria-label="anchor" href="#super-metroid-is-the-top-snes-speed-runner-game"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;"></p>
 <ul class="task-list">
 <li>
 <input type="checkbox">convert to coloured barchart, grouped by game, coloured by category</li>
@@ -260,7 +297,7 @@ source: wikipedia
 <div class="section level3">
 <h3 id="subway-surfers-tiktok-phenomenon-or-good-upload-interface">Subway Surfers TikTok phenomenon or good upload interface?<a class="anchor" aria-label="anchor" href="#subway-surfers-tiktok-phenomenon-or-good-upload-interface"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
@@ -284,7 +321,7 @@ source: wikipedia
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Charles Gray <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/YOUR-ORCID-ID" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Charles Gray <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9978-011X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>

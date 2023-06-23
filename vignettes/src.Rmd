@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   error=TRUE,
   warning=FALSE,
-  eval=FALSE,
+  eval=TRUE,
   fig.width = 8,
   fig.height = 6
 )
@@ -397,7 +397,11 @@ src_df <-
     country = as.character(location)
   )
 
+head(src_df)
 
+```
+
+```{r eval=FALSE}
 usethis::use_data(src_df, overwrite=TRUE)
 
 ```
