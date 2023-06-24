@@ -119,7 +119,7 @@ ui <- dashboardPage(
                   ),
                   dashboardBody(
                     shinyjs::useShinyjs(),
-                    chooseSliderSkin("Simple", color=sm_cols$orange),
+                    chooseSliderSkin("Simple", color=sm_col_h$dominant_colour),
                     # setSliderColor("DarkSlateGrey", 1),
                     tags$head(
                       # links to files in www/

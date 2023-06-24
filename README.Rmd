@@ -40,12 +40,8 @@ Super Metroid speed run data is captured from leaderboards, and analysed to answ
 
 > While the exploration-focused platformers known as Metroidvanias derive their genre name from two different series, there’s one game they’re all judged by. Super Metroid wasn’t the first Metroidvania, the first Metroid game also had the focus on exploring a large interconnected map and using new abilities to open up new areas, but its polish, visual direction, and atmosphere all created a more involved experience than its predecessors. Released in 1994, Super Metroid’s shadow looms over every game in the genre since... - [thegamehoard 2022](https://thegamehoard.com/2022/04/24/50-years-of-video-games-super-metroid-snes/) 
 
-
-```{r fig.align='center', out.width="50%",fig.cap="source: wikipedia"}
-# source: wikipedia
-knitr::include_graphics("https://upload.wikimedia.org/wikipedia/en/e/e4/Smetroidbox.jpg")
-
-```
+<img align="left" 
+src="https://drive.google.com/uc?export=view&id=1YpsBSc4oKTHqgU_3bkMI6cmJWh79M91m">
 
 ## Super Metroid speed running
 
@@ -78,9 +74,6 @@ devtools::install_github("softloud/supermetroid")
 ```{r echo=TRUE}
 # example: access speedrun.com leaderboard
 library(supermetroid) # analysis code
-
-# access leaderboard data
-data("src_df")
 
 # take a look at observations
 src_df %>% head()

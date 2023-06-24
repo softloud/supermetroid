@@ -9,3 +9,8 @@
 ^\.github$
 ^talks$
 ^LICENSE\.md$
+^vignettes/*\.jpg$
+^vignettes/*\.png$
+^app$
+^dev$
+^py$

@@ -45,13 +45,8 @@ top_five_vis <- function(base_size = 10) {
   top_plt_dat  %>%
     ggplot() +
     geom_segment(
-      aes(x = 0, xend = count + 0.01*count, y = game, yend=game),
-      colour=sm_cols$ice_blue,
-      size=base_size*1.3
-    ) +
-    geom_segment(
       aes(x = 0, xend = count, y = game, yend=game),
-      colour=sm_cols$persian_indigo,
+      colour=sm_col_h$secondary_colour,
       linewidth=base_size*1.2
     ) +
     theme_sm(base_size = base_size) +
@@ -59,7 +54,8 @@ top_five_vis <- function(base_size = 10) {
       aes(x = 0.75 * count, y = game, label = count),
       family="courier",
       linewidth = base_size/2,
-      colour = sm_cols$ice_blue
+      colour = "black",
+      alpha = 0.8
     ) +
     facet_wrap(
       counted_thing ~ ., scale="free_x"
@@ -115,14 +111,9 @@ tribble(
     counted_thing = str_wrap(counted_thing, 10)
   ) %>%
   ggplot() +
-  geom_segment(
-    aes(x = 0, xend = count + 0.01*count, y = game, yend=game),
-    colour=sm_cols$ice_blue,
-    linewidth=base_size * 1.1
-  ) +
-  geom_segment(
+   geom_segment(
     aes(x = 0, xend = count, y = game, yend=game),
-    colour=sm_cols$persian_indigo,
+    colour=sm_col_h$secondary_colour,
     linewidth=base_size * 1
   ) +
   theme_sm(base_size = base_size) +
@@ -130,7 +121,8 @@ tribble(
     aes(x = 0.75 * count, y = game, label = count),
     family="courier",
     linewidth = base_size / 2,
-    colour = sm_cols$ice_blue
+    colour = "black",
+    alpha = 0.8
   ) +
   facet_wrap(
     counted_thing ~ ., scale="free"

@@ -13,14 +13,4 @@ distinct_routes
 \description{
 Used in route-graph and route-matching vignettes
 }
-\seealso{
-Other smdata: 
-\code{\link{anatomecha_splits}},
-\code{\link{from_to_df}},
-\code{\link{sio_df}},
-\code{\link{sio_routes_wide}},
-\code{\link{sio_splits_df}},
-\code{\link{src_df}()}
-}
-\concept{smdata}
 \keyword{datasets}

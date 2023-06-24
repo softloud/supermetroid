@@ -1,4 +1,4 @@
-#' Visualise each run
+#' Visualise each run by rank
 #'
 #' Takes sio_df. Need to join rankings to get y-axis ordering.
 #'
@@ -21,13 +21,15 @@ ranked_runs <- function(selected_split = NULL,
   plt <-
     plt_dat %>%
     ggplot(aes(x = t_h, y = run_id)) +
-    geom_line(colour = sm_cols$teal, alpha = 0.2) +
-    geom_point(colour = sm_cols$teal, alpha = 0.3) +
+    geom_line(colour = sm_col_h$dominant_colour, alpha = 0.2) +
+    geom_point(colour = sm_col_h$secondary_colour, alpha = 0.3) +
     theme_sm(base_size = base_size) +
     labs(title = "Time of split in each run",
          x = "Time (hrs)",
          y = "Run") +
-    theme(axis.text.y = element_blank())
+    theme(axis.text.y = element_blank(),
+          panel.grid = element_blank()
+          )
 
   if (is.null(selected_split))
     return(plt)
@@ -35,17 +37,17 @@ ranked_runs <- function(selected_split = NULL,
     return(
       plt +
         geom_point(
-          colour = sm_cols$oxford_blue,
-          data = plt_dat %>% filter(split == selected_split,
-                                    player_name == "anatomecha"),
-          size = 3
-        )  +
-        geom_point(
-          colour = sm_cols$orange,
+          colour = sm_col_h$highlight,
           data = plt_dat %>% filter(split == selected_split),
           size = 2,
           alpha = 0.5
         ) +
+        geom_point(
+          colour = sm_col_h$anatomecha,
+          data = plt_dat %>% filter(split == selected_split,
+                                    player_name == "anatomecha"),
+          size = 3
+        )  +
         labs(
           subtitle = sprintf("Split: %s", selected_split),
           caption = "anatomecha is the pale blue dot"

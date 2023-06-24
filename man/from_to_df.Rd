@@ -11,16 +11,6 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 from_to_df
 }
 \description{
-Dataframe for graphing routes
+splits.io routes in tidygraph form
 }
-\seealso{
-Other smdata: 
-\code{\link{anatomecha_splits}},
-\code{\link{distinct_routes}},
-\code{\link{sio_df}},
-\code{\link{sio_routes_wide}},
-\code{\link{sio_splits_df}},
-\code{\link{src_df}()}
-}
-\concept{smdata}
 \keyword{datasets}

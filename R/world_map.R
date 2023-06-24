@@ -24,7 +24,7 @@ sm_world <- function(df = src_df) {
     theme(axis.text.x = element_blank(),
           axis.text.y = element_blank(),
           legend.position = "bottom") +
-    scale_fill_gradient("Number of players", high = sm_cols$orange, low = sm_cols$wine)
+    scale_fill_gradient("Number of players", high = sm_col_h$dominant_colour, low = sm_cols$wine)
 
 
   # plotly fails on this map, need to switch to leaflet

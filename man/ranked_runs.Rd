@@ -2,7 +2,7 @@
 % Please edit documentation in R/ranked_runs.R
 \name{ranked_runs}
 \alias{ranked_runs}
-\title{Visualise each run}
+\title{Visualise each run by rank}
 \usage{
 ranked_runs(selected_split = NULL, base_size = 40)
 }

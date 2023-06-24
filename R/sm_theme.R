@@ -21,10 +21,23 @@ sm_cols <- list(
   orange = "#FB9435"
 )
 
-#' Inspect colours in the theme
+#' Super metroid colour heirarchy
 #'
 #' @export
 
+sm_col_h <- list(
+  dominant_colour = "#CCCCCC",
+  secondary_colour = "#666666",
+  anatomecha = "#738E9E",
+  highlight = "#AB3C06",
+  label = "#F2F2F2"
+)
+
+
+
+#' Inspect colours in the theme
+#'
+#' @export
 
 sm_cols_look <- function(base_size=20) {
   tibble(
@@ -60,47 +73,36 @@ sm_cols_look <- function(base_size=20) {
 #' Add Super Metroid theme to ggplot
 #'
 #' @param base_size for theme_minimal
-#' @param leaderboard_api string for api "splits.io" or "speedrunner.com"
-#'
-#' Stuff to do
-#'
-#'
-#' Possibly add source as an argument
 #'
 #' @export
 
-theme_sm <- function(base_size = 15# , hmm how to add captino
-                     # leaderboard_api
-                     ) {
+theme_sm <- function(base_size = 15) {
   ggplot2::theme_minimal(
     base_size = base_size,
     base_family = "courier"
   ) +
     ggplot2::theme(
       # background
-      plot.background=ggplot2::element_rect(fill=sm_cols$black),
+      plot.background=ggplot2::element_rect(fill=sm_cols$night),
       panel.background = ggplot2::element_rect(
-        colour=sm_cols$night,
-        fill=sm_cols$night
+        fill= sm_cols$black,
+        colour = sm_cols$black
       ),
-      panel.grid = ggplot2::element_line(colour=sm_cols$oxford_blue,
+      panel.grid = ggplot2::element_line(colour="#1A1A1A",
                                          linetype="dotted"),
 
       # axis text
-      axis.title =
-        ggplot2::element_text(
-          colour = sm_cols$text_green
-        ),
-      axis.text.x =
-        ggplot2::element_text(colour = sm_cols$text_green),
-      axis.text.y = ggplot2::element_text(colour = sm_cols$text_green),
-      axis.ticks = ggplot2::element_blank(),
-      plot.title = ggplot2::element_text(colour=sm_cols$cream),
-      plot.subtitle = ggplot2::element_text(colour=sm_cols$cream),
-      plot.caption = ggplot2::element_text(colour=sm_cols$cream),
-      legend.text = ggplot2::element_text(colour=sm_cols$orange),
-      legend.title = ggplot2::element_text(colour=sm_cols$orange),
-      strip.text = ggplot2::element_text(colour=sm_cols$orange)
+      axis.title = ggplot2::element_text(colour = "#D9D9D9"),
+      axis.text.x = ggplot2::element_text(colour = "#BFBFBF"),
+      axis.text.y = ggplot2::element_text(colour = "#BFBFBF"),
+      # will need to colour axis ticks
+      # axis.ticks = ggplot2::element_line(),
+      plot.title = ggplot2::element_text(colour="#D9D9D9"),
+      plot.subtitle = ggplot2::element_text(colour = "#BFBFBF"),
+      plot.caption = ggplot2::element_text(colour = "#BFBFBF"),
+      legend.text = ggplot2::element_text(colour ="#BFBFBF"),
+      legend.title = ggplot2::element_text(colour = "#BFBFBF"),
+      strip.text = ggplot2::element_text(colour="#BFBFBF")
     )
 }
 

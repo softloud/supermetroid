@@ -3,7 +3,7 @@
 \docType{data}
 \name{sio_splits_df}
 \alias{sio_splits_df}
-\title{smdatasets}
+\title{Splits.io data for segments}
 \format{
 An object of class \code{data.frame} with 19815 rows and 12 columns.
 }
@@ -11,22 +11,8 @@ An object of class \code{data.frame} with 19815 rows and 12 columns.
 sio_splits_df
 }
 \description{
-smdata included in the supermetroid package.
-}
-\seealso{
-Other smdata: 
-\code{\link{anatomecha_splits}},
-\code{\link{distinct_routes}},
-\code{\link{from_to_df}},
-\code{\link{sio_df}},
-\code{\link{sio_routes_wide}},
-\code{\link{src_df}()}
-}
-\concept{smdata}
-\concept{smdata
-Splits.io data for segments
-
 Intermediary dataset from sio vignette.
 Each row is a split time (segment) for a specific run, created in sio. Use
-\link{sio_df} for analyses; this is the raw data before relabelling.}
+sio_df for analyses; this is the raw data before relabelling.
+}
 \keyword{datasets}

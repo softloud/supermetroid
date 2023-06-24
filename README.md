@@ -58,14 +58,8 @@ speed runner.
 > [thegamehoard
 > 2022](https://thegamehoard.com/2022/04/24/50-years-of-video-games-super-metroid-snes/)
 
-<div class="figure" style="text-align: center">
-
-<img src="https://upload.wikimedia.org/wikipedia/en/e/e4/Smetroidbox.jpg" alt="source: wikipedia" width="50%" />
-<p class="caption">
-source: wikipedia
-</p>
-
-</div>
+<img align="left" 
+src="https://drive.google.com/uc?export=view&id=1YpsBSc4oKTHqgU_3bkMI6cmJWh79M91m">
 
 ## Super Metroid speed running
 
@@ -112,9 +106,6 @@ devtools::install_github("softloud/supermetroid")
 # example: access speedrun.com leaderboard
 library(supermetroid) # analysis code
 
-# access leaderboard data
-data("src_df")
-
 # take a look at observations
 src_df %>% head()
 #>   rank  player_name       date      t_s      location player_id   run_id
@@ -132,7 +123,7 @@ src_df %>%
   )
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -176,9 +167,8 @@ favoured by SNES Super Metroid (1994) speed runners.
 ``` r
 # whyfor error?
 knitr::include_graphics("vignettes/splits_screenshot.PNG")
+#> Error in knitr::include_graphics("vignettes/splits_screenshot.PNG"): Cannot find the file(s): "vignettes/splits_screenshot.PNG"
 ```
-
-<img src="vignettes/splits_screenshot.PNG" width="40%" style="display: block; margin: auto;" />
 
 These observations are captured in a .lss file that can be uploaded to
 [splitsio](https://splits.io/).
@@ -262,26 +252,26 @@ Sir I Dont Like It GIF</a>from
 
 ## Speed run times from speedrun.com
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" />
 
 - [ ] interpretable x axis
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />
 
-<div id="aczuvbxolc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aczuvbxolc table {
+<div id="zsrzxnayrf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zsrzxnayrf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#aczuvbxolc thead, #aczuvbxolc tbody, #aczuvbxolc tfoot, #aczuvbxolc tr, #aczuvbxolc td, #aczuvbxolc th {
+&#10;#zsrzxnayrf thead, #zsrzxnayrf tbody, #zsrzxnayrf tfoot, #zsrzxnayrf tr, #zsrzxnayrf td, #zsrzxnayrf th {
   border-style: none;
 }
-&#10;#aczuvbxolc p {
+&#10;#zsrzxnayrf p {
   margin: 0;
   padding: 0;
 }
-&#10;#aczuvbxolc .gt_table {
+&#10;#zsrzxnayrf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -306,11 +296,11 @@ Sir I Dont Like It GIF</a>from
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_caption {
+&#10;#zsrzxnayrf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#aczuvbxolc .gt_title {
+&#10;#zsrzxnayrf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -321,7 +311,7 @@ Sir I Dont Like It GIF</a>from
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#aczuvbxolc .gt_subtitle {
+&#10;#zsrzxnayrf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -332,7 +322,7 @@ Sir I Dont Like It GIF</a>from
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#aczuvbxolc .gt_heading {
+&#10;#zsrzxnayrf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -343,12 +333,12 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_bottom_border {
+&#10;#zsrzxnayrf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_col_headings {
+&#10;#zsrzxnayrf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -362,7 +352,7 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_col_heading {
+&#10;#zsrzxnayrf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -381,7 +371,7 @@ Sir I Dont Like It GIF</a>from
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#aczuvbxolc .gt_column_spanner_outer {
+&#10;#zsrzxnayrf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -392,13 +382,13 @@ Sir I Dont Like It GIF</a>from
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#aczuvbxolc .gt_column_spanner_outer:first-child {
+&#10;#zsrzxnayrf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#aczuvbxolc .gt_column_spanner_outer:last-child {
+&#10;#zsrzxnayrf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#aczuvbxolc .gt_column_spanner {
+&#10;#zsrzxnayrf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -409,10 +399,10 @@ Sir I Dont Like It GIF</a>from
   display: inline-block;
   width: 100%;
 }
-&#10;#aczuvbxolc .gt_spanner_row {
+&#10;#zsrzxnayrf .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#aczuvbxolc .gt_group_heading {
+&#10;#zsrzxnayrf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -437,7 +427,7 @@ Sir I Dont Like It GIF</a>from
   vertical-align: middle;
   text-align: left;
 }
-&#10;#aczuvbxolc .gt_empty_group_heading {
+&#10;#zsrzxnayrf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -451,13 +441,13 @@ Sir I Dont Like It GIF</a>from
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#aczuvbxolc .gt_from_md > :first-child {
+&#10;#zsrzxnayrf .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#aczuvbxolc .gt_from_md > :last-child {
+&#10;#zsrzxnayrf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#aczuvbxolc .gt_row {
+&#10;#zsrzxnayrf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -475,7 +465,7 @@ Sir I Dont Like It GIF</a>from
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#aczuvbxolc .gt_stub {
+&#10;#zsrzxnayrf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -487,7 +477,7 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#aczuvbxolc .gt_stub_row_group {
+&#10;#zsrzxnayrf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -500,13 +490,13 @@ Sir I Dont Like It GIF</a>from
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#aczuvbxolc .gt_row_group_first td {
+&#10;#zsrzxnayrf .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#aczuvbxolc .gt_row_group_first th {
+&#10;#zsrzxnayrf .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#aczuvbxolc .gt_summary_row {
+&#10;#zsrzxnayrf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -515,14 +505,14 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#aczuvbxolc .gt_first_summary_row {
+&#10;#zsrzxnayrf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_first_summary_row.thick {
+&#10;#zsrzxnayrf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#aczuvbxolc .gt_last_summary_row {
+&#10;#zsrzxnayrf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -531,7 +521,7 @@ Sir I Dont Like It GIF</a>from
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_grand_summary_row {
+&#10;#zsrzxnayrf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -540,7 +530,7 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#aczuvbxolc .gt_first_grand_summary_row {
+&#10;#zsrzxnayrf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -549,7 +539,7 @@ Sir I Dont Like It GIF</a>from
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_last_grand_summary_row_top {
+&#10;#zsrzxnayrf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -558,10 +548,10 @@ Sir I Dont Like It GIF</a>from
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_striped {
+&#10;#zsrzxnayrf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#aczuvbxolc .gt_table_body {
+&#10;#zsrzxnayrf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -569,7 +559,7 @@ Sir I Dont Like It GIF</a>from
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_footnotes {
+&#10;#zsrzxnayrf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -582,7 +572,7 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_footnote {
+&#10;#zsrzxnayrf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -590,7 +580,7 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#aczuvbxolc .gt_sourcenotes {
+&#10;#zsrzxnayrf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -603,57 +593,57 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#aczuvbxolc .gt_sourcenote {
+&#10;#zsrzxnayrf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#aczuvbxolc .gt_left {
+&#10;#zsrzxnayrf .gt_left {
   text-align: left;
 }
-&#10;#aczuvbxolc .gt_center {
+&#10;#zsrzxnayrf .gt_center {
   text-align: center;
 }
-&#10;#aczuvbxolc .gt_right {
+&#10;#zsrzxnayrf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#aczuvbxolc .gt_font_normal {
+&#10;#zsrzxnayrf .gt_font_normal {
   font-weight: normal;
 }
-&#10;#aczuvbxolc .gt_font_bold {
+&#10;#zsrzxnayrf .gt_font_bold {
   font-weight: bold;
 }
-&#10;#aczuvbxolc .gt_font_italic {
+&#10;#zsrzxnayrf .gt_font_italic {
   font-style: italic;
 }
-&#10;#aczuvbxolc .gt_super {
+&#10;#zsrzxnayrf .gt_super {
   font-size: 65%;
 }
-&#10;#aczuvbxolc .gt_footnote_marks {
+&#10;#zsrzxnayrf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#aczuvbxolc .gt_asterisk {
+&#10;#zsrzxnayrf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#aczuvbxolc .gt_indent_1 {
+&#10;#zsrzxnayrf .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#aczuvbxolc .gt_indent_2 {
+&#10;#zsrzxnayrf .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#aczuvbxolc .gt_indent_3 {
+&#10;#zsrzxnayrf .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#aczuvbxolc .gt_indent_4 {
+&#10;#zsrzxnayrf .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#aczuvbxolc .gt_indent_5 {
+&#10;#zsrzxnayrf .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -728,7 +718,7 @@ Sir I Dont Like It GIF</a>from
 
 ### Different routes
 
-<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" />
 
 ### Missingness of routes
 
@@ -736,37 +726,37 @@ Sir I Dont Like It GIF</a>from
 
 ##### Too messy
 
-<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" />
 
 ##### Need order
 
-<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" />
 
 ##### Need direction
 
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;" />
 
 ##### Too many nodes for EDA
 
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;" />
 
 #### Analysis graph
 
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" />
 
 ## All the runs
+
+<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" />
 
 <img src="man/figures/README-unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;" />
 
 <img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;" />
 
-<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;" />
-
 ## Super Metroid and speed running
 
 ### Super Metroid is the top SNES speed runner game
 
-<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;" />
 
 - [ ] convert to coloured barchart, grouped by game, coloured by
   category
@@ -774,4 +764,4 @@ Sir I Dont Like It GIF</a>from
 
 ### Subway Surfers TikTok phenomenon or good upload interface?
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" style="display: block; margin: auto;" />

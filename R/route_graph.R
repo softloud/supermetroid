@@ -21,11 +21,11 @@ route_graph <- function(base_size = base_size,
     ggraph(layout = "linear") +
     geom_edge_arc(arrow = arrow(),
                   aes(alpha = runs),
-                  colour = sm_cols$orange) +
-    geom_edge_fan(colour = sm_cols$resolution_blue, alpha = 0.2) +
+                  colour = sm_col_h$dominant_colour) +
+    geom_edge_fan(colour = sm_col_h$secondary_colour, alpha = 0.2) +
     geom_node_text(
       aes(label = name),
-      colour = sm_cols$text_green,
+      colour = sm_col_h$label,
       family = "courier",
       size = 4,
       angle = 45

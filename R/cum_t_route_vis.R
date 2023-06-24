@@ -23,8 +23,8 @@ cum_t_route_vis <- function(
            t_h = realtime_end_ms / 1000 / 60) %>%
     filter(!is.na(split_anatomecha)) %>%
     ggplot(aes(x = split_anatomecha, y = t_h, group = run_id)) +
-    geom_line(colour = sm_cols$orange, alpha = 0.2) +
-    geom_point(colour = sm_cols$orange, alpha = 0.2) +
+    geom_line(colour = sm_col_h$dominant_colour, alpha = 0.2) +
+    geom_point(colour = sm_col_h$dominant_colour, alpha = 0.2) +
     theme_sm(base_size = base_size) +
     labs(
       title = "Players take different routes",

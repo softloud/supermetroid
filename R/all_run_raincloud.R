@@ -33,7 +33,7 @@ all_run_raincloud <- function(run_df = src_run_df,
       .width = 0,
       alpha = 0.5,
       point_colour = NA,
-      fill = sm_cols$orange
+      fill = sm_col_h$dominant_colour
     ) +
 
     # boxplot
@@ -42,8 +42,8 @@ all_run_raincloud <- function(run_df = src_run_df,
       ## remove outliers
       outlier.color = NA,
       alpha = 0.5,
-      colour = sm_cols$orange,
-      fill = sm_cols$orange
+      colour = sm_col_h$dominant_colour,
+      fill = sm_col_h$dominant_colour
     ) +
 
     # dots
@@ -55,8 +55,8 @@ all_run_raincloud <- function(run_df = src_run_df,
       # move geom to the left
       justification = 1.2,
       alpha = 0.5,
-      colour = sm_cols$orange,
-      fill = sm_cols$orange
+      colour = sm_col_h$dominant_colour,
+      fill = sm_col_h$dominant_colour
     ) +
 
     # set theme
@@ -78,6 +78,10 @@ all_run_raincloud <- function(run_df = src_run_df,
     ggplot2::coord_flip() +
 
     # final tweaks
-    ggplot2::theme(axis.text.y = ggplot2::element_blank())
+    ggplot2::theme(
+      axis.text.y = ggplot2::element_blank(),
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor.y = element_blank()
+      )
 
 }

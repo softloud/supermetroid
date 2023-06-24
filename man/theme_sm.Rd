@@ -8,12 +8,6 @@ theme_sm(base_size = 15)
 }
 \arguments{
 \item{base_size}{for theme_minimal}
-
-\item{leaderboard_api}{string for api "splits.io" or "speedrunner.com"
-
-Stuff to do
-
-Possibly add source as an argument}
 }
 \description{
 Add Super Metroid theme to ggplot
