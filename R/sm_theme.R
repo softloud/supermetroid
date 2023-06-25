@@ -29,7 +29,7 @@ sm_col_h <- list(
   dominant_colour = "#CCCCCC",
   secondary_colour = "#666666",
   anatomecha = "#738E9E",
-  highlight = "#AB3C06",
+  highlight = "#F2F2F2",
   label = "#F2F2F2"
 )
 
@@ -88,7 +88,7 @@ theme_sm <- function(base_size = 15) {
         fill= sm_cols$black,
         colour = sm_cols$black
       ),
-      panel.grid = ggplot2::element_line(colour="#1A1A1A",
+      panel.grid = ggplot2::element_line(colour="#4D4D4D",
                                          linetype="dotted"),
 
       # axis text

@@ -5,14 +5,12 @@
 \title{Graphing routes players take}
 \usage{
 route_graph(
-  base_size = base_size,
+  font_size = 15,
   selected_splits = c("kraid", "ice beam", "gravity suit", "draygon", "ridley",
     "varia suit", "space jump")
 )
 }
 \arguments{
-\item{base_size}{for theme_minimal}
-
 \item{selected_splits}{Vector of splits of interest.}
 
 \item{segments}{Spltis of interest}

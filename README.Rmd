@@ -255,7 +255,7 @@ from_to_gg %>%
 
 
 ```{r fig.width=8, fig.height=8}
-from_to_gg %>%
+from_to_df %>%
   ggraph(layout = "linear") +
   geom_edge_fan(aes(size = runs), alpha = 0.2) +
   geom_node_point()
@@ -266,9 +266,9 @@ from_to_gg %>%
 ##### Too many nodes for EDA
 
 ```{r fig.width=8, fig.height=8} 
-from_to_gg %>% 
-  ggraph(layout = "linear") +
-  geom_edge_arc(arrow = arrow(), aes(alpha = runs)) 
+from_to_df %>% 
+  ggraph::ggraph(layout = "linear") +
+  ggraph::geom_edge_arc(arrow = arrow(), aes(alpha = runs)) 
 
 
 ```
