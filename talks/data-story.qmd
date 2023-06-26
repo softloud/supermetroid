@@ -1,0 +1,106 @@
+---
+title: "data-story"
+author: "Charles T. Gray, Ph.D."
+format: revealjs
+server: shiny
+editor: visual
+---
+
+## What is Super Metroid?
+
+```{r setup r, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo=FALSE,
+  error=FALSE,
+  fig.width=12,
+  fig.height=8
+)
+
+
+```
+
+```{r pkg r}
+library(supermetroid)
+library(gt)
+library(shiny)
+
+```
+
+## [speedrun.com](https://www.speedrun.com/supermetroid?h=100&x=xd1mpewd) leaderboard
+
+```{r echo=TRUE}
+
+# how to make data available in Python?
+
+# inspect top 10 players on speedrun.com
+src_df %>% 
+  head(10) %>% 
+  gt()
+
+
+```
+
+------------------------------------------------------------------------
+
+```{r raincloud ui}
+
+plotOutput("raincloud")
+sliderInput("ranks", "Ranks displayed",
+            min = 1,
+            max = max(
+              supermetroid::src_df$rank),
+            value = c(1, max(
+              supermetroid::src_df$rank)),
+            width = "1000px"
+            )
+
+
+```
+
+```{r raincloud server}
+#| context: server
+
+output$raincloud <- renderPlot({
+  supermetroid::all_run_raincloud(
+                    lowest_rank = input$ranks[2],
+                    highest_rank = input$ranks[1])
+})
+
+
+```
+
+------------------------------------------------------------------------
+
+How Brazilian Tik Tokkers pwn Super Metroid players on the speed runner leaderboards
+
+# Classifying routes
+
+-   [ ] animation of imputed and then clusters with ranked routes
+-   [ ] move experiments from splits to the identifying routes vignette
+-   [ ] show table of route data
+
+## Shiny Documents
+
+This Quarto document is made interactive using Shiny. Interactive documents allow readers to modify parameters and see the results immediately. Learn more about Shiny interactive documents at <https://quarto.org/docs/interactive/shiny/>.
+
+## Inputs and Outputs
+
+You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. This demonstrates how a standard R plot can be made interactive:
+
+```{r}
+sliderInput("bins", "Number of bins:", 
+            min = 1, max = 50, value = 30)
+plotOutput("distPlot")
+```
+
+```{r}
+#| context: server
+output$distPlot <- renderPlot({
+   x <- faithful[, 2]  # Old Faithful Geyser data
+   bins <- seq(min(x), max(x), length.out = input$bins + 1)
+   hist(x, breaks = bins, col = 'darkgray', border = 'white',
+        xlab = 'Waiting time to next eruption (in mins)',
+        main = 'Histogram of waiting times')
+})
+```

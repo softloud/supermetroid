@@ -105,7 +105,10 @@ relabels <- read_csv("data-raw/sio-relabels.csv") %>%
 sio_relabelled <- 
 sio_splits_df %>% 
   mutate(
-    label = tolower(game_event)
+    label = tolower(game_event),
+    label = if_else(
+      label == "grappling beam", "grapple beam", label
+    )
   ) %>% 
   left_join(relabels, by = "label")
 
@@ -118,9 +121,8 @@ sio_splits_df %>%
 # check out counts now
 sio_relabelled %>% 
   ungroup() %>% 
-  count(supermetroid_label) %>% 
+  count(label) %>% 
   arrange(desc(n)) %>% 
-  head(30) %>% 
   gt()
 
 ```

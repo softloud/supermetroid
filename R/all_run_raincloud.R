@@ -3,23 +3,44 @@
 #' @param run_df Dataframe of column of run times in seconds.
 #' @param xmin Set limits of x axis, for shiny slider input, in minutes.
 #' @param xmax Set max of x axis, shiny slider, in minutes.
-#' @param base_size For theme minimal
+#' @param font_size For theme minimal
 #' @param source Caption provenance
 #'
 #' @export
 
-all_run_raincloud <- function(run_df = src_run_df,
-                              xmin = min(src_run_df$t_s) / 60,
-                              xmax = max(src_run_df$t_s) / 60,
-                              base_size = 20,
+all_run_raincloud <- function(run_df = supermetroid::src_df,
+                              lowest_rank =
+                                max(supermetroid::src_df$rank),
+                              highest_rank = 1,
+                              font_size = 20,
                               source = "speedrun.com via srcomapi") {
-  run_df %>%
+
+  plot_dat <-
+    run_df %>%
     # convert milliseconds to hours, for now
-    dplyr::mutate(t_m = t_s / 60) %>%
+    dplyr::mutate(t_m = t_s / 60)
 
-    # exclude runs > 3 hours
+    # get x-axis limits of plot from ranks
+  plot_xlim <-
+    plot_dat %>%
+    dplyr::filter(
+      rank >= highest_rank,
+      rank <= lowest_rank
+    ) %>%
+      dplyr::summarise(
+        min = min(t_m),
+        max = max(t_m)
+      ) %>%
+      as.list()
 
-    ggplot2::ggplot(ggplot2::aes(y = t_m)) +
+
+
+plot_dat %>%
+    ggplot2::ggplot(
+      ggplot2::aes(y = t_m),
+      colour = supermetroid::sm_col_h$highlight,
+      fill = supermetroid::sm_col_h$highlight
+      ) +
 
     # plot layers
 
@@ -31,9 +52,10 @@ all_run_raincloud <- function(run_df = src_run_df,
       # above after flip
       justification = -.2,
       .width = 0,
-      alpha = 0.5,
+      alpha = 0.4,
       point_colour = NA,
-      fill = sm_col_h$dominant_colour
+      colour = supermetroid::sm_col_h$highlight,
+      fill = supermetroid::sm_col_h$highlight
     ) +
 
     # boxplot
@@ -41,9 +63,7 @@ all_run_raincloud <- function(run_df = src_run_df,
       width = .2,
       ## remove outliers
       outlier.color = NA,
-      alpha = 0.5,
-      colour = sm_col_h$dominant_colour,
-      fill = sm_col_h$dominant_colour
+      alpha = 0.4
     ) +
 
     # dots
@@ -54,25 +74,23 @@ all_run_raincloud <- function(run_df = src_run_df,
       # binwidth=0.25, # seems better to let it choose
       # move geom to the left
       justification = 1.2,
-      alpha = 0.5,
-      colour = sm_col_h$dominant_colour,
-      fill = sm_col_h$dominant_colour
+      alpha = 0.4
     ) +
 
     # set theme
-    theme_sm(base_size = base_size) +
+    theme_sm(base_size = font_size) +
 
     ggplot2::labs(
       title = "Super Metroid 100% speed run times" %>%
-        stringr::str_wrap(base_size * 2),
+        stringr::str_wrap(font_size * 2),
       subtitle = "Duration of speedrun distribution",
       y = "Time (minutes)",
       x = '',
-      caption = source
+      caption = ""
     ) +
 
     # zoom for shiny
-    ggplot2::ylim(xmin, xmax) +
+    ggplot2::ylim(plot_xlim$min, plot_xlim$max) +
 
   # rotate
     ggplot2::coord_flip() +
@@ -80,8 +98,8 @@ all_run_raincloud <- function(run_df = src_run_df,
     # final tweaks
     ggplot2::theme(
       axis.text.y = ggplot2::element_blank(),
-      panel.grid.major.y = element_blank(),
-      panel.grid.minor.y = element_blank()
+      panel.grid.major.y = ggplot2::element_blank(),
+      panel.grid.minor.y = ggplot2::element_blank()
       )
 
 }
