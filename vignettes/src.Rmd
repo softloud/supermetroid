@@ -65,20 +65,31 @@ src_df %>% head() %>% gt()
 
 ## api
 
-There is a Python module for accessing speedrun.com 
-(many thanks to maintainer...).  
+There is a Python module for accessing speedrun.com .
 
 ```{python}
-# this chunk is only evaluated when data is updated
-
-# this code from
-# https://github.com/blha303/srcomapi
-
-# load Python module 
+# load Python modules 
 import srcomapi, srcomapi.datatypes as dt
 import pandas as pd # for wrangling into df
 import time
+import json
+import math
 
+# Tak, Anthony :)
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+
+
+```
+
+
+### Get data
+
+```{python, eval=FALSE}
+# this chunk is only evaluated when data is updated
+
+# this chunk code copied from
+# https://github.com/blha303/srcomapi
 
 # call api
 src_api = srcomapi.SpeedrunCom(); src_api.debug = 1
@@ -104,52 +115,56 @@ for category in game.categories:
 
 
 ### 100% Super Metroid leaderboard
-leaderboard = srcomapi_runs['100%']
+src_leaderboard = srcomapi_runs['100%']
+
+
+
+# list of dictionaries
+type(src_leaderboard)
+
+# Only nested object seems to be runs
+src_leaderboard.keys()
+
+# Don't know what this is, is it useful?
+# generator object DataType
+src_leaderboard.variables 
+
+type(src_leaderboard.runs)
+type(src_leaderboard.runs[0])
+src_leaderboard.runs[0]['run'].data
+
+# convert the run objects to dictionaries
+src_runs = [src_leaderboard.runs[x]['run'].data for x in range(len(src_leaderboard.runs))]
+
 
 ```
 
+### Get runs
+
 ```{python}
-# this chunk is only evaluated when data is updated
 
-# Now to inspect what I have; I'm pretty new to python, so this is a bit of an exploration.
 
-# this gives an error, hmm
-leaderboard.keys()
-
-# what is leaderboard?
-type(leaderboard) # hmm not so helpful
-
-# experimenting with what I can get out of the object
-
-# oooh leaderboard has an attribute that gives a nested dictionary
-type(leaderboard.data)
-
-# what else can I get out?
-leaderboard.embeds 
-leaderboard.category # returns 100%
-# can't seem to get much more out of leaderboard 
-
-# inspect leaderboard dictionary
-leaderboard.data.keys()
-leaderboard.data['game']
-leaderboard.data['runs']
-
-src_runs = leaderboard.data['runs']
 # list of 
 type(src_runs)
 # dictionaries
 type(src_runs[1])
 
-
 # extracting specific values
 src_runs[0].keys()
 
 # rank
-src_runs[0]['place']
+src_leaderboard.runs[0]['place']
 
 # run as a nested dictionary
-src_runs[0]['run'].keys()
+src_runs[0].keys()
 
+# Inspect bits we want to extract
+src_runs[5]['id']
+src_runs[5]['times']
+src_runs[5]['date']
+
+for x in range(len(src_runs)):
+  print(src_runs[x]['players'][0]['id'])
 
 ```
 
@@ -170,24 +185,64 @@ n_obs = len(src_runs)
 
 # how to get splits? [src_runs][x]['run']['splits']
 
-# extract elements with list comprehension (new tool for me)
-src_run_df = pd.DataFrame({
-  'run_id' : [src_runs[x]['run']['id'] for x in range(n_obs)],
-  # need to inspect what happens to historical ranking
-  'rank' : [src_runs[x]['place'] for x in range(n_obs)], 
-  't_s' : [src_runs[x]['run']['times']['realtime_t'] for x in range(n_obs)],
-  'date' : [src_runs[x]['run']['date'] for x in range(n_obs)],
-  'player_id' : [pd.DataFrame(src_runs[x]['run']['players']).iloc[0,1] 
-    for x in range(n_obs)]
+# get a list of players
+src_players = [pd.DataFrame(
+  src_runs[x]['players']) for x in range(len(src_runs))]
+
+# check length of run-player is same
+len(src_players)
+
+# i think these are all single-depth dicts, and can be flattened
+pp.pprint(src_players[0:3])
+
+# concatenate players into df
+src_player_df = pd.concat(src_players).rename(columns={
+  'uri':'uri_player',
+  'id':'src_id',
+  'rel':'src_user_guest'
 })
 
-# inspect runs dataframe
-src_run_df.head()
-src_run_df.shape
+# create api call
+src_player_df["api_call"] = src_player_df[
+  'src_id'].fillna(src_player_df['name'])
 
+# ugh couldn't figure out how to lambda that ifelse
+src_player_df = src_player_df.drop(columns = ['src_id', 'name'])
+
+# take a look
+src_player_df.head()
+
+# check number of records should match runs
+src_player_df.shape[0]
+
+
+# extract elements with list comprehension (new tool for me)
+src_run_df = pd.DataFrame({
+  # need to inspect what happens to historical ranking
+  'rank' : [src_leaderboard.runs[x]['place'] for x in range(n_obs)], 
+  't_human' : [src_runs[x]['times']['primary'] 
+    for x in range(n_obs)],
+  'date' : [src_runs[x]['date'] for x in range(n_obs)],
+  't_s' : [src_runs[x]['times']['realtime_t'] 
+    for x in range(n_obs)],
+  'run_id' : [src_runs[x]['id'] for x in range(n_obs)]
+})
+
+# check that run-players and runs have same length
+src_player_df.shape[0] == src_run_df.shape[0]
+
+src_run_runners_df = pd.concat([src_run_df.reset_index(drop = True), src_player_df.reset_index(drop = True)], axis=1)
+
+# check we still have the same number of runs
+# should be one row per run
+len(src_leaderboard.runs) == src_run_runners_df.shape[0]
+
+# inspect runs dataframe
+src_run_runners_df.head()
+src_run_runners_df.shape
+src_run_runners_df.columns
 
 ```
-
 
 ## Player data
 
@@ -202,134 +257,82 @@ location | geographic location of player | api.get_user -> user.location
 
 
 # get a list of player records for each valid player id
-src_players = []
-for player in list(src_run_df.player_id.unique()):
+src_location = []
+src_name = []
+
+player = src_run_runners_df.api_call[7]
+
+# well this turned into something horrible, despite my best efforts
+# but I think it works
+
+for player in list(src_run_runners_df.api_call):
   print("loop index")
-  print(len(src_players))
+  print(len(src_location))
+  print(len(src_name))
   print(player)
-  user = src_api.get_user(player)
-  src_players.append(user)
-
-
-```
-
-
-```{python}
-# curiously this works on first three records but not on all
-
-# get a list of player records for each valid player id
-src_players = []
-for player in src_run_df.player[0:3]:
-  print("loop index")
-  print(len(src_players))
-  print(player)
-  user = src_api.get_user(player)
-  src_players.append(user)
-
-```
-
-```{python}
-
-# not all ids work when passed to thingy
-# try-catch to identify which users' ids I can call
-src_valid_players = []
-src_invalid_players = []
-src_users = []
-
-for src_player in list(src_run_df.player_id.unique()):
-  try: 
-    user = src_api.get_user(src_player)
-    src_users.append(user)
-    src_valid_players.append(src_player)
+  try:
+    user = src_api.get_user(player)
+    src_name.append(user.name)
+    try: 
+      src_location.append(user.location['country']['names']['international'])
+    except: 
+      src_location.append("no record")
   except:
-    src_invalid_players.append(src_player)
-  time.sleep(3)
+    try: 
+      src_api.search(srcomapi.datatypes.Player, {'name': player})
+      api_player = _[0]
+      src_location.append(api_player.location)
+      src_name.append(player)
+    except:
+      src_location.append("no record")
+      src_name.append(player)
+  time.sleep(0.5)
 
-len(src_players)
-    
-# this many records failed
-len(src_invalid_players)
+src_run_runners_df.shape[0]  
+len(src_location)
+len(src_name)
+print(src_location[0:9])
+print(src_name[0:9])
 
-# this many records succeeded
-len(src_valid_players)
-
-```
-
-### Player dataframe
-
-```{python}
-# extract for single
-
-src_users[0].data['id']
-# each user has an attribute that is a dictionary
-src_users[0].data.keys()
-# for matching back
-src_users[1].data['id']
-src_users[1].data['names']['international']
-src_users[1].data['location']['country']['names']['international']
+# do we have the correct number of players? (repeats expected, 1/run)
 
 
-```
-
-### Location of players on speedrun.com
-
-
-```{python}
-
-# extract list of player locations and locations separately
-valid_player_locations = []
-invalid_player_locations = []
-player_locations = []
-
-for src_user in range(len(src_users)):
-  print("loop index")
-  print(len(valid_player_locations) + len(invalid_player_locations))
-  try: 
-    player_location = src_users[src_user].data['location']['country']['names']['international']
-    valid_player_locations.append(src_user)
-    player_locations.append(player_location)
-  except:
-    invalid_player_locations.append(src_user)
-    player_locations.append("missing")
-    
-len(valid_player_locations)
-len(invalid_player_locations)
-len(player_locations)
-
-
-```
-
-
-```{python, error=TRUE}
-# extract player data into dataframe    
-src_player_df = pd.DataFrame({
-  'player_name' : [src_users[x].data['names']['international']
-    for x in range(len(src_users))],
-  'location' : player_locations,
-  'player_id' : [src_users[x].data['id'] for x in range(len(src_users))]
-
-})
-
-src_player_df.head()
 
 ```
 
 ```{python}
+src_raw_df = src_run_runners_df.assign(
+  player_name = src_name,
+  country = src_location
+)
 
-# join runs with player data
-src_run_player_df = src_player_df.merge(src_run_df, how = "right", on = "player_id")
-
-
-
+src_raw_df.shape
+src_raw_df.tail()
+src_raw_df.head()
 
 ```
+
+
+
 
 ```{r}
 # bring it over into sweet, sweet easier R
-src_df_all_obs <- py$src_run_player_df %>% 
-  mutate(
-    player_name = ifelse(is.na(player_name), player_id, player_name)
-  ) %>% select(rank, player_name, date, t_s, location, contains("id")) 
+src_all_obs_df <- py$src_raw_df %>% 
+  select(rank, 
+         player_name, 
+         date, 
+         t_human, 
+         country, 
+         contains("id"),
+         everything()) 
+
+src_df %>% head()
+
+```
+
+
+```{r eval=FALSE}
+usethis::use_data(src_df, overwrite=TRUE)
 
 ```
 
@@ -401,8 +404,4 @@ head(src_df)
 
 ```
 
-```{r eval=FALSE}
-usethis::use_data(src_df, overwrite=TRUE)
-
-```
 

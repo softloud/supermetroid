@@ -57,81 +57,30 @@ However, this will results in missing data, so specific analyses need to take th
 
 Either way, we need to know what we have in each dataset, and have a universal schema across datasets.
 
-### Runs 
+## Rank of runs from speedrun.com
 
 Each row describes one speed run; a player may have multiple runs in a database. 
 
 run_df | description 
 - | - 
-date | timestamp of run upload
-*run_id* | unique identifier of run
-run_time | total time of run in s or ms
 *player_id* | unique identifier of player
 rank | rank of player
-
-To build a speed run leaderboard across datasets, we'd need to do some fancy engineering, so we will focus on source-specific analyses for now. Each leaderboard comprises runs.
-
-run_df | description 
-- | - 
-date | timestamp of run upload
-*run_id* | unique identifier of run
-run_time | total time of run in s or ms
-*player_id* | unique identifier of player
-rank | rank of player
-*src_id* | speedrun.com id
-*sio_id* | splits.io id
-*deertier_id* | deertier id
-historical | if a historical ranking, need to inspect data to see how this should be recorded, possibly a bool, or putting NA in rank   
-
-### Location of players on speedrun.com
-
-player_df | description
-- | -
-*player_id* | unique identifier of player
-player_handle | human-readable **unique** tag
 location | geographic location of player
+t_hr | human readable total time 
+date | timestamp of run upload
+*run_id* | unique identifier of run
+t_s | total time of run in s 
 
-### Segments for each run from splitsio
+## Segments for each run from splitsio
+
+In addition to the fields above, for splits data, we have one row per split 
+recorded on a run. There are as many rows as there are splits for a run. 
 
 segment_df | description
 - | - 
 *run_id* | unique identifier of run
 segment_id | unique identifier of segment
 t_s | time in seconds, measured to millisecond precision
-
-# Import pkg & helper functions
-
-```{python py pkg}
-import srcomapi, srcomapi.datatypes as dt
-import pandas as pd
-import pickle
-import splitsio
-
-```
-
-```{r r pkg, message=FALSE}
-library(tidyquant)
-library(ggdist) # for rainclouds
-library(reticulate) # Python <-> R
-
-# load r functions for this analysis
-library(supermetroid)
-
-
-```
-
-
-```{python, eval=FALSE}
-# helper function: saving an anonymous object in python 
-# https://stackoverflow.com/questions/4529815/saving-an-object-data-persistence
-
-def save_object(obj, filename):
-    with open(filename, 'wb') as outp:  # Overwrites any existing file.
-        pickle.dump(obj, outp, pickle.HIGHEST_PROTOCOL)
-
-```
-
-
 
 # deertier
 
