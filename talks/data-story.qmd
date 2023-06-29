@@ -25,6 +25,7 @@ knitr::opts_chunk$set(
 ```{r pkg r}
 library(supermetroid)
 library(gt)
+library(gtExtras)
 library(shiny)
 library(tidyverse)
 library(plotly)
@@ -39,12 +40,11 @@ library(shinydashboardPlus)
 library(shinyWidgets)
 library(shinythemes)
 
+
+
 ```
 
-
-
-<img align="left" 
-src="https://drive.google.com/uc?export=view&id=1YpsBSc4oKTHqgU_3bkMI6cmJWh79M91m">
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/2Nq4m9ZH8uY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ::: {.notes}
 - thank anders
@@ -84,7 +84,8 @@ supermetroid::src_df %>%
   ungroup() %>% 
   head(10) %>% 
   select(1:5) %>% 
-  gt()
+  gt() %>% 
+  gt_theme_dark()
 
 ```
 
@@ -95,10 +96,6 @@ supermetroid::src_df %>%
 
 fluidPage(
   theme = bs_theme(version = 4, bootswatch = "slate"),
-  # theme = shinytheme("slate"),
-  # shinyjs::useShinyjs(),
-  # setBackgroundColor(color = "black"),
-  # tags$select()
   p(textOutput("raincloud_title")),
   sidebarLayout(
     sidebarPanel(
@@ -161,7 +158,7 @@ output$raincloud_title <- renderText({
 splits_df %>%
   select(1:10) %>% 
   head(7) %>% 
-  gt()
+  gt() %>% gt_theme_dark()
 
 
 ```
@@ -310,6 +307,42 @@ output$ranked_runs_title <- renderText({
 
 ```
 
+---
+
+```{r echo=TRUE}
+sio_routes_wide %>% 
+  ungroup() %>% 
+  select(1:10) %>%
+  sample_n(10) %>% 
+  gt() %>% 
+  tab_header(title = "What is the fastest route?",
+             subtitle = "Open ML problem"
+             ) %>% 
+  gt_theme_dark()
+
+```
+
+---
+
+- knn imputation?
+- k-means?
+- hierarchical clustering?
+- how to classify route classes?
+
+
+```{r}
+sio_routes_wide %>% 
+  ungroup() %>% 
+  select(1:10) %>%
+  sample_n(5) %>% 
+  gt() %>% 
+  tab_header(title = "What is the fastest route?",
+             subtitle = "Open ML problem"
+             ) %>% 
+  gt_theme_dark()
+
+```
+
 
 # Seeking data science position in Copenhagen
 
@@ -325,3 +358,5 @@ Mid-level data science position: ML, exploratoray data analysis, and modelling.
 
 Find me on LinkedIn.
 
+---
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/kY4VpZjFfwk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
