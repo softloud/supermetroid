@@ -4,7 +4,7 @@
 \alias{theme_sm}
 \title{Add Super Metroid theme to ggplot}
 \usage{
-theme_sm(base_size = 15)
+theme_sm(font_size = 15)
 }
 \arguments{
 \item{base_size}{for theme_minimal}

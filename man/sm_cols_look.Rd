@@ -4,7 +4,7 @@
 \alias{sm_cols_look}
 \title{Inspect colours in the theme}
 \usage{
-sm_cols_look(base_size = 20)
+sm_cols_look(font_size = 20)
 }
 \description{
 Inspect colours in the theme

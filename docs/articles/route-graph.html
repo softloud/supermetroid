@@ -95,15 +95,12 @@
 <code class="sourceCode R"><span><span class="va">long_routes</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">run_id</span>, <span class="va">supermetroid_label</span>, <span class="va">realtime_end_ms</span>, <span class="va">realtime_start_ms</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't subset columns that don't exist.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Column `supermetroid_label` doesn't exist.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">long_routes</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   run_id supermetroid_label realtime_end_ms realtime_start_ms</span></span>
-<span><span class="co">#&gt; 1   ato1         morph ball          200835                 0</span></span>
-<span><span class="co">#&gt; 2   ato1               &lt;NA&gt;          224926            200835</span></span>
-<span><span class="co">#&gt; 3   ato1              bombs          358321            224926</span></span>
-<span><span class="co">#&gt; 4   ato1               &lt;NA&gt;          589662            358321</span></span>
-<span><span class="co">#&gt; 5   ato1        charge beam          709962            589662</span></span>
-<span><span class="co">#&gt; 6   ato1             spazer          807838            709962</span></span></code></pre></div>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'long_routes' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># take a look at a dataset from ggraph</span></span>
 <span><span class="va">highschool</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -125,28 +122,14 @@ Hmmm, or just use itself.</p>
 <span>         <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">realtime_start_ms</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'long_routes' not found</span></span>
 <span></span>
 <span><span class="co"># and create a from, to df</span></span>
 <span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="va">run_events</span><span class="op">)</span>,</span>
 <span>  to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">run_events</span>, <span class="st">"end"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13 × 2</span></span></span>
-<span><span class="co">#&gt;    from               to                </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> start              bombs             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> bombs              varia suit        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> varia suit         speed booster     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> speed booster      grapple beam      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> grapple beam       phantoon          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> phantoon           gravity suit      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> gravity suit       spore spawn supers</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> spore spawn supers space jump        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> space jump         plasma beam       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> plasma beam        screw attack      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> screw attack       x-ray             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> x-ray              golden 4          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> golden 4           end</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'run_events' not found</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="create-a-from-to-dataframe-for-each-route">Create a from-to dataframe for each route<a class="anchor" aria-label="anchor" href="#create-a-from-to-dataframe-for-each-route"></a>

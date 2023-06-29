@@ -6,8 +6,7 @@
 \usage{
 route_graph(
   font_size = 15,
-  selected_splits = c("kraid", "ice beam", "gravity suit", "draygon", "ridley",
-    "varia suit", "space jump")
+  selected_splits = supermetroid::common_splits$game_event
 )
 }
 \arguments{

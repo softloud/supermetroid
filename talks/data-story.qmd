@@ -1,20 +1,22 @@
 ---
-title: "data-story"
-author: "Charles T. Gray, Ph.D."
-format: revealjs
+title: "Super Metroid 100% Speed Runs"
+author: "Charles, Cecilie, and Dave (`anatomecha`)"
+format: 
+  revealjs:
+    theme: night
 server: shiny
-editor: visual
+editor: source
+mainfont: "courier"
 ---
-
-## What is Super Metroid?
 
 ```{r setup r, include=FALSE}
 
 knitr::opts_chunk$set(
   echo=FALSE,
-  error=FALSE,
+  error=TRUE,
   fig.width=12,
-  fig.height=8
+  fig.height=8,
+  fig.align="center"
 )
 
 
@@ -24,36 +26,107 @@ knitr::opts_chunk$set(
 library(supermetroid)
 library(gt)
 library(shiny)
+library(tidyverse)
+library(plotly)
+library(ggraph) # graphs
+library(tidygraph) # graphs
+
+
+library(bslib)
+library(shinyjs)
+library(shinydashboard)
+library(shinydashboardPlus)
+library(shinyWidgets)
+library(shinythemes)
 
 ```
+
+
+
+<img align="left" 
+src="https://drive.google.com/uc?export=view&id=1YpsBSc4oKTHqgU_3bkMI6cmJWh79M91m">
+
+::: {.notes}
+- thank anders
+- 2 x piano 1 x datasci
+- 2 friends from Unity
+- What is Unity?
+  - anatomecha intro
+
+- anatomecha:
+  - What is Super Metroid?
+  - What is speed running?
+  - The question that started this: When competetive? 
+  
+:::
+  
+---
+
+```{r}
+top_five_vis()
+
+```
+
+---
+
+```{r}
+top_games_vis()
+
+```
+
+# Rankings
 
 ## [speedrun.com](https://www.speedrun.com/supermetroid?h=100&x=xd1mpewd) leaderboard
 
-```{r echo=TRUE}
-
-# how to make data available in Python?
-
+```{r }
 # inspect top 10 players on speedrun.com
-src_df %>% 
+supermetroid::src_df %>% 
+  ungroup() %>% 
   head(10) %>% 
+  select(1:5) %>% 
   gt()
-
 
 ```
 
-------------------------------------------------------------------------
+---
 
 ```{r raincloud ui}
 
-plotOutput("raincloud")
-sliderInput("ranks", "Ranks displayed",
-            min = 1,
-            max = max(
-              supermetroid::src_df$rank),
-            value = c(1, max(
-              supermetroid::src_df$rank)),
-            width = "1000px"
-            )
+
+fluidPage(
+  theme = bs_theme(version = 4, bootswatch = "slate"),
+  # theme = shinytheme("slate"),
+  # shinyjs::useShinyjs(),
+  # setBackgroundColor(color = "black"),
+  # tags$select()
+  p(textOutput("raincloud_title")),
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+      p("Highest rank"),
+      numericInput(
+        "min_rank",
+        label = "",
+        value = 1,
+        min = 1,
+        max = max(supermetroid::src_df$rank)
+      ),
+      p("Lowest rank"),
+      numericInput(
+        "max_rank",
+        label = "",
+        value = max(supermetroid::src_df$rank),
+        min = 1,
+        max = max(supermetroid::src_df$rank)
+      ),
+    ),
+    mainPanel(width = 9,
+              plotOutput(
+                "raincloud", height = "600px", width = "100%"
+              ))
+  )
+)
+
 
 
 ```
@@ -63,44 +136,192 @@ sliderInput("ranks", "Ranks displayed",
 
 output$raincloud <- renderPlot({
   supermetroid::all_run_raincloud(
-                    lowest_rank = input$ranks[2],
-                    highest_rank = input$ranks[1])
+    font_size = 30,
+    lowest_rank = input$max_rank,
+    highest_rank = input$min_rank
+  )
+})
+
+output$raincloud_title <- renderText({
+  sprintf(
+    "How fast do players ranked from  %s to %s run?",
+    input$min_rank,
+    input$max_rank
+  )
 })
 
 
 ```
 
-------------------------------------------------------------------------
+# Routes 
 
-How Brazilian Tik Tokkers pwn Super Metroid players on the speed runner leaderboards
-
-# Classifying routes
-
--   [ ] animation of imputed and then clusters with ranked routes
--   [ ] move experiments from splits to the identifying routes vignette
--   [ ] show table of route data
-
-## Shiny Documents
-
-This Quarto document is made interactive using Shiny. Interactive documents allow readers to modify parameters and see the results immediately. Learn more about Shiny interactive documents at <https://quarto.org/docs/interactive/shiny/>.
-
-## Inputs and Outputs
-
-You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. This demonstrates how a standard R plot can be made interactive:
+## [splits.io](https://splits.io/) game event data
 
 ```{r}
-sliderInput("bins", "Number of bins:", 
-            min = 1, max = 50, value = 30)
-plotOutput("distPlot")
+splits_df %>%
+  select(1:10) %>% 
+  head(7) %>% 
+  gt()
+
+
 ```
 
+
+---
+
 ```{r}
+cum_t_route_vis()+ylim(0, 200)
+
+```
+
+
+---
+
+```{r fig.cap="image source: metroid.retropixel.net"}
+knitr::include_graphics("https://metroid.retropixel.net/games/metroid3/metroid3_map.gif")
+
+```
+
+--- 
+
+::: {.panel-tabset}
+
+
+```{r}
+from_to_gg <- 
+  from_to_df %>% 
+  as_tbl_graph()
+
+```
+
+### Mess
+
+```{r fig.width=5, fig.height=5}
+from_to_gg %>% 
+  ggraph() +
+  geom_edge_fan(aes(size = runs))
+  
+
+```
+
+### Order
+
+
+```{r fig.width=5, fig.height=5}
+from_to_gg %>%
+  ggraph(layout = "linear", circular = TRUE) +
+  geom_edge_fan(aes(size = runs), alpha = 0.2) +
+  geom_node_point(aes(colour = ))
+
+
+```
+
+
+### Dir
+
+
+```{r fig.width=5, fig.height=5}
+from_to_df %>%
+  ggraph(layout = "linear") +
+  geom_edge_fan(aes(size = runs), alpha = 0.2) +
+  geom_node_point()
+
+
+```
+
+### Busy
+
+```{r fig.width=5, fig.height=5} 
+from_to_df %>% 
+  ggraph::ggraph(layout = "linear") +
+  ggraph::geom_edge_arc(arrow = arrow(), aes(alpha = runs)) 
+
+
+```
+
+### Strats
+
+  
+```{r fig.height=5,fig.width=7}
+route_graph(selected_splits = c("varia suit", "phantoon", "space jump", "ridley", "golden 4", "grapple beam"))
+```
+
+
+
+:::  
+  
+
+---
+
+```{r ranked ui}
+fluidPage(
+  theme=shinytheme("slate"),
+  chooseSliderSkin("Simple", color = supermetroid::sm_col_h$highlight),
+  tags$head(
+    tags$style("#make_smaller {font-size: 0.5vw;}")
+  ),
+            p(textOutput("ranked_title")),
+          sidebarLayout(
+            sidebarPanel(
+              width = 3,
+              p("Split"),
+              selectInput(
+                "split",
+                "",
+                choices = common_splits$game_event,
+                selected = "ice beam"
+              ),
+              p("Max time"),
+              numericInput(
+                "max_t",
+                "",
+                min = 100,
+                max = 400,
+                value = 400
+              ),
+              NULL
+            ),
+            mainPanel(
+              width = 9,
+              plotOutput("ranked_runs", height = "600px", width = "100%")
+            )
+          ))
+
+```
+
+```{r ranked server}
 #| context: server
-output$distPlot <- renderPlot({
-   x <- faithful[, 2]  # Old Faithful Geyser data
-   bins <- seq(min(x), max(x), length.out = input$bins + 1)
-   hist(x, breaks = bins, col = 'darkgray', border = 'white',
-        xlab = 'Waiting time to next eruption (in mins)',
-        main = 'Histogram of waiting times')
+
+output$ranked_runs <- renderPlot({
+  
+  supermetroid::ranked_runs(
+    selected_split = input$split,
+    font_size = 30
+  ) +
+    ggplot2::xlim(0, input$max_t)
 })
+
+output$ranked_runs_title <- renderText({
+  sprintf(
+    "Inspect game event clusters"
+  )
+})
+
+
 ```
+
+
+# Seeking data science position in Copenhagen
+
+## Looking for
+
+Mid-level data science position: ML, exploratoray data analysis, and modelling.
+
+### Priorities
+
+-   Copenhagen
+-   Data science
+-   Swing dancing
+
+Find me on LinkedIn.
+

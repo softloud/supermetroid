@@ -84,7 +84,6 @@
 <li>
 <a href="#analyses-work-in-progress">Analyses (work in progress)</a>
 <ul>
-<li><a href="#colour-palette-is-in-experimentalgrab-whatever-colours-phase">Colour palette is in experimental/grab whatever colours phase</a></li>
 <li>
 <a href="#speed-run-times-from-speedruncom">Speed run times from speedrun.com</a>
 <ul>
@@ -98,7 +97,7 @@
 <li><a href="#missingness-of-routes">Missingness of routes</a></li>
 </ul>
 </li>
-<li><a href="#all-the-runs">All the runs</a></li>
+<li><a href="#route-clusters">Route clusters</a></li>
 <li>
 <a href="#super-metroid-and-speed-running">Super Metroid and speed running</a>
 <ul>
@@ -155,18 +154,26 @@ image source: metroid.retropixel.net
 <span></span>
 <span><span class="co"># take a look at observations</span></span>
 <span><span class="va">src_df</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   rank  player_name       date      t_s      location player_id   run_id</span></span>
-<span><span class="co">#&gt; 0    1    ShinyZeni 2021-07-31 4373.000 United States  zxzno3ex z5do82dm</span></span>
-<span><span class="co">#&gt; 1    2        zoast 2021-02-24 4375.000         Palau  18v6k4nx yo75d4dm</span></span>
-<span><span class="co">#&gt; 2    3   Behemoth87 2021-12-08 4375.930       England  zxz2wy4x m36d0q6m</span></span>
-<span><span class="co">#&gt; 3    4        Gebbu 2023-05-08 4392.000        Norway  xk49m26j m3qo724y</span></span>
-<span><span class="co">#&gt; 4    5 Static_Shock 2023-06-10 4438.367        Brazil  x35ve3kj m3qrx76y</span></span>
-<span><span class="co">#&gt; 5    6   Oatsngoats 2020-09-08 4478.000 United States  zx7q0k08 z1odq09m</span></span>
+<span><span class="co">#&gt;   rank  player_name       date        t_human       country   run_id      t_s</span></span>
+<span><span class="co">#&gt; 1    1    ShinyZeni 2023-06-20     PT1H12M47S United States ywrjqd9m 4367.000</span></span>
+<span><span class="co">#&gt; 2    2        zoast 2021-02-24     PT1H12M55S         Palau yo75d4dm 4375.000</span></span>
+<span><span class="co">#&gt; 3    3   Behemoth87 2021-12-08 PT1H12M55.930S       England m36d0q6m 4375.930</span></span>
+<span><span class="co">#&gt; 4    4        Gebbu 2023-05-08     PT1H13M12S        Norway m3qo724y 4392.000</span></span>
+<span><span class="co">#&gt; 5    5 Static_Shock 2023-06-10 PT1H13M58.367S        Brazil m3qrx76y 4438.367</span></span>
+<span><span class="co">#&gt; 6    6     CScottyW 2023-06-27     PT1H14M18S United States zpw9px8y 4458.000</span></span>
+<span><span class="co">#&gt;   src_user_guest                                     uri_player api_call</span></span>
+<span><span class="co">#&gt; 1           user https://www.speedrun.com/api/v1/users/zxzno3ex zxzno3ex</span></span>
+<span><span class="co">#&gt; 2           user https://www.speedrun.com/api/v1/users/18v6k4nx 18v6k4nx</span></span>
+<span><span class="co">#&gt; 3           user https://www.speedrun.com/api/v1/users/zxz2wy4x zxz2wy4x</span></span>
+<span><span class="co">#&gt; 4           user https://www.speedrun.com/api/v1/users/xk49m26j xk49m26j</span></span>
+<span><span class="co">#&gt; 5           user https://www.speedrun.com/api/v1/users/x35ve3kj x35ve3kj</span></span>
+<span><span class="co">#&gt; 6           user https://www.speedrun.com/api/v1/users/18q3n0dj 18q3n0dj</span></span>
 <span></span>
 <span><span class="co"># visualise observations in a raincloud plot</span></span>
 <span><span class="va">src_df</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="reference/all_run_raincloud.html">all_run_raincloud</a></span><span class="op">(</span></span>
-<span>    base_size <span class="op">=</span> <span class="fl">15</span> <span class="co"># set font size</span></span>
+<span>    lowest_rank <span class="op">=</span> <span class="fl">580</span>,</span>
+<span>    font_size <span class="op">=</span> <span class="fl">15</span> <span class="co"># set font size</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -190,13 +197,20 @@ image source: metroid.retropixel.net
 <p>Player rankings are sourced from <a href="https://speedrun.com/" class="external-link">speedrun.com</a>’s leaderboard.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">src_df</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   rank  player_name       date      t_s      location player_id   run_id</span></span>
-<span><span class="co">#&gt; 0    1    ShinyZeni 2021-07-31 4373.000 United States  zxzno3ex z5do82dm</span></span>
-<span><span class="co">#&gt; 1    2        zoast 2021-02-24 4375.000         Palau  18v6k4nx yo75d4dm</span></span>
-<span><span class="co">#&gt; 2    3   Behemoth87 2021-12-08 4375.930       England  zxz2wy4x m36d0q6m</span></span>
-<span><span class="co">#&gt; 3    4        Gebbu 2023-05-08 4392.000        Norway  xk49m26j m3qo724y</span></span>
-<span><span class="co">#&gt; 4    5 Static_Shock 2023-06-10 4438.367        Brazil  x35ve3kj m3qrx76y</span></span>
-<span><span class="co">#&gt; 5    6   Oatsngoats 2020-09-08 4478.000 United States  zx7q0k08 z1odq09m</span></span></code></pre></div>
+<span><span class="co">#&gt;   rank  player_name       date        t_human       country   run_id      t_s</span></span>
+<span><span class="co">#&gt; 1    1    ShinyZeni 2023-06-20     PT1H12M47S United States ywrjqd9m 4367.000</span></span>
+<span><span class="co">#&gt; 2    2        zoast 2021-02-24     PT1H12M55S         Palau yo75d4dm 4375.000</span></span>
+<span><span class="co">#&gt; 3    3   Behemoth87 2021-12-08 PT1H12M55.930S       England m36d0q6m 4375.930</span></span>
+<span><span class="co">#&gt; 4    4        Gebbu 2023-05-08     PT1H13M12S        Norway m3qo724y 4392.000</span></span>
+<span><span class="co">#&gt; 5    5 Static_Shock 2023-06-10 PT1H13M58.367S        Brazil m3qrx76y 4438.367</span></span>
+<span><span class="co">#&gt; 6    6     CScottyW 2023-06-27     PT1H14M18S United States zpw9px8y 4458.000</span></span>
+<span><span class="co">#&gt;   src_user_guest                                     uri_player api_call</span></span>
+<span><span class="co">#&gt; 1           user https://www.speedrun.com/api/v1/users/zxzno3ex zxzno3ex</span></span>
+<span><span class="co">#&gt; 2           user https://www.speedrun.com/api/v1/users/18v6k4nx 18v6k4nx</span></span>
+<span><span class="co">#&gt; 3           user https://www.speedrun.com/api/v1/users/zxz2wy4x zxz2wy4x</span></span>
+<span><span class="co">#&gt; 4           user https://www.speedrun.com/api/v1/users/xk49m26j xk49m26j</span></span>
+<span><span class="co">#&gt; 5           user https://www.speedrun.com/api/v1/users/x35ve3kj x35ve3kj</span></span>
+<span><span class="co">#&gt; 6           user https://www.speedrun.com/api/v1/users/18q3n0dj 18q3n0dj</span></span></code></pre></div>
 <p>In addition to ranking data from speedrun.com’s leaderboards, this analysis incorporates timepoints observed for game events (of the player’s choosing, frustratingly).</p>
 <p>Speed runners use an open source plugin for the open source emulator favoured by SNES Super Metroid (1994) speed runners.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -206,34 +220,27 @@ image source: metroid.retropixel.net
 <p>These observations are captured in a .lss file that can be uploaded to <a href="https://splits.io/" class="external-link">splitsio</a>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sio_df</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   supermetroid_label player_name           game_event segment_number</span></span>
-<span><span class="co">#&gt; 1         morph ball  anatomecha        Morphing Ball              0</span></span>
-<span><span class="co">#&gt; 2               &lt;NA&gt;  anatomecha       First Missiles              1</span></span>
-<span><span class="co">#&gt; 3              bombs  anatomecha                 Bomb              2</span></span>
-<span><span class="co">#&gt; 4               &lt;NA&gt;  anatomecha First Super Missiles              3</span></span>
-<span><span class="co">#&gt; 5        charge beam  anatomecha          Charge Beam              4</span></span>
-<span><span class="co">#&gt; 6             spazer  anatomecha               Spazer              5</span></span>
-<span><span class="co">#&gt;   realtime_start_ms                           segment_id run_id player_id</span></span>
-<span><span class="co">#&gt; 1                 0 69d90da3-1634-4af4-9096-419a32bedd0a   ato1     89646</span></span>
-<span><span class="co">#&gt; 2            200835 fad50319-d55b-460e-923a-c416f233daea   ato1     89646</span></span>
-<span><span class="co">#&gt; 3            224926 089daf0b-64c3-4eec-8902-022335b2b179   ato1     89646</span></span>
-<span><span class="co">#&gt; 4            358321 2a215dcd-2989-4939-8558-a7215904dfd1   ato1     89646</span></span>
-<span><span class="co">#&gt; 5            589662 e906991d-e919-47c1-a809-2b4da9b67461   ato1     89646</span></span>
-<span><span class="co">#&gt; 6            709962 10439232-43c7-4752-afb9-ee23782da4a9   ato1     89646</span></span>
-<span><span class="co">#&gt;   realtime_duration_ms realtime_end_ms realtime_shortest_duration_ms</span></span>
-<span><span class="co">#&gt; 1               200835          200835                        200835</span></span>
-<span><span class="co">#&gt; 2                24091          224926                         23286</span></span>
-<span><span class="co">#&gt; 3               133395          358321                        129371</span></span>
-<span><span class="co">#&gt; 4               231341          589662                        227335</span></span>
-<span><span class="co">#&gt; 5               120300          709962                        120299</span></span>
-<span><span class="co">#&gt; 6                97876          807838                         95884</span></span>
-<span><span class="co">#&gt;   realtime_gold         split_player                split</span></span>
-<span><span class="co">#&gt; 1          TRUE        morphing ball        morphing ball</span></span>
-<span><span class="co">#&gt; 2         FALSE       first missiles       first missiles</span></span>
-<span><span class="co">#&gt; 3         FALSE                 bomb                 bomb</span></span>
-<span><span class="co">#&gt; 4         FALSE first super missiles first super missiles</span></span>
-<span><span class="co">#&gt; 5         FALSE          charge beam          charge beam</span></span>
-<span><span class="co">#&gt; 6         FALSE               spazer               spazer</span></span></code></pre></div>
+<span><span class="co">#&gt;             game_event player_name realtime_start_ms realtime_duration_ms</span></span>
+<span><span class="co">#&gt; 1           morph ball  anatomecha                 0               200835</span></span>
+<span><span class="co">#&gt; 2       first missiles  anatomecha            200835                24091</span></span>
+<span><span class="co">#&gt; 3                bombs  anatomecha            224926               133395</span></span>
+<span><span class="co">#&gt; 4 first super missiles  anatomecha            358321               231341</span></span>
+<span><span class="co">#&gt; 5          charge beam  anatomecha            589662               120300</span></span>
+<span><span class="co">#&gt; 6               spazer  anatomecha            709962                97876</span></span>
+<span><span class="co">#&gt;   realtime_end_ms realtime_shortest_duration_ms realtime_gold segment_number</span></span>
+<span><span class="co">#&gt; 1          200835                        200835          TRUE              0</span></span>
+<span><span class="co">#&gt; 2          224926                         23286         FALSE              1</span></span>
+<span><span class="co">#&gt; 3          358321                        129371         FALSE              2</span></span>
+<span><span class="co">#&gt; 4          589662                        227335         FALSE              3</span></span>
+<span><span class="co">#&gt; 5          709962                        120299         FALSE              4</span></span>
+<span><span class="co">#&gt; 6          807838                         95884         FALSE              5</span></span>
+<span><span class="co">#&gt;                             segment_id run_id player_id</span></span>
+<span><span class="co">#&gt; 1 69d90da3-1634-4af4-9096-419a32bedd0a   ato1     89646</span></span>
+<span><span class="co">#&gt; 2 fad50319-d55b-460e-923a-c416f233daea   ato1     89646</span></span>
+<span><span class="co">#&gt; 3 089daf0b-64c3-4eec-8902-022335b2b179   ato1     89646</span></span>
+<span><span class="co">#&gt; 4 2a215dcd-2989-4939-8558-a7215904dfd1   ato1     89646</span></span>
+<span><span class="co">#&gt; 5 e906991d-e919-47c1-a809-2b4da9b67461   ato1     89646</span></span>
+<span><span class="co">#&gt; 6 10439232-43c7-4752-afb9-ee23782da4a9   ato1     89646</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="open-python-speed-runner-api-implementations">Open Python speed runner API implementations<a class="anchor" aria-label="anchor" href="#open-python-speed-runner-api-implementations"></a>
 </h3>
@@ -260,37 +267,37 @@ image source: metroid.retropixel.net
 <td>Plan for what data to extract for analysis</td>
 </tr>
 <tr class="even">
-<td>player-rank</td>
-<td>Combine speedrun.com and splits.io data</td>
-</tr>
-<tr class="odd">
 <td>src</td>
 <td>Scrape supermetroid.com data using <code>srcomapi</code>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>sio</td>
 <td>Scrape splits.io data using <code>splitsio</code>; data is not labelled in this vignette. Raw data.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>splits</td>
 <td>Use anatomecha’s labels to update split strings</td>
+</tr>
+<tr class="odd">
+<td>player-rank</td>
+<td>Combine speedrun.com and splits.io data</td>
+</tr>
+<tr class="even">
+<td>route-graph</td>
+<td>Graphs of routes players take</td>
+</tr>
+<tr class="odd">
+<td>player-locations</td>
+<td>Exploring differences in players across locations</td>
 </tr>
 <tr class="even">
 <td>route-matching</td>
 <td>Explore the missingness of routes recorded by players</td>
 </tr>
 <tr class="odd">
-<td>route-graph</td>
-<td>Graphs of routes players take</td>
-</tr>
-<tr class="even">
 <td>identifying-routes</td>
 <td>Classifying routes players take</td>
-</tr>
-<tr class="odd">
-<td>player-locations</td>
-<td>Exploring differences in players across locations</td>
 </tr>
 </tbody>
 </table>
@@ -299,36 +306,23 @@ image source: metroid.retropixel.net
 <h1 id="analyses-work-in-progress">Analyses (work in progress)<a class="anchor" aria-label="anchor" href="#analyses-work-in-progress"></a>
 </h1>
 <div class="section level2">
-<h2 id="colour-palette-is-in-experimentalgrab-whatever-colours-phase">Colour palette is in experimental/grab whatever colours phase<a class="anchor" aria-label="anchor" href="#colour-palette-is-in-experimentalgrab-whatever-colours-phase"></a>
-</h2>
-<div class="tenor-gif-embed" data-postid="10436793" data-share-method="host" data-aspect-ratio="1.3369" data-width="100%">
-<p><a href="https://tenor.com/view/no-sir-i-dont-like-it-horse-gif-10436793" class="external-link">No Sir I Dont Like It GIF</a>from <a href="https://tenor.com/search/no+sir-gifs" class="external-link">No Sir GIFs</a></p>
-</div>
-<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-</div>
-<div class="section level2">
 <h2 id="speed-run-times-from-speedruncom">Speed run times from speedrun.com<a class="anchor" aria-label="anchor" href="#speed-run-times-from-speedruncom"></a>
 </h2>
 <p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;"></p>
-<ul class="task-list">
-<li>
-<input type="checkbox">interpretable x axis</li>
-</ul>
-<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;"></p>
-<div id="zsrzxnayrf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zsrzxnayrf table {
+<div id="idvfcctick" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#idvfcctick table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#zsrzxnayrf thead, #zsrzxnayrf tbody, #zsrzxnayrf tfoot, #zsrzxnayrf tr, #zsrzxnayrf td, #zsrzxnayrf th {
+&#10;#idvfcctick thead, #idvfcctick tbody, #idvfcctick tfoot, #idvfcctick tr, #idvfcctick td, #idvfcctick th {
   border-style: none;
 }
-&#10;#zsrzxnayrf p {
+&#10;#idvfcctick p {
   margin: 0;
   padding: 0;
 }
-&#10;#zsrzxnayrf .gt_table {
+&#10;#idvfcctick .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -353,11 +347,11 @@ image source: metroid.retropixel.net
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_caption {
+&#10;#idvfcctick .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#zsrzxnayrf .gt_title {
+&#10;#idvfcctick .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -368,7 +362,7 @@ image source: metroid.retropixel.net
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#zsrzxnayrf .gt_subtitle {
+&#10;#idvfcctick .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -379,7 +373,7 @@ image source: metroid.retropixel.net
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#zsrzxnayrf .gt_heading {
+&#10;#idvfcctick .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -390,12 +384,12 @@ image source: metroid.retropixel.net
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_bottom_border {
+&#10;#idvfcctick .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_col_headings {
+&#10;#idvfcctick .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -409,7 +403,7 @@ image source: metroid.retropixel.net
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_col_heading {
+&#10;#idvfcctick .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -428,7 +422,7 @@ image source: metroid.retropixel.net
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#zsrzxnayrf .gt_column_spanner_outer {
+&#10;#idvfcctick .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -439,13 +433,13 @@ image source: metroid.retropixel.net
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#zsrzxnayrf .gt_column_spanner_outer:first-child {
+&#10;#idvfcctick .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#zsrzxnayrf .gt_column_spanner_outer:last-child {
+&#10;#idvfcctick .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#zsrzxnayrf .gt_column_spanner {
+&#10;#idvfcctick .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -456,10 +450,10 @@ image source: metroid.retropixel.net
   display: inline-block;
   width: 100%;
 }
-&#10;#zsrzxnayrf .gt_spanner_row {
+&#10;#idvfcctick .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#zsrzxnayrf .gt_group_heading {
+&#10;#idvfcctick .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -484,7 +478,7 @@ image source: metroid.retropixel.net
   vertical-align: middle;
   text-align: left;
 }
-&#10;#zsrzxnayrf .gt_empty_group_heading {
+&#10;#idvfcctick .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -498,13 +492,13 @@ image source: metroid.retropixel.net
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#zsrzxnayrf .gt_from_md > :first-child {
+&#10;#idvfcctick .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#zsrzxnayrf .gt_from_md > :last-child {
+&#10;#idvfcctick .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#zsrzxnayrf .gt_row {
+&#10;#idvfcctick .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -522,7 +516,7 @@ image source: metroid.retropixel.net
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#zsrzxnayrf .gt_stub {
+&#10;#idvfcctick .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -534,7 +528,7 @@ image source: metroid.retropixel.net
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zsrzxnayrf .gt_stub_row_group {
+&#10;#idvfcctick .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -547,13 +541,13 @@ image source: metroid.retropixel.net
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#zsrzxnayrf .gt_row_group_first td {
+&#10;#idvfcctick .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#zsrzxnayrf .gt_row_group_first th {
+&#10;#idvfcctick .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#zsrzxnayrf .gt_summary_row {
+&#10;#idvfcctick .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -562,14 +556,14 @@ image source: metroid.retropixel.net
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zsrzxnayrf .gt_first_summary_row {
+&#10;#idvfcctick .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_first_summary_row.thick {
+&#10;#idvfcctick .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#zsrzxnayrf .gt_last_summary_row {
+&#10;#idvfcctick .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -578,7 +572,7 @@ image source: metroid.retropixel.net
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_grand_summary_row {
+&#10;#idvfcctick .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -587,7 +581,7 @@ image source: metroid.retropixel.net
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zsrzxnayrf .gt_first_grand_summary_row {
+&#10;#idvfcctick .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -596,7 +590,7 @@ image source: metroid.retropixel.net
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_last_grand_summary_row_top {
+&#10;#idvfcctick .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -605,10 +599,10 @@ image source: metroid.retropixel.net
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_striped {
+&#10;#idvfcctick .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#zsrzxnayrf .gt_table_body {
+&#10;#idvfcctick .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -616,7 +610,7 @@ image source: metroid.retropixel.net
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_footnotes {
+&#10;#idvfcctick .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -629,7 +623,7 @@ image source: metroid.retropixel.net
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_footnote {
+&#10;#idvfcctick .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -637,7 +631,7 @@ image source: metroid.retropixel.net
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zsrzxnayrf .gt_sourcenotes {
+&#10;#idvfcctick .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -650,64 +644,64 @@ image source: metroid.retropixel.net
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#zsrzxnayrf .gt_sourcenote {
+&#10;#idvfcctick .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#zsrzxnayrf .gt_left {
+&#10;#idvfcctick .gt_left {
   text-align: left;
 }
-&#10;#zsrzxnayrf .gt_center {
+&#10;#idvfcctick .gt_center {
   text-align: center;
 }
-&#10;#zsrzxnayrf .gt_right {
+&#10;#idvfcctick .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#zsrzxnayrf .gt_font_normal {
+&#10;#idvfcctick .gt_font_normal {
   font-weight: normal;
 }
-&#10;#zsrzxnayrf .gt_font_bold {
+&#10;#idvfcctick .gt_font_bold {
   font-weight: bold;
 }
-&#10;#zsrzxnayrf .gt_font_italic {
+&#10;#idvfcctick .gt_font_italic {
   font-style: italic;
 }
-&#10;#zsrzxnayrf .gt_super {
+&#10;#idvfcctick .gt_super {
   font-size: 65%;
 }
-&#10;#zsrzxnayrf .gt_footnote_marks {
+&#10;#idvfcctick .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#zsrzxnayrf .gt_asterisk {
+&#10;#idvfcctick .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#zsrzxnayrf .gt_indent_1 {
+&#10;#idvfcctick .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#zsrzxnayrf .gt_indent_2 {
+&#10;#idvfcctick .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#zsrzxnayrf .gt_indent_3 {
+&#10;#idvfcctick .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#zsrzxnayrf .gt_indent_4 {
+&#10;#idvfcctick .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#zsrzxnayrf .gt_indent_5 {
+&#10;#idvfcctick .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>
+<td colspan="10" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>
 speedrun.com leaderboard data
 </td>
 </tr>
@@ -718,20 +712,29 @@ rank
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="player_name">
 player_name
 </th>
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="date">
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="date">
 date
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="t_human">
+t_human
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="country">
+country
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="run_id">
+run_id
 </th>
 <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="t_s">
 t_s
 </th>
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="location">
-location
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="src_user_guest">
+src_user_guest
 </th>
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="player_id">
-player_id
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uri_player">
+uri_player
 </th>
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="run_id">
-run_id
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="api_call">
+api_call
 </th>
 </tr>
 </thead>
@@ -743,20 +746,29 @@ run_id
 <td headers="player_name" class="gt_row gt_left">
 ShinyZeni
 </td>
-<td headers="date" class="gt_row gt_right">
-2021-07-31
+<td headers="date" class="gt_row gt_center">
+2023-06-20
 </td>
-<td headers="t_s" class="gt_row gt_right">
-4373.000
+<td headers="t_human" class="gt_row gt_left">
+PT1H12M47S
 </td>
-<td headers="location" class="gt_row gt_left">
+<td headers="country" class="gt_row gt_center">
 United States
 </td>
-<td headers="player_id" class="gt_row gt_left">
-zxzno3ex
-</td>
 <td headers="run_id" class="gt_row gt_left">
-z5do82dm
+ywrjqd9m
+</td>
+<td headers="t_s" class="gt_row gt_right">
+4367.000
+</td>
+<td headers="src_user_guest" class="gt_row gt_left">
+user
+</td>
+<td headers="uri_player" class="gt_row gt_left">
+<a href="https://www.speedrun.com/api/v1/users/zxzno3ex" class="external-link uri">https://www.speedrun.com/api/v1/users/zxzno3ex</a>
+</td>
+<td headers="api_call" class="gt_row gt_left">
+zxzno3ex
 </td>
 </tr>
 <tr>
@@ -766,20 +778,29 @@ z5do82dm
 <td headers="player_name" class="gt_row gt_left">
 zoast
 </td>
-<td headers="date" class="gt_row gt_right">
+<td headers="date" class="gt_row gt_center">
 2021-02-24
+</td>
+<td headers="t_human" class="gt_row gt_left">
+PT1H12M55S
+</td>
+<td headers="country" class="gt_row gt_center">
+Palau
+</td>
+<td headers="run_id" class="gt_row gt_left">
+yo75d4dm
 </td>
 <td headers="t_s" class="gt_row gt_right">
 4375.000
 </td>
-<td headers="location" class="gt_row gt_left">
-Palau
+<td headers="src_user_guest" class="gt_row gt_left">
+user
 </td>
-<td headers="player_id" class="gt_row gt_left">
+<td headers="uri_player" class="gt_row gt_left">
+<a href="https://www.speedrun.com/api/v1/users/18v6k4nx" class="external-link uri">https://www.speedrun.com/api/v1/users/18v6k4nx</a>
+</td>
+<td headers="api_call" class="gt_row gt_left">
 18v6k4nx
-</td>
-<td headers="run_id" class="gt_row gt_left">
-yo75d4dm
 </td>
 </tr>
 <tr>
@@ -789,20 +810,29 @@ yo75d4dm
 <td headers="player_name" class="gt_row gt_left">
 Behemoth87
 </td>
-<td headers="date" class="gt_row gt_right">
+<td headers="date" class="gt_row gt_center">
 2021-12-08
+</td>
+<td headers="t_human" class="gt_row gt_left">
+PT1H12M55.930S
+</td>
+<td headers="country" class="gt_row gt_center">
+England
+</td>
+<td headers="run_id" class="gt_row gt_left">
+m36d0q6m
 </td>
 <td headers="t_s" class="gt_row gt_right">
 4375.930
 </td>
-<td headers="location" class="gt_row gt_left">
-England
+<td headers="src_user_guest" class="gt_row gt_left">
+user
 </td>
-<td headers="player_id" class="gt_row gt_left">
+<td headers="uri_player" class="gt_row gt_left">
+<a href="https://www.speedrun.com/api/v1/users/zxz2wy4x" class="external-link uri">https://www.speedrun.com/api/v1/users/zxz2wy4x</a>
+</td>
+<td headers="api_call" class="gt_row gt_left">
 zxz2wy4x
-</td>
-<td headers="run_id" class="gt_row gt_left">
-m36d0q6m
 </td>
 </tr>
 <tr>
@@ -812,20 +842,29 @@ m36d0q6m
 <td headers="player_name" class="gt_row gt_left">
 Gebbu
 </td>
-<td headers="date" class="gt_row gt_right">
+<td headers="date" class="gt_row gt_center">
 2023-05-08
+</td>
+<td headers="t_human" class="gt_row gt_left">
+PT1H13M12S
+</td>
+<td headers="country" class="gt_row gt_center">
+Norway
+</td>
+<td headers="run_id" class="gt_row gt_left">
+m3qo724y
 </td>
 <td headers="t_s" class="gt_row gt_right">
 4392.000
 </td>
-<td headers="location" class="gt_row gt_left">
-Norway
+<td headers="src_user_guest" class="gt_row gt_left">
+user
 </td>
-<td headers="player_id" class="gt_row gt_left">
+<td headers="uri_player" class="gt_row gt_left">
+<a href="https://www.speedrun.com/api/v1/users/xk49m26j" class="external-link uri">https://www.speedrun.com/api/v1/users/xk49m26j</a>
+</td>
+<td headers="api_call" class="gt_row gt_left">
 xk49m26j
-</td>
-<td headers="run_id" class="gt_row gt_left">
-m3qo724y
 </td>
 </tr>
 <tr>
@@ -835,20 +874,29 @@ m3qo724y
 <td headers="player_name" class="gt_row gt_left">
 Static_Shock
 </td>
-<td headers="date" class="gt_row gt_right">
+<td headers="date" class="gt_row gt_center">
 2023-06-10
+</td>
+<td headers="t_human" class="gt_row gt_left">
+PT1H13M58.367S
+</td>
+<td headers="country" class="gt_row gt_center">
+Brazil
+</td>
+<td headers="run_id" class="gt_row gt_left">
+m3qrx76y
 </td>
 <td headers="t_s" class="gt_row gt_right">
 4438.367
 </td>
-<td headers="location" class="gt_row gt_left">
-Brazil
+<td headers="src_user_guest" class="gt_row gt_left">
+user
 </td>
-<td headers="player_id" class="gt_row gt_left">
+<td headers="uri_player" class="gt_row gt_left">
+<a href="https://www.speedrun.com/api/v1/users/x35ve3kj" class="external-link uri">https://www.speedrun.com/api/v1/users/x35ve3kj</a>
+</td>
+<td headers="api_call" class="gt_row gt_left">
 x35ve3kj
-</td>
-<td headers="run_id" class="gt_row gt_left">
-m3qrx76y
 </td>
 </tr>
 <tr>
@@ -856,22 +904,31 @@ m3qrx76y
 6
 </td>
 <td headers="player_name" class="gt_row gt_left">
-Oatsngoats
+CScottyW
 </td>
-<td headers="date" class="gt_row gt_right">
-2020-09-08
+<td headers="date" class="gt_row gt_center">
+2023-06-27
 </td>
-<td headers="t_s" class="gt_row gt_right">
-4478.000
+<td headers="t_human" class="gt_row gt_left">
+PT1H14M18S
 </td>
-<td headers="location" class="gt_row gt_left">
+<td headers="country" class="gt_row gt_center">
 United States
 </td>
-<td headers="player_id" class="gt_row gt_left">
-zx7q0k08
-</td>
 <td headers="run_id" class="gt_row gt_left">
-z1odq09m
+zpw9px8y
+</td>
+<td headers="t_s" class="gt_row gt_right">
+4458.000
+</td>
+<td headers="src_user_guest" class="gt_row gt_left">
+user
+</td>
+<td headers="uri_player" class="gt_row gt_left">
+<a href="https://www.speedrun.com/api/v1/users/18q3n0dj" class="external-link uri">https://www.speedrun.com/api/v1/users/18q3n0dj</a>
+</td>
+<td headers="api_call" class="gt_row gt_left">
+18q3n0dj
 </td>
 </tr>
 </tbody>
@@ -889,7 +946,7 @@ z1odq09m
 <div class="section level3">
 <h3 id="different-routes">Different routes<a class="anchor" aria-label="anchor" href="#different-routes"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="missingness-of-routes">Missingness of routes<a class="anchor" aria-label="anchor" href="#missingness-of-routes"></a>
@@ -900,21 +957,22 @@ z1odq09m
 <div class="section level5">
 <h5 id="too-messy">Too messy<a class="anchor" aria-label="anchor" href="#too-messy"></a>
 </h5>
-<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level5">
 <h5 id="need-order">Need order<a class="anchor" aria-label="anchor" href="#need-order"></a>
 </h5>
-<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level5">
 <h5 id="need-direction">Need direction<a class="anchor" aria-label="anchor" href="#need-direction"></a>
 </h5>
-<p><img src="reference/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level5">
 <h5 id="too-many-nodes-for-eda">Too many nodes for EDA<a class="anchor" aria-label="anchor" href="#too-many-nodes-for-eda"></a>
 </h5>
+<p><img src="reference/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p><img src="reference/figures/README-unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -926,11 +984,10 @@ z1odq09m
 </div>
 </div>
 <div class="section level2">
-<h2 id="all-the-runs">All the runs<a class="anchor" aria-label="anchor" href="#all-the-runs"></a>
+<h2 id="route-clusters">Route clusters<a class="anchor" aria-label="anchor" href="#route-clusters"></a>
 </h2>
 <p><img src="reference/figures/README-unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p><img src="reference/figures/README-unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;"></p>
-<p><img src="reference/figures/README-unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="super-metroid-and-speed-running">Super Metroid and speed running<a class="anchor" aria-label="anchor" href="#super-metroid-and-speed-running"></a>
@@ -938,7 +995,7 @@ z1odq09m
 <div class="section level3">
 <h3 id="super-metroid-is-the-top-snes-speed-runner-game">Super Metroid is the top SNES speed runner game<a class="anchor" aria-label="anchor" href="#super-metroid-is-the-top-snes-speed-runner-game"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;"></p>
 <ul class="task-list">
 <li>
 <input type="checkbox">convert to coloured barchart, grouped by game, coloured by category</li>
@@ -949,7 +1006,7 @@ z1odq09m
 <div class="section level3">
 <h3 id="subway-surfers-tiktok-phenomenon-or-good-upload-interface">Subway Surfers TikTok phenomenon or good upload interface?<a class="anchor" aria-label="anchor" href="#subway-surfers-tiktok-phenomenon-or-good-upload-interface"></a>
 </h3>
-<p><img src="reference/figures/README-unnamed-chunk-25-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/README-unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>

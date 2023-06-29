@@ -26,11 +26,12 @@ sm_cols <- list(
 #' @export
 
 sm_col_h <- list(
-  dominant_colour = "#CCCCCC",
-  secondary_colour = "#666666",
+  dominant_colour = "#E6E6E6",
+  secondary_colour = "#CCCCCC",
   anatomecha = "#738E9E",
-  highlight = "#F2F2F2",
-  label = "#F2F2F2"
+  highlight = "white",
+  label = "white",
+  outline="black"
 )
 
 
@@ -39,7 +40,7 @@ sm_col_h <- list(
 #'
 #' @export
 
-sm_cols_look <- function(base_size=20) {
+sm_cols_look <- function(font_size=20) {
   tibble(
     colour = names(sm_cols),
     hash = as.character(sm_cols),
@@ -55,7 +56,7 @@ sm_cols_look <- function(base_size=20) {
     ) +
     scale_color_manual(values = sm_cols) +
     theme_minimal(
-      base_family = "courier",base_size=base_size) +
+      base_family = "courier",base_size=font_size) +
     theme(
       axis.text = element_text(
         colour="grey"
@@ -76,17 +77,17 @@ sm_cols_look <- function(base_size=20) {
 #'
 #' @export
 
-theme_sm <- function(base_size = 15) {
+theme_sm <- function(font_size = 15) {
   ggplot2::theme_minimal(
-    base_size = base_size,
+    base_size = font_size,
     base_family = "courier"
   ) +
     ggplot2::theme(
       # background
-      plot.background=ggplot2::element_rect(fill=sm_cols$night),
+      plot.background=ggplot2::element_rect(fill=sm_cols$black),
       panel.background = ggplot2::element_rect(
-        fill= sm_cols$black,
-        colour = sm_cols$black
+        fill= sm_cols$night,
+        colour = sm_cols$night
       ),
       panel.grid = ggplot2::element_line(colour="#4D4D4D",
                                          linetype="dotted"),

@@ -25,6 +25,7 @@ library(supermetroid)
 library(tidyverse)
 library(gt)
 
+
 ```
 
 ## This document updates splitsio df for the analysis
@@ -70,10 +71,8 @@ labels_dat %>%
 label_counts %>% 
   ungroup() %>% 
   select(-starts_with) %>%  
-  arrange(desc(n)) %>% 
-  head(30) %>% 
-  gt()
-
+  arrange(desc(n)) %>%
+  filter(n > 50)
 ```
 
 
@@ -93,8 +92,18 @@ write_csv(relabels, "data-raw/sio-relabels.csv")
 
 ## Add labels
 
-```{r}
+
+```{r eval=FALSE, echo=FALSE}
+# for console
 relabels <- read_csv("data-raw/sio-relabels.csv") %>% 
+  select(label, supermetroid_label) %>% 
+  distinct()
+
+```
+
+
+```{r}
+relabels <- read_csv("../data-raw/sio-relabels.csv") %>% 
   select(label, supermetroid_label) %>% 
   distinct()
 
@@ -103,15 +112,19 @@ relabels <- read_csv("data-raw/sio-relabels.csv") %>%
 ```{r}
 
 sio_relabelled <- 
-sio_splits_df %>% 
-  mutate(
-    label = tolower(game_event),
-    label = if_else(
-      label == "grappling beam", "grapple beam", label
-    )
-  ) %>% 
-  left_join(relabels, by = "label")
+  sio_splits_df %>% 
+    mutate(
+      label = tolower(game_event)
+    ) %>% 
+    left_join(relabels, by = "label") %>% 
+    # replace label values
+    mutate(label = if_else(!is.na(supermetroid_label), supermetroid_label, label)) %>% 
+    ungroup() %>% 
+    select(-game_event, -name) %>% 
+    select(contains("label"), player_name, contains("realtime"), everything())
 
+# there now, that's looking better
+head(sio_relabelled)
 
 ```
 
@@ -120,29 +133,74 @@ sio_splits_df %>%
 ```{r}
 # check out counts now
 sio_relabelled %>% 
-  ungroup() %>% 
-  count(label) %>% 
+  count(label, supermetroid_label) %>% 
   arrange(desc(n)) %>% 
+  filter(n > 50) %>% 
   gt()
 
 ```
 
 ```{r}
-sio_df <- sio_relabelled %>% 
-  select(-name) %>% 
-  select(supermetroid_label, everything(), split_player = label)
+sio_df <- sio_relabelled %>% select(-supermetroid_label) %>% 
+  rename(game_event = label)
 
 sio_df %>% head()
 
 ```
 
 ```{r eval=FALSE}
-usethis::use_data(sio_df)
+# not run
+usethis::use_data(sio_df, overwrite=TRUE)
+
+```
+
+## Selected splits
+
+Select most common splits used by players.
+
+```{r}
+sio_df %>%
+  group_by(game_event) %>% 
+  summarise(
+    n_runners = n_distinct(player_id)
+  ) %>% 
+  filter(n_runners < 20) %>%  
+  ggplot(aes(x=n_runners)) +
+  geom_histogram(fill=sm_col_h$label) +
+  theme_sm() +
+  labs(title = "Counts of runners for splits")
+  
+```
+
+
+
+```{r}
+common_splits <-
+  # get standard order - recorded by at least 30 runners
+  sio_df %>%
+  group_by(game_event) %>% 
+  summarise(
+    n_runners = n_distinct(player_id)
+  ) %>% 
+  filter(n_runners >= 30) %>% 
+  arrange(desc(n_runners)) 
+
+common_splits
+
+
+```
+
+```{r eval=FALSE}
+# not run
+usethis::use_data(common_splits, overwrite=TRUE)
 
 ```
 
 
+
 ## What routes do people take?
+
+Oh this code is all borked and from early experimental phase from here. Waiting to copy-paste, etc.
 
 ```{r}
 routes_raw <- 
@@ -185,34 +243,10 @@ nested_splits %>%
 
 
 ```{r}
-anatomecha_splits <-
-  # get standard order
-  sio_df %>%
-  filter(player_name == "anatomecha",!is.na(supermetroid_label)) %>%
-  arrange(segment_number) %>%
-  # should really filter to last date
-  # will need to fix this when there's more than one anatomecha run
-  select(supermetroid_label) %>%
-  mutate(split_anatomecha = 1:n())
-
-levels(sio_df$split) <- anatomecha_splits$split
-
-
-```
-
-```{r eval=FALSE}
-
-usethis::use_data(anatomecha_splits)
-
-```
-
-
-
-```{r}
 routes <- 
 nested_splits %>%
   # head() %>% 
-  mutate(event = map(splits, \(df) left_join(df, anatomecha_splits, by = "supermetroid_label")),
+  mutate(event = map(splits, \(df) left_join(df, common_splits, by = "supermetroid_label")),
          route_anatomecha = map(event, \(df) df %>% filter(!is.na(split_anatomecha)) %>%  pull(split_anatomecha)),
          route_standard = map_lgl(route_anatomecha,
                                   \(x) all(sort(x) == x))
@@ -233,7 +267,7 @@ nested_splits %>%
 
 # plot <- 
   sio_df %>% 
-  left_join(anatomecha_splits, by = "supermetroid_label") %>% 
+  left_join(common_splits, by = "supermetroid_label") %>% 
   filter(!is.na(supermetroid_label)) %>% 
   mutate(split_anatomecha = as_factor(split_anatomecha),
          t_h = realtime_end_ms/1000/60
@@ -253,7 +287,7 @@ nested_splits %>%
   theme(
     axis.text.x = element_text(angle=90)
   ) +
-  scale_x_discrete(labels=c("start", anatomecha_splits$supermetroid_label)) +
+  scale_x_discrete(labels=c("start", game_event)) +
   facet_grid(route_standard ~. ) 
 
 # ggplotly(plot)
@@ -263,7 +297,7 @@ nested_splits %>%
 
 ```{r}
 # selected_split <- "ice beam" 
-selected_split <- "ice beam"# sample(anatomecha_splits$supermetroid_label, 1)
+selected_split <- "ice beam"# sample(game_event, 1)
 rank <- c(1,25)
 
 #xlim <- c(0.8, 1.2)
@@ -313,7 +347,7 @@ routes_wide <-
     rename(game_event = supermetroid_label) %>% 
     group_by(run_id) %>% 
     filter(realtime_end_ms == max(realtime_end_ms),
-           game_event %in% anatomecha_splits$supermetroid_label
+           game_event %in% game_event
            ) %>% 
     ungroup() %>% 
     distinct() %>% 
@@ -351,7 +385,7 @@ routes %>%
   select(route_id, runs) %>% 
   unnest(runs) %>% 
   left_join(sio_df %>% 
-              filter(split %in% anatomecha_splits$supermetroid_label) %>% 
+              filter(split %in% game_event) %>% 
               select(run_id,
                      realtime_end_ms, split) %>% 
               group_by(run_id, split) %>% 
@@ -425,14 +459,14 @@ clusters <- dist(ice_beam) %>% hclust()
 
 plot(clusters, labels = ice_beam$route_id)
 
+library(ggdendro)
+
+ggdendrogram(clusters)
 
 
 ```
 
-```{r}
-library(ggdendro)
-
-ggdendrogram(clusters)
+```{r eval=FALSE}
 
 # fuckit write csv
 write_csv(routes_wide, "dev/routes_wide.csv")

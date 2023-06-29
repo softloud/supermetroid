@@ -139,8 +139,8 @@ knitr::include_graphics("colour palette 2023-05-28 12-49-59.png")
 
 ```{r filepaths}
 
-any_raw <- read_xml("Super Metroid Any% KPDR.lss")
-hun_raw <- read_xml("Super Metroid - 100%.lss")
+any_raw <- read_xml("data-raw/Super Metroid Any% KPDR.lss")
+hun_raw <- read_xml("data-raw/Super Metroid - 100%.lss")
 
 
 ```
@@ -225,7 +225,7 @@ attempts_dat <-
   mutate(
     start = mdy_hms(start),
     end = mdy_hms(end),
-    total_run_time = difftime(end, start, units = ''),
+    total_run_time = difftime(end, start, units = 'secs'),
     date = as_date(end),
     id = as.integer(id)
   ) 

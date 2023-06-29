@@ -5,8 +5,9 @@ Authors@R:
   c(
     person("Charles", "Gray", , "charlestigray@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9978-011X")),
-    person("Dave", "Hunt", role = "ctb"),
     person("Mattias", "Hansson", role = "ctb"),
+    person("Dave", "Hunt", role = "ctb"),
+    person("John MacKintosh", role = "ctb"),
     person("Jeremy", "Silver", role = "ctb")
     )
 Description: What the package does (one paragraph).

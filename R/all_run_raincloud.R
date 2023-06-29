@@ -37,9 +37,7 @@ all_run_raincloud <- function(run_df = supermetroid::src_df,
 
 plot_dat %>%
     ggplot2::ggplot(
-      ggplot2::aes(y = t_m),
-      colour = supermetroid::sm_col_h$highlight,
-      fill = supermetroid::sm_col_h$highlight
+      ggplot2::aes(y = t_m)
       ) +
 
     # plot layers
@@ -54,8 +52,8 @@ plot_dat %>%
       .width = 0,
       alpha = 0.4,
       point_colour = NA,
-      colour = supermetroid::sm_col_h$highlight,
-      fill = supermetroid::sm_col_h$highlight
+      colour = supermetroid::sm_col_h$label,
+      fill = supermetroid::sm_col_h$dominant_colour
     ) +
 
     # boxplot
@@ -63,7 +61,9 @@ plot_dat %>%
       width = .2,
       ## remove outliers
       outlier.color = NA,
-      alpha = 0.4
+      alpha = 0.4,
+      colour = supermetroid::sm_col_h$label,
+      fill = supermetroid::sm_col_h$dominant_colour
     ) +
 
     # dots
@@ -74,16 +74,19 @@ plot_dat %>%
       # binwidth=0.25, # seems better to let it choose
       # move geom to the left
       justification = 1.2,
-      alpha = 0.4
+      alpha = 0.4,
+      colour = supermetroid::sm_col_h$label,
+      fill = supermetroid::sm_col_h$dominant_colour
     ) +
 
     # set theme
-    theme_sm(base_size = font_size) +
+    theme_sm(font_size = font_size) +
 
     ggplot2::labs(
       title = "Super Metroid 100% speed run times" %>%
-        stringr::str_wrap(font_size * 2),
-      subtitle = "Duration of speedrun distribution",
+        stringr::str_wrap(30),
+      subtitle = "Duration of speedrun distribution" %>%
+        stringr::str_wrap(40),
       y = "Time (minutes)",
       x = '',
       caption = ""

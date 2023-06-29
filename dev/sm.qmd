@@ -32,6 +32,7 @@ write_csv(sm_dat, "sm_dat.csv")
 ```
 
 ```{r dhb update}
+gs4_deauth()
 
 # dave's obs
 dhb_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1eWvJiXBav4cyCH0eNhUtfyTaCLlb60pHpFeZklaKrSM/edit#gid=0",

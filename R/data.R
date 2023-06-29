@@ -7,17 +7,17 @@
 
 #' Splitsio smdata: time series observations
 #'
-#' See vignette splits
+#' See vignette splits; use [splits_df] for analysis.
 "sio_df"
 
-#' Splitsio smdata: anatomecha's splits
+#' Most recorded splits
 #'
-#' See vignette splits
-"anatomecha_splits"
+#' See vignette splits; splits the most runners have recorded.
+"common_splits"
 
 #' Speedrun.com leaderboard smdata
 #'
-#' Player and run data joined. See src vignette.
+#' Player and run data joined. See src vignette; use [splits_df] for analysis.
 "src_df"
 
 #' Distinct routes
@@ -34,3 +34,14 @@
 #'
 #' splits.io routes in tidygraph form
 "from_to_df"
+
+#' Splits df with src info
+#'
+#' Use this dataset for analysis
+"splits_df"
+
+#' Top games from speedrun.com
+#'
+#' Hand transcribed top five from each category across games
+#' and for SNES.
+"src_top_df"

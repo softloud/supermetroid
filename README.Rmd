@@ -81,7 +81,8 @@ src_df %>% head()
 # visualise observations in a raincloud plot
 src_df %>% 
   all_run_raincloud(
-    base_size = 15 # set font size
+    lowest_rank = 580,
+    font_size = 15 # set font size
   )
 
 # how to do all this in Python?
@@ -151,45 +152,24 @@ Player ranks from speedrun.com were accessed via the Python implementation [`src
 Vignette|Description|Output data
 -|-
 [data schema](#data-schema) | Plan for what data to extract for analysis |
-player-rank | Combine speedrun.com and splits.io data | `splits_df`
 src | Scrape supermetroid.com data using `srcomapi` | `src_df`
 sio | Scrape splits.io data using `splitsio`; data is not labelled in this vignette. Raw data. | `sio_splits_df`
-splits | Use anatomecha's labels to update split strings | `sio_df`, `anatomecha_splist`, `sio_routes_wide`
-route-matching | Explore the missingness of routes recorded by players | `distinct_routes`
+splits | Use anatomecha's labels to update split strings | `sio_df`, `common_splits`, `sio_routes_wide`
+player-rank | Combine speedrun.com and splits.io data | `splits_df`
 route-graph | Graphs of routes players take | `from_to_df` 
-identifying-routes | Classifying routes players take | 
 player-locations | Exploring differences in players across locations | 
+route-matching | Explore the missingness of routes recorded by players | `distinct_routes`
+identifying-routes | Classifying routes players take | 
 
 # Analyses (work in progress)
-
-## Colour palette is in experimental/grab whatever colours phase
-
-<div class="tenor-gif-embed" data-postid="10436793" data-share-method="host" data-aspect-ratio="1.3369" data-width="100%"><a href="https://tenor.com/view/no-sir-i-dont-like-it-horse-gif-10436793">No Sir I Dont Like It GIF</a>from <a href="https://tenor.com/search/no+sir-gifs">No Sir GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-
 
 ## Speed run times from speedrun.com
 
 ```{r }
 
-all_run_raincloud(base_size = 15)
+all_run_raincloud(font_size = 15, lowest_rank = 580)
 
 ```
-
-- [ ] interpretable x axis
-
-```{r}
-data("src_df")
-
-top_100 <- src_df %>% 
-  filter(rank <= 100) 
-
-top_100 %>% 
-  all_run_raincloud(xmin = min(top_100$t_s) / 60, xmax = max(top_100$t_s)/ 60, base_size =  15) +
-  labs(title = "Top 100 Super Metroid 100% speed run times" %>% str_wrap(40))
-
-
-```
-
 
 ```{r}
 src_df %>% 
@@ -213,7 +193,7 @@ sm_world()
 ### Different routes
 
 ```{r}
-cum_t_route_vis(base_size = 10)
+cum_t_route_vis(font_size = 10) + ylim(0, 200)
 
 ```
 
@@ -274,37 +254,29 @@ from_to_df %>%
 ```
 
 
+```{r fig.width=8, fig.height=8}
+route_graph(font_size = 15)
+
+
+```
+
 #### Analysis graph
 
-```{r fig.width=8, fig.height=8}
-route_graph(base_size = 15)
-
-
+  
+```{r fig.height=5,fig.width=7}
+route_graph(selected_splits = c("varia suit", "phantoon", "space jump", "ridley", "golden 4", "grapple beam"))
 ```
 
 
-## All the runs
+## Route clusters
 
-```{r}
-ranked_runs("ice beam", base_size = 15)
-
-```
-
-```{r}
-ranked_runs("grapple beam", base_size = 15)
-
+```{r fig.height=8}
+ranked_runs("ice beam", font_size = 15) + xlim(0, 130)
 
 ```
 
-```{r}
-
-# restrict runs
-ranked_runs("grapple beam", base_size = 15) +
-  xlim(0.2, 0.6) +
-  labs(
-    x = "Time (hrs) restricted to most grapple beam observations" %>% 
-      str_wrap()
-  )
+```{r fig.height=8}
+ranked_runs("grapple beam", font_size = 15) + xlim(0, 130)
 
 
 ```
@@ -317,7 +289,7 @@ ranked_runs("grapple beam", base_size = 15) +
 ### Super Metroid is the top SNES speed runner game
 
 ```{r}
-top_five_vis(base_size = 10)
+top_five_vis(text_scale = 10)
 
 ```
 
@@ -328,7 +300,7 @@ top_five_vis(base_size = 10)
 ### Subway Surfers TikTok phenomenon or good upload interface?
 
 ```{r }
-top_games_vis(base_size = 10)
+top_games_vis(text_scale = 10)
 ```
 
 

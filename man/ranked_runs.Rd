@@ -4,13 +4,15 @@
 \alias{ranked_runs}
 \title{Visualise each run by rank}
 \usage{
-ranked_runs(selected_split = NULL, base_size = 40)
+ranked_runs(selected_split = NULL, max_time = 1000, font_size = 40)
 }
 \arguments{
-\item{base_size}{For sm_theme theme_minimal.
-segment. If an \link{anatomecha_splits} split is specificied, highlight that.}
+\item{max_time}{max time shown in plot in minutes
+segment. If an \link{common_splits} split is specificied, highlight that.}
 
 \item{selected_segment}{If NULL plot produces plot with no highlighted}
+
+\item{base_size}{For sm_theme theme_minimal.}
 }
 \description{
 Takes sio_df. Need to join rankings to get y-axis ordering.

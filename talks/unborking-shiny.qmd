@@ -1,0 +1,78 @@
+---
+title: "data/story"
+author: "Charles, Cecilie, and Dave"
+format: revealjs
+server: shiny
+editor: source
+---
+
+
+```{r pkg r}
+library(supermetroid)
+library(gt)
+library(shiny)
+library(tidyverse)
+
+```
+
+
+---
+
+
+```{r ranked ui}
+fluidPage(p(textOutput("ranked_title")),
+          sidebarLayout(
+            sidebarPanel(
+              width = 3,
+              selectInput(
+                "split",
+                "Split",
+                choices = common_splits$game_event,
+                selected = "ice beam"
+              ),
+              NULL
+            ),
+            mainPanel(
+              width = 9,
+              sliderInput(
+                "race_time",
+                label = "Time",
+                min = 0,
+                max = 300,
+                value = 0,
+                animate = animationOptions(
+                  interval=500,
+                  loop=TRUE
+                ),
+                width = "600px"
+              ),
+              plotOutput("ranked_runs", height = "500px", width = "100%")
+            )
+          ))
+
+```
+
+```{r ranked server}
+#| context: server
+
+output$ranked_runs <- renderPlot({
+  
+  
+  supermetroid::ranked_runs(
+    selected_split = input$split,
+    font_size = 30,
+    max_time = input$race_time
+  ) +
+    ggplot2::xlim(0, 300)
+})
+
+output$ranked_runs_title <- renderText({
+  sprintf(
+    "Inspect game event clusters"
+  )
+})
+
+
+```
+
+

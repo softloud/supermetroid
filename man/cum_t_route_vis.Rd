@@ -4,7 +4,10 @@
 \alias{cum_t_route_vis}
 \title{Players take different routes}
 \usage{
-cum_t_route_vis(ylim = range(sio_df$realtime_end_ms)/1000/60, base_size = 10)
+cum_t_route_vis(
+  ylim = range(supermetroid::splits_df$realtime_end_ms)/1000/60,
+  font_size = 20
+)
 }
 \arguments{
 \item{ylim}{Set y min and max (shiny slider input).}

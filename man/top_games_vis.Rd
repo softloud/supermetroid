@@ -4,7 +4,7 @@
 \alias{top_games_vis}
 \title{Super Metroid vs top games on speedrun.com}
 \usage{
-top_games_vis(base_size = 10)
+top_games_vis(text_scale = 15)
 }
 \description{
 Super Metroid vs top games on speedrun.com

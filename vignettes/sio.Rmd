@@ -18,11 +18,15 @@ knitr::opts_chunk$set(
 ```{r setup, message=FALSE}
 library(supermetroid)
 library(tidyverse)
+library(reticulate)
 ```
 
 ```{python}
 import pandas as pd
 import splitsio
+import json
+
+# try to fix the issue in src, possibly ask Anthony
 ```
 
 
@@ -30,19 +34,17 @@ import splitsio
 
 ## Load runs and runners  
 
-```{python}
+This module has its own types; here I convert to a list of dictionaries I can 
+save locally so I don't have to call the API every time I knit the html. 
+
+
+```{python, eval=FALSE}
 # this chunk is not evaluated 
 # to minimise api calls
 
 # get 100% Category Super Metroid game data  
 sio_cat = splitsio.Category.from_id("279", historic=True)
 type(sio_cat)
-```
-
-This module has its own types. 
-
-
-```{python load splitsio dat}
 # extract runners from category  
 sio_runners = sio_cat.runners()
 type(sio_runners)
@@ -54,6 +56,38 @@ sio_runs = sio_cat.runs()
 type(sio_runs)
 sio_runs[0]
 sio_runs[-1]
+
+
+# convert the run objects to dictionaries
+sio_run_dicts = [sio_runs[x].to_dict() for x in range(len(sio_runs))]
+
+# each element is a dictionary with keys
+sio_run_dicts[0].keys()
+
+
+# run id
+sio_run_dicts[0].keys()
+
+# get id
+sio_run_dicts[0]['id']
+
+# get realtime
+sio_run_dicts[0]['realtime_duration_ms']
+
+print(sio_run_dicts)
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(sio_run_dicts[0:3])
+sio_cat.__dict__
+for key in sio_cat.keys():
+  print(key.__dict__)
+
+# save object locally
+file_path = "data-raw/sio_cat.json"
+with open(file_path, "w") as outfile:
+  outfile.write(json.dumps(sio_run_dicts, indent=4))
+
+
 ```
 
 ## Run dataframe
@@ -70,25 +104,18 @@ src_player_id | speedrun.com player id | `srdc_id`
 
 ## Try with list of dictionaries
 
-```{python}
+```{python eval=FALSE, echo=FALSE}
+with open("data-raw/sio_cat.json", "r") as infile:
+  sio_run_dicts = json.load(infile)
 
-# convert the run objects to disctionaries
-sio_run_dicts = [sio_runs[x].to_dict() for x in range(len(sio_runs))]
-
-# each element is a dictionary with keys
-sio_run_dicts[0].keys()
 
 ```
 
+
 ```{python}
-# run id
-sio_run_dicts[0].keys()
+with open("../data-raw/sio_cat.json", "r") as infile:
+  sio_run_dicts = json.load(infile)
 
-# get id
-sio_run_dicts[0]['id']
-
-# get realtime
-sio_run_dicts[0]['realtime_duration_ms']
 
 ```
 
@@ -98,7 +125,7 @@ pd.json_normalize(sio_run_dicts[0]['runners'])['id'][0]
 
 sio_run_player_index = 10 # len(sio_run_dicts)
 
-run_runners_list = [pd.json_normalize(sio_run_dicts[x]['runners']).assign(run_id = sio_runs[x].id) for x in range(len(sio_runs))]
+run_runners_list = [pd.json_normalize(sio_run_dicts[x]['runners']).assign(run_id = sio_run_dicts[x]['id']) for x in range(len(sio_run_dicts))]
 
 run_runners_concat = pd.concat(run_runners_list)
 
@@ -106,22 +133,17 @@ run_runners = run_runners_concat[['name', 'run_id','id']].rename(columns={'id':'
 
 sio_run_dicts[0].keys()
 
-# this
-
-
-
 ```
 
 ```{python}
 # create a dataframe
 
 sio_runs_df = pd.DataFrame({
-  'run_id' : [sio_run_dicts[x]['id'] for x in range(len(sio_runs))],
-  't_ms' : [sio_run_dicts[x]['realtime_duration_ms'] for x in range(len(sio_runs))],
-  'date' : [sio_run_dicts[x]['updated_at'] for x in range(len(sio_runs))]
-  # ,
- #  'image_url': [sio_run_dicts[x]['image_url'] for x in range(len(sio_runs))],
-  # 'video_url': [sio_run_dicts[x]['video_url'] for x in range(len(sio_runs))]
+  'run_id' : [sio_run_dicts[x]['id'] for x in range(len(sio_run_dicts))],
+  't_ms' : [sio_run_dicts[x]['realtime_duration_ms'] for x in range(len(sio_run_dicts))],
+  'date' : [sio_run_dicts[x]['updated_at'] for x in range(len(sio_run_dicts))],
+  'image_url': [sio_run_dicts[x]['image_url'] for x in range(len(sio_run_dicts))],
+  'video_url': [sio_run_dicts[x]['video_url'] for x in range(len(sio_run_dicts))]
 })
 
 
@@ -130,28 +152,17 @@ sio_runs_df.head()
 
 ```
 
-```{r}
+```{python }
 # need to merge with run runners
 run_runners.head()
 
-sio_df = sio_runs_df.merge(run_runners, on = "run_id", how = 'left')
+run_runners_df = sio_runs_df.merge(
+  run_runners, on = "run_id", how = 'left').reset_index(drop=True)
 
-
-```
-
-
-
-```{r}
-# take a look 
-
-py$sio_runs_df %>% select(-contains("url")) %>% 
-  select(display_name, everything()) %>% sample_n()
-
-# argh something is bad 
+# run and runner data
+run_runners_df.head()
 
 ```
-
-
 
 ## create segments dataframe
 
@@ -159,57 +170,98 @@ segment_df | description
 - | - 
 *run_id* | unique identifier of run
 segment_id | unique identifier of segment
+game_event | description of split 
 t_s | time in seconds, measured to millisecond precision
 
 ```{python}
 # first level of segments
-type(sio_df['segments'][0])
-len(sio_df['segments'][0])
+type(sio_run_dicts[0]['segments'])
+type(sio_run_dicts[0]['segments'][0])
 
-# second level of segments
-type(sio_df['segments'][0][0])
-sio_df['segments'][0][2].keys()
+# inspect a segment
+sio_run_dicts[0]['segments']
 
+# a single segment
+sio_run_dicts[0]['segments'][0].keys()
 
-segments_list = [pd.DataFrame(sio_df.segments[x]).assign(run_id = sio_df.id[x]) for x in range(sio_df.shape[0]) ]
+# convert to df
+# I think this is a dictionary of single-element entries, so can be flattened
+# how to efficiently check this?
+pd.DataFrame(sio_run_dicts[0]['segments']).head()
 
-segment_raw = pd.concat(segments_list)
+# List of dataframes of segments for each run
+segments_list = [pd.DataFrame(sio_run_dicts[x]['segments']).assign(run_id = sio_run_dicts[x]['id']) for x in range(len(sio_run_dicts))]
+
+segment_raw = pd.concat(segments_list).reset_index(drop=True)
 
 segment_raw.columns
 segment_raw.shape
-
-sio_segments_df = segment_raw.merge(
-  sio_runs_df[['player_name', 'player_id']], on = "run_id", how="left")
+segment_raw.head()
 
 
 ```
+
+```{python}
+
+segment_raw.columns
+sio_runs_df.columns
+
+# sio_segments_df = (segment_raw.rename(
+#   {
+#     'display_name': 'player_name'
+# }
+# ).merge(
+#   sio_runs_df, on = "run_id", how="left"))
+
+sio_segments_df.shape
+sio_segments_df.columns
+sio_segments_df.head()
+
+
+```
+
 
 ```{r}
 # tidy it up in R before writing it
 
-sio_segments <- py$sio_segments_df
+sio_segments <- py$segment_raw
+sio_runs <- py$run_runners
 
+sio_seg_runs <- left_join(sio_segments %>% distinct(), 
+                          sio_runs %>% distinct() %>% 
+                            rename(total_t_ms = t_ms) %>% 
+                            select(-video_url, -image_url, -date)
+                            , by = "run_id")
+
+colnames(sio_seg_runs)
+
+sio_seg_runs %>% 
+  count(run_id, id) %>% 
+  arrange(desc(n)) %>% 
+  filter(n > 1) 
 
 sio_splits_df <- 
-sio_segments %>% 
-  select(
-    player_name, 
-    game_event = display_name, 
-    segment_number, 
-    realtime_start_ms, 
-    segment_id = id,
-    run_id,
-    player_id,
-    everything()) %>% 
-  select(-contains("gametime"),
-         -contains("reduced"),
-         -contains("skipped"), -histories) %>% 
-  mutate(
-    player_id = as.character(player_id))
+  sio_segments %>% 
+    select(
+      player_name = name, 
+      game_event = display_name, 
+      segment_number, 
+      realtime_start_ms, 
+      segment_id = id,
+      run_id,
+      player_id,
+      everything()) %>% 
+    select(-contains("gametime"),
+           -contains("reduced"),
+           -contains("skipped"), -histories) %>% 
+    mutate(player_id = as.character(player_id)))
+
+head(sio_splits_df)
 
 ```
 
 ```{r eval=FALSE}
-usethis::use_data(sio_splits_df)
+# write data - this chunk is not evaluated on knit
+usethis::use_data(sio_splits_df, overwrite = TRUE)
 
 ```

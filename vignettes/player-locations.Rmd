@@ -10,13 +10,14 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  error=TRUE
 )
 ```
 
 ```{r setup, message=FALSE}
 library(supermetroid)
-data("src_df")
+
 
 library(tidyverse)
 library(gt)

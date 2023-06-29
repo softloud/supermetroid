@@ -20,6 +20,7 @@ library(supermetroid)
 # other tools
 library(tidyverse)
 
+
 ```
 
 # Create a dataframe with `splitsio` observations of game events, with `srcomapi` rank and location.  
@@ -28,24 +29,34 @@ We will join theses elements from speedrun.com data to splits.io data.
 
 ```{r error=TRUE}
 
+
+
 # speedrun.com, each row is a player
 src_join_df <-
-  src_df %>%
+  supermetroid::src_df %>%
   group_by(player_name) %>%
   filter(rank == max(rank)) %>%
-  rename_with( ~ paste0("src_", .x))
+  ungroup() %>% 
+  select(rank, player_name, date, t_human, country, run_id) %>% 
+  rename_with( ~ paste0("src_", .x)) %>% 
+  mutate(src_player_name = tolower(src_player_name),
+         src_date = ymd(src_date)) %>% 
+  filter(!is.na(src_player_name))
 
 head(src_join_df)
 
 # need to debug player id types
-splits_df <- left_join(sio_df, src_join_df, 
-          by = c("player_id" = "src_player_id"))
+splits_df <- sio_df %>% 
+  mutate(player_name = as.character(player_name)) %>% 
+  left_join(src_join_df, 
+          by = c("player_name" = "src_player_name"))
 
-
+dim(splits_df)
+head(splits_df)
 ```
 
 ```{r eval=FALSE}
-usethis::use_data(splits_df)
+usethis::use_data(splits_df, overwrite=TRUE)
 
 ```
 

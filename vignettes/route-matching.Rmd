@@ -12,13 +12,15 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  error=TRUE
 )
 ```
 
 ```{r setup,message=FALSE}
 library(supermetroid)
 library(tidyverse)
+library(gt)
 
 set.seed(306)
 
@@ -30,21 +32,20 @@ set.seed(306)
 knitr::include_graphics("route_math.jpg")
 ```
 
-
 ```{r}
 # get routes
 run_routes <- 
-  sio_df %>% 
+  splits_df %>% 
     # ensure data is arranged by run, ordered by segment time
     arrange(run_id, realtime_end_ms) %>% 
     # why is player name a list?
     mutate(player_name = as.character(player_name)) %>% 
     # filter to common splits shared by players
-    filter(!is.na(supermetroid_label)) %>%
-    select(player_name, supermetroid_label, run_id) %>% 
+    filter(game_event %in% common_splits$game_event) %>%
+    select(player_name, game_event, run_id) %>% 
     group_by(run_id) %>% 
     # create a list-column of label dataframes
-    nest(data = supermetroid_label) %>% 
+    nest(data = game_event) %>% 
     rename(route = data) 
 
 head(run_routes)
@@ -69,8 +70,7 @@ usethis::use_data(distinct_routes)
 
 ```
 
-
-In these data we have `r nrow(run_routes)` runs that use `r nrow(distinct_routes)` routes, but subroutes are considered separate routes. Which isn't quite what I want, i.e., a route containing a single label is considered distinct from every other route that it is a label from.  
+In these data we have runs that use routes, but subroutes are considered separate routes. Which isn't quite what I want, i.e., a route containing a single label is considered distinct from every other route that it is a label from.  
 
 We want to know the number of classes of route, that contain every subroute. Single labels can't be considered (except via classification, I'm thinking some kind of centroid thing). 
 
@@ -145,7 +145,7 @@ pivoted_routes <-
   two_routes %>% 
     arrange(desc(route_length)) %>% 
     unnest(route) %>% 
-    select(route_id, supermetroid_label) %>% 
+    select(route_id, game_event) %>% 
     group_by(route_id) %>% 
     mutate(route_order = 1:n()) %>% 
     mutate(route_label = if_else(route_id == comparison_route, 
@@ -240,6 +240,14 @@ Probably some kind of `map_df` that returns:
 We need to find out if `possible_classroute` 
 
 ```{r}
+
+```
+
+## all the routes
+
+```{r}
+distinct_routes %>% 
+  gt()
 
 ```
 

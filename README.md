@@ -10,8 +10,6 @@
       implementations](#open-python-speed-runner-api-implementations)
 - [Articles](#articles)
 - [Analyses (work in progress)](#analyses-work-in-progress)
-  - [Colour palette is in experimental/grab whatever colours
-    phase](#colour-palette-is-in-experimentalgrab-whatever-colours-phase)
   - [Speed run times from
     speedrun.com](#speed-run-times-from-speedruncom)
     - [Where are Super Metroid
@@ -19,7 +17,7 @@
   - [Routes players take](#routes-players-take)
     - [Different routes](#different-routes)
     - [Missingness of routes](#missingness-of-routes)
-  - [All the runs](#all-the-runs)
+  - [Route clusters](#route-clusters)
   - [Super Metroid and speed running](#super-metroid-and-speed-running)
     - [Super Metroid is the top SNES speed runner
       game](#super-metroid-is-the-top-snes-speed-runner-game)
@@ -108,18 +106,26 @@ library(supermetroid) # analysis code
 
 # take a look at observations
 src_df %>% head()
-#>   rank  player_name       date      t_s      location player_id   run_id
-#> 0    1    ShinyZeni 2021-07-31 4373.000 United States  zxzno3ex z5do82dm
-#> 1    2        zoast 2021-02-24 4375.000         Palau  18v6k4nx yo75d4dm
-#> 2    3   Behemoth87 2021-12-08 4375.930       England  zxz2wy4x m36d0q6m
-#> 3    4        Gebbu 2023-05-08 4392.000        Norway  xk49m26j m3qo724y
-#> 4    5 Static_Shock 2023-06-10 4438.367        Brazil  x35ve3kj m3qrx76y
-#> 5    6   Oatsngoats 2020-09-08 4478.000 United States  zx7q0k08 z1odq09m
+#>   rank  player_name       date        t_human       country   run_id      t_s
+#> 1    1    ShinyZeni 2023-06-20     PT1H12M47S United States ywrjqd9m 4367.000
+#> 2    2        zoast 2021-02-24     PT1H12M55S         Palau yo75d4dm 4375.000
+#> 3    3   Behemoth87 2021-12-08 PT1H12M55.930S       England m36d0q6m 4375.930
+#> 4    4        Gebbu 2023-05-08     PT1H13M12S        Norway m3qo724y 4392.000
+#> 5    5 Static_Shock 2023-06-10 PT1H13M58.367S        Brazil m3qrx76y 4438.367
+#> 6    6     CScottyW 2023-06-27     PT1H14M18S United States zpw9px8y 4458.000
+#>   src_user_guest                                     uri_player api_call
+#> 1           user https://www.speedrun.com/api/v1/users/zxzno3ex zxzno3ex
+#> 2           user https://www.speedrun.com/api/v1/users/18v6k4nx 18v6k4nx
+#> 3           user https://www.speedrun.com/api/v1/users/zxz2wy4x zxz2wy4x
+#> 4           user https://www.speedrun.com/api/v1/users/xk49m26j xk49m26j
+#> 5           user https://www.speedrun.com/api/v1/users/x35ve3kj x35ve3kj
+#> 6           user https://www.speedrun.com/api/v1/users/18q3n0dj 18q3n0dj
 
 # visualise observations in a raincloud plot
 src_df %>% 
   all_run_raincloud(
-    base_size = 15 # set font size
+    lowest_rank = 580,
+    font_size = 15 # set font size
   )
 ```
 
@@ -148,13 +154,20 @@ leaderboard.
 
 ``` r
 src_df %>% head()
-#>   rank  player_name       date      t_s      location player_id   run_id
-#> 0    1    ShinyZeni 2021-07-31 4373.000 United States  zxzno3ex z5do82dm
-#> 1    2        zoast 2021-02-24 4375.000         Palau  18v6k4nx yo75d4dm
-#> 2    3   Behemoth87 2021-12-08 4375.930       England  zxz2wy4x m36d0q6m
-#> 3    4        Gebbu 2023-05-08 4392.000        Norway  xk49m26j m3qo724y
-#> 4    5 Static_Shock 2023-06-10 4438.367        Brazil  x35ve3kj m3qrx76y
-#> 5    6   Oatsngoats 2020-09-08 4478.000 United States  zx7q0k08 z1odq09m
+#>   rank  player_name       date        t_human       country   run_id      t_s
+#> 1    1    ShinyZeni 2023-06-20     PT1H12M47S United States ywrjqd9m 4367.000
+#> 2    2        zoast 2021-02-24     PT1H12M55S         Palau yo75d4dm 4375.000
+#> 3    3   Behemoth87 2021-12-08 PT1H12M55.930S       England m36d0q6m 4375.930
+#> 4    4        Gebbu 2023-05-08     PT1H13M12S        Norway m3qo724y 4392.000
+#> 5    5 Static_Shock 2023-06-10 PT1H13M58.367S        Brazil m3qrx76y 4438.367
+#> 6    6     CScottyW 2023-06-27     PT1H14M18S United States zpw9px8y 4458.000
+#>   src_user_guest                                     uri_player api_call
+#> 1           user https://www.speedrun.com/api/v1/users/zxzno3ex zxzno3ex
+#> 2           user https://www.speedrun.com/api/v1/users/18v6k4nx 18v6k4nx
+#> 3           user https://www.speedrun.com/api/v1/users/zxz2wy4x zxz2wy4x
+#> 4           user https://www.speedrun.com/api/v1/users/xk49m26j xk49m26j
+#> 5           user https://www.speedrun.com/api/v1/users/x35ve3kj x35ve3kj
+#> 6           user https://www.speedrun.com/api/v1/users/18q3n0dj 18q3n0dj
 ```
 
 In addition to ranking data from speedrun.com’s leaderboards, this
@@ -175,34 +188,27 @@ These observations are captured in a .lss file that can be uploaded to
 
 ``` r
 sio_df %>% head()
-#>   supermetroid_label player_name           game_event segment_number
-#> 1         morph ball  anatomecha        Morphing Ball              0
-#> 2               <NA>  anatomecha       First Missiles              1
-#> 3              bombs  anatomecha                 Bomb              2
-#> 4               <NA>  anatomecha First Super Missiles              3
-#> 5        charge beam  anatomecha          Charge Beam              4
-#> 6             spazer  anatomecha               Spazer              5
-#>   realtime_start_ms                           segment_id run_id player_id
-#> 1                 0 69d90da3-1634-4af4-9096-419a32bedd0a   ato1     89646
-#> 2            200835 fad50319-d55b-460e-923a-c416f233daea   ato1     89646
-#> 3            224926 089daf0b-64c3-4eec-8902-022335b2b179   ato1     89646
-#> 4            358321 2a215dcd-2989-4939-8558-a7215904dfd1   ato1     89646
-#> 5            589662 e906991d-e919-47c1-a809-2b4da9b67461   ato1     89646
-#> 6            709962 10439232-43c7-4752-afb9-ee23782da4a9   ato1     89646
-#>   realtime_duration_ms realtime_end_ms realtime_shortest_duration_ms
-#> 1               200835          200835                        200835
-#> 2                24091          224926                         23286
-#> 3               133395          358321                        129371
-#> 4               231341          589662                        227335
-#> 5               120300          709962                        120299
-#> 6                97876          807838                         95884
-#>   realtime_gold         split_player                split
-#> 1          TRUE        morphing ball        morphing ball
-#> 2         FALSE       first missiles       first missiles
-#> 3         FALSE                 bomb                 bomb
-#> 4         FALSE first super missiles first super missiles
-#> 5         FALSE          charge beam          charge beam
-#> 6         FALSE               spazer               spazer
+#>             game_event player_name realtime_start_ms realtime_duration_ms
+#> 1           morph ball  anatomecha                 0               200835
+#> 2       first missiles  anatomecha            200835                24091
+#> 3                bombs  anatomecha            224926               133395
+#> 4 first super missiles  anatomecha            358321               231341
+#> 5          charge beam  anatomecha            589662               120300
+#> 6               spazer  anatomecha            709962                97876
+#>   realtime_end_ms realtime_shortest_duration_ms realtime_gold segment_number
+#> 1          200835                        200835          TRUE              0
+#> 2          224926                         23286         FALSE              1
+#> 3          358321                        129371         FALSE              2
+#> 4          589662                        227335         FALSE              3
+#> 5          709962                        120299         FALSE              4
+#> 6          807838                         95884         FALSE              5
+#>                             segment_id run_id player_id
+#> 1 69d90da3-1634-4af4-9096-419a32bedd0a   ato1     89646
+#> 2 fad50319-d55b-460e-923a-c416f233daea   ato1     89646
+#> 3 089daf0b-64c3-4eec-8902-022335b2b179   ato1     89646
+#> 4 2a215dcd-2989-4939-8558-a7215904dfd1   ato1     89646
+#> 5 e906991d-e919-47c1-a809-2b4da9b67461   ato1     89646
+#> 6 10439232-43c7-4752-afb9-ee23782da4a9   ato1     89646
 ```
 
 ### Open Python speed runner API implementations
@@ -226,52 +232,35 @@ implementation [`srcomapi`](https://github.com/blha303/srcomapi) of the
 | Vignette                    | Description                                                                              |
 |-----------------------------|------------------------------------------------------------------------------------------|
 | [data schema](#data-schema) | Plan for what data to extract for analysis                                               |
-| player-rank                 | Combine speedrun.com and splits.io data                                                  |
 | src                         | Scrape supermetroid.com data using `srcomapi`                                            |
 | sio                         | Scrape splits.io data using `splitsio`; data is not labelled in this vignette. Raw data. |
 | splits                      | Use anatomecha’s labels to update split strings                                          |
-| route-matching              | Explore the missingness of routes recorded by players                                    |
+| player-rank                 | Combine speedrun.com and splits.io data                                                  |
 | route-graph                 | Graphs of routes players take                                                            |
-| identifying-routes          | Classifying routes players take                                                          |
 | player-locations            | Exploring differences in players across locations                                        |
+| route-matching              | Explore the missingness of routes recorded by players                                    |
+| identifying-routes          | Classifying routes players take                                                          |
 
 # Analyses (work in progress)
-
-## Colour palette is in experimental/grab whatever colours phase
-
-<div class="tenor-gif-embed" data-postid="10436793"
-data-share-method="host" data-aspect-ratio="1.3369" data-width="100%">
-
-<a href="https://tenor.com/view/no-sir-i-dont-like-it-horse-gif-10436793">No
-Sir I Dont Like It GIF</a>from
-<a href="https://tenor.com/search/no+sir-gifs">No Sir GIFs</a>
-
-</div>
-
-<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 
 ## Speed run times from speedrun.com
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" />
 
-- [ ] interpretable x axis
-
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />
-
-<div id="gcpbtfpkjm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gcpbtfpkjm table {
+<div id="idvfcctick" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#idvfcctick table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#gcpbtfpkjm thead, #gcpbtfpkjm tbody, #gcpbtfpkjm tfoot, #gcpbtfpkjm tr, #gcpbtfpkjm td, #gcpbtfpkjm th {
+&#10;#idvfcctick thead, #idvfcctick tbody, #idvfcctick tfoot, #idvfcctick tr, #idvfcctick td, #idvfcctick th {
   border-style: none;
 }
-&#10;#gcpbtfpkjm p {
+&#10;#idvfcctick p {
   margin: 0;
   padding: 0;
 }
-&#10;#gcpbtfpkjm .gt_table {
+&#10;#idvfcctick .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -296,11 +285,11 @@ Sir I Dont Like It GIF</a>from
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_caption {
+&#10;#idvfcctick .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#gcpbtfpkjm .gt_title {
+&#10;#idvfcctick .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -311,7 +300,7 @@ Sir I Dont Like It GIF</a>from
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#gcpbtfpkjm .gt_subtitle {
+&#10;#idvfcctick .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -322,7 +311,7 @@ Sir I Dont Like It GIF</a>from
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#gcpbtfpkjm .gt_heading {
+&#10;#idvfcctick .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -333,12 +322,12 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_bottom_border {
+&#10;#idvfcctick .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_col_headings {
+&#10;#idvfcctick .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -352,7 +341,7 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_col_heading {
+&#10;#idvfcctick .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -371,7 +360,7 @@ Sir I Dont Like It GIF</a>from
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#gcpbtfpkjm .gt_column_spanner_outer {
+&#10;#idvfcctick .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -382,13 +371,13 @@ Sir I Dont Like It GIF</a>from
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#gcpbtfpkjm .gt_column_spanner_outer:first-child {
+&#10;#idvfcctick .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#gcpbtfpkjm .gt_column_spanner_outer:last-child {
+&#10;#idvfcctick .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#gcpbtfpkjm .gt_column_spanner {
+&#10;#idvfcctick .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -399,10 +388,10 @@ Sir I Dont Like It GIF</a>from
   display: inline-block;
   width: 100%;
 }
-&#10;#gcpbtfpkjm .gt_spanner_row {
+&#10;#idvfcctick .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#gcpbtfpkjm .gt_group_heading {
+&#10;#idvfcctick .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -427,7 +416,7 @@ Sir I Dont Like It GIF</a>from
   vertical-align: middle;
   text-align: left;
 }
-&#10;#gcpbtfpkjm .gt_empty_group_heading {
+&#10;#idvfcctick .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -441,13 +430,13 @@ Sir I Dont Like It GIF</a>from
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#gcpbtfpkjm .gt_from_md > :first-child {
+&#10;#idvfcctick .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#gcpbtfpkjm .gt_from_md > :last-child {
+&#10;#idvfcctick .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#gcpbtfpkjm .gt_row {
+&#10;#idvfcctick .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -465,7 +454,7 @@ Sir I Dont Like It GIF</a>from
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#gcpbtfpkjm .gt_stub {
+&#10;#idvfcctick .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -477,7 +466,7 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#gcpbtfpkjm .gt_stub_row_group {
+&#10;#idvfcctick .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -490,13 +479,13 @@ Sir I Dont Like It GIF</a>from
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#gcpbtfpkjm .gt_row_group_first td {
+&#10;#idvfcctick .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#gcpbtfpkjm .gt_row_group_first th {
+&#10;#idvfcctick .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#gcpbtfpkjm .gt_summary_row {
+&#10;#idvfcctick .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -505,14 +494,14 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#gcpbtfpkjm .gt_first_summary_row {
+&#10;#idvfcctick .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_first_summary_row.thick {
+&#10;#idvfcctick .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#gcpbtfpkjm .gt_last_summary_row {
+&#10;#idvfcctick .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -521,7 +510,7 @@ Sir I Dont Like It GIF</a>from
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_grand_summary_row {
+&#10;#idvfcctick .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -530,7 +519,7 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#gcpbtfpkjm .gt_first_grand_summary_row {
+&#10;#idvfcctick .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -539,7 +528,7 @@ Sir I Dont Like It GIF</a>from
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_last_grand_summary_row_top {
+&#10;#idvfcctick .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -548,10 +537,10 @@ Sir I Dont Like It GIF</a>from
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_striped {
+&#10;#idvfcctick .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#gcpbtfpkjm .gt_table_body {
+&#10;#idvfcctick .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -559,7 +548,7 @@ Sir I Dont Like It GIF</a>from
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_footnotes {
+&#10;#idvfcctick .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -572,7 +561,7 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_footnote {
+&#10;#idvfcctick .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -580,7 +569,7 @@ Sir I Dont Like It GIF</a>from
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#gcpbtfpkjm .gt_sourcenotes {
+&#10;#idvfcctick .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -593,118 +582,139 @@ Sir I Dont Like It GIF</a>from
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#gcpbtfpkjm .gt_sourcenote {
+&#10;#idvfcctick .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#gcpbtfpkjm .gt_left {
+&#10;#idvfcctick .gt_left {
   text-align: left;
 }
-&#10;#gcpbtfpkjm .gt_center {
+&#10;#idvfcctick .gt_center {
   text-align: center;
 }
-&#10;#gcpbtfpkjm .gt_right {
+&#10;#idvfcctick .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#gcpbtfpkjm .gt_font_normal {
+&#10;#idvfcctick .gt_font_normal {
   font-weight: normal;
 }
-&#10;#gcpbtfpkjm .gt_font_bold {
+&#10;#idvfcctick .gt_font_bold {
   font-weight: bold;
 }
-&#10;#gcpbtfpkjm .gt_font_italic {
+&#10;#idvfcctick .gt_font_italic {
   font-style: italic;
 }
-&#10;#gcpbtfpkjm .gt_super {
+&#10;#idvfcctick .gt_super {
   font-size: 65%;
 }
-&#10;#gcpbtfpkjm .gt_footnote_marks {
+&#10;#idvfcctick .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#gcpbtfpkjm .gt_asterisk {
+&#10;#idvfcctick .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#gcpbtfpkjm .gt_indent_1 {
+&#10;#idvfcctick .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#gcpbtfpkjm .gt_indent_2 {
+&#10;#idvfcctick .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#gcpbtfpkjm .gt_indent_3 {
+&#10;#idvfcctick .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#gcpbtfpkjm .gt_indent_4 {
+&#10;#idvfcctick .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#gcpbtfpkjm .gt_indent_5 {
+&#10;#idvfcctick .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_heading">
-      <td colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>speedrun.com leaderboard data</td>
+      <td colspan="10" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>speedrun.com leaderboard data</td>
     </tr>
     &#10;    <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="rank">rank</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="player_name">player_name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="date">date</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="t_s">t_s</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="location">location</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="player_id">player_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="date">date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="t_human">t_human</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="country">country</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="run_id">run_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="t_s">t_s</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="src_user_guest">src_user_guest</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="uri_player">uri_player</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="api_call">api_call</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr><td headers="rank" class="gt_row gt_right">1</td>
 <td headers="player_name" class="gt_row gt_left">ShinyZeni</td>
-<td headers="date" class="gt_row gt_right">2021-07-31</td>
-<td headers="t_s" class="gt_row gt_right">4373.000</td>
-<td headers="location" class="gt_row gt_left">United States</td>
-<td headers="player_id" class="gt_row gt_left">zxzno3ex</td>
-<td headers="run_id" class="gt_row gt_left">z5do82dm</td></tr>
+<td headers="date" class="gt_row gt_center">2023-06-20</td>
+<td headers="t_human" class="gt_row gt_left">PT1H12M47S</td>
+<td headers="country" class="gt_row gt_center">United States</td>
+<td headers="run_id" class="gt_row gt_left">ywrjqd9m</td>
+<td headers="t_s" class="gt_row gt_right">4367.000</td>
+<td headers="src_user_guest" class="gt_row gt_left">user</td>
+<td headers="uri_player" class="gt_row gt_left">https://www.speedrun.com/api/v1/users/zxzno3ex</td>
+<td headers="api_call" class="gt_row gt_left">zxzno3ex</td></tr>
     <tr><td headers="rank" class="gt_row gt_right">2</td>
 <td headers="player_name" class="gt_row gt_left">zoast</td>
-<td headers="date" class="gt_row gt_right">2021-02-24</td>
+<td headers="date" class="gt_row gt_center">2021-02-24</td>
+<td headers="t_human" class="gt_row gt_left">PT1H12M55S</td>
+<td headers="country" class="gt_row gt_center">Palau</td>
+<td headers="run_id" class="gt_row gt_left">yo75d4dm</td>
 <td headers="t_s" class="gt_row gt_right">4375.000</td>
-<td headers="location" class="gt_row gt_left">Palau</td>
-<td headers="player_id" class="gt_row gt_left">18v6k4nx</td>
-<td headers="run_id" class="gt_row gt_left">yo75d4dm</td></tr>
+<td headers="src_user_guest" class="gt_row gt_left">user</td>
+<td headers="uri_player" class="gt_row gt_left">https://www.speedrun.com/api/v1/users/18v6k4nx</td>
+<td headers="api_call" class="gt_row gt_left">18v6k4nx</td></tr>
     <tr><td headers="rank" class="gt_row gt_right">3</td>
 <td headers="player_name" class="gt_row gt_left">Behemoth87</td>
-<td headers="date" class="gt_row gt_right">2021-12-08</td>
+<td headers="date" class="gt_row gt_center">2021-12-08</td>
+<td headers="t_human" class="gt_row gt_left">PT1H12M55.930S</td>
+<td headers="country" class="gt_row gt_center">England</td>
+<td headers="run_id" class="gt_row gt_left">m36d0q6m</td>
 <td headers="t_s" class="gt_row gt_right">4375.930</td>
-<td headers="location" class="gt_row gt_left">England</td>
-<td headers="player_id" class="gt_row gt_left">zxz2wy4x</td>
-<td headers="run_id" class="gt_row gt_left">m36d0q6m</td></tr>
+<td headers="src_user_guest" class="gt_row gt_left">user</td>
+<td headers="uri_player" class="gt_row gt_left">https://www.speedrun.com/api/v1/users/zxz2wy4x</td>
+<td headers="api_call" class="gt_row gt_left">zxz2wy4x</td></tr>
     <tr><td headers="rank" class="gt_row gt_right">4</td>
 <td headers="player_name" class="gt_row gt_left">Gebbu</td>
-<td headers="date" class="gt_row gt_right">2023-05-08</td>
+<td headers="date" class="gt_row gt_center">2023-05-08</td>
+<td headers="t_human" class="gt_row gt_left">PT1H13M12S</td>
+<td headers="country" class="gt_row gt_center">Norway</td>
+<td headers="run_id" class="gt_row gt_left">m3qo724y</td>
 <td headers="t_s" class="gt_row gt_right">4392.000</td>
-<td headers="location" class="gt_row gt_left">Norway</td>
-<td headers="player_id" class="gt_row gt_left">xk49m26j</td>
-<td headers="run_id" class="gt_row gt_left">m3qo724y</td></tr>
+<td headers="src_user_guest" class="gt_row gt_left">user</td>
+<td headers="uri_player" class="gt_row gt_left">https://www.speedrun.com/api/v1/users/xk49m26j</td>
+<td headers="api_call" class="gt_row gt_left">xk49m26j</td></tr>
     <tr><td headers="rank" class="gt_row gt_right">5</td>
 <td headers="player_name" class="gt_row gt_left">Static_Shock</td>
-<td headers="date" class="gt_row gt_right">2023-06-10</td>
+<td headers="date" class="gt_row gt_center">2023-06-10</td>
+<td headers="t_human" class="gt_row gt_left">PT1H13M58.367S</td>
+<td headers="country" class="gt_row gt_center">Brazil</td>
+<td headers="run_id" class="gt_row gt_left">m3qrx76y</td>
 <td headers="t_s" class="gt_row gt_right">4438.367</td>
-<td headers="location" class="gt_row gt_left">Brazil</td>
-<td headers="player_id" class="gt_row gt_left">x35ve3kj</td>
-<td headers="run_id" class="gt_row gt_left">m3qrx76y</td></tr>
+<td headers="src_user_guest" class="gt_row gt_left">user</td>
+<td headers="uri_player" class="gt_row gt_left">https://www.speedrun.com/api/v1/users/x35ve3kj</td>
+<td headers="api_call" class="gt_row gt_left">x35ve3kj</td></tr>
     <tr><td headers="rank" class="gt_row gt_right">6</td>
-<td headers="player_name" class="gt_row gt_left">Oatsngoats</td>
-<td headers="date" class="gt_row gt_right">2020-09-08</td>
-<td headers="t_s" class="gt_row gt_right">4478.000</td>
-<td headers="location" class="gt_row gt_left">United States</td>
-<td headers="player_id" class="gt_row gt_left">zx7q0k08</td>
-<td headers="run_id" class="gt_row gt_left">z1odq09m</td></tr>
+<td headers="player_name" class="gt_row gt_left">CScottyW</td>
+<td headers="date" class="gt_row gt_center">2023-06-27</td>
+<td headers="t_human" class="gt_row gt_left">PT1H14M18S</td>
+<td headers="country" class="gt_row gt_center">United States</td>
+<td headers="run_id" class="gt_row gt_left">zpw9px8y</td>
+<td headers="t_s" class="gt_row gt_right">4458.000</td>
+<td headers="src_user_guest" class="gt_row gt_left">user</td>
+<td headers="uri_player" class="gt_row gt_left">https://www.speedrun.com/api/v1/users/18q3n0dj</td>
+<td headers="api_call" class="gt_row gt_left">18q3n0dj</td></tr>
   </tbody>
   &#10;  
 </table>
@@ -718,7 +728,7 @@ Sir I Dont Like It GIF</a>from
 
 ### Different routes
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;" />
 
 ### Missingness of routes
 
@@ -726,17 +736,19 @@ Sir I Dont Like It GIF</a>from
 
 ##### Too messy
 
-<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" />
 
 ##### Need order
 
-<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" />
 
 ##### Need direction
 
-<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" />
 
 ##### Too many nodes for EDA
+
+<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;" />
 
 <img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;" />
 
@@ -744,19 +756,17 @@ Sir I Dont Like It GIF</a>from
 
 <img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" />
 
-## All the runs
+## Route clusters
 
 <img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" />
 
 <img src="man/figures/README-unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;" />
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;" />
-
 ## Super Metroid and speed running
 
 ### Super Metroid is the top SNES speed runner game
 
-<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;" />
 
 - [ ] convert to coloured barchart, grouped by game, coloured by
   category
@@ -764,4 +774,4 @@ Sir I Dont Like It GIF</a>from
 
 ### Subway Surfers TikTok phenomenon or good upload interface?
 
-<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;" />

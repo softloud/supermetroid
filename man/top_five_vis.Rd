@@ -4,10 +4,7 @@
 \alias{top_five_vis}
 \title{Top five plot}
 \usage{
-top_five_vis(base_size = 10)
-}
-\arguments{
-\item{base_size}{\code{theme_minimal} argument}
+top_five_vis(text_scale = 20)
 }
 \description{
 Top five plot

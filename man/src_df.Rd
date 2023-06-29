@@ -5,12 +5,12 @@
 \alias{src_df}
 \title{Speedrun.com leaderboard smdata}
 \format{
-An object of class \code{data.frame} with 586 rows and 7 columns.
+An object of class \code{data.frame} with 600 rows and 10 columns.
 }
 \usage{
 src_df
 }
 \description{
-Player and run data joined. See src vignette.
+Player and run data joined. See src vignette; use \link{splits_df} for analysis.
 }
 \keyword{datasets}

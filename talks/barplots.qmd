@@ -1,0 +1,22 @@
+---
+title: "raincloud"
+format: revealjs
+server: shiny
+editor: source
+---
+
+```{r}
+library(supermetroid)
+library(tidyverse)
+```
+
+
+---
+```{r}
+top_five_vis()
+```
+
+---
+```{r}
+top_games_vis()
+```

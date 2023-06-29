@@ -5,12 +5,12 @@
 \alias{sio_df}
 \title{Splitsio smdata: time series observations}
 \format{
-An object of class \code{data.frame} with 19815 rows and 14 columns.
+An object of class \code{data.frame} with 19815 rows and 11 columns.
 }
 \usage{
 sio_df
 }
 \description{
-See vignette splits
+See vignette splits; use \link{splits_df} for analysis.
 }
 \keyword{datasets}

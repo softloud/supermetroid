@@ -164,7 +164,7 @@ src_runs[5]['times']
 src_runs[5]['date']
 
 for x in range(len(src_runs)):
-  print(src_runs[x]['players'][0]['id'])
+  print(src_runs[x]['players'][0])
 
 ```
 
@@ -317,7 +317,10 @@ src_raw_df.head()
 
 ```{r}
 # bring it over into sweet, sweet easier R
-src_all_obs_df <- py$src_raw_df %>% 
+src_all_obs_df <- py$src_raw_df
+
+src_df <-
+  src_all_obs_df %>% 
   select(rank, 
          player_name, 
          date, 
