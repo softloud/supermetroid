@@ -49,7 +49,7 @@
     <loc>https://softloud.github.io/supermetroid/reference/all_run_raincloud.html</loc>
   </url>
   <url>
-    <loc>https://softloud.github.io/supermetroid/reference/anatomecha_splits.html</loc>
+    <loc>https://softloud.github.io/supermetroid/reference/common_splits.html</loc>
   </url>
   <url>
     <loc>https://softloud.github.io/supermetroid/reference/cum_t_route_vis.html</loc>
@@ -94,7 +94,13 @@
     <loc>https://softloud.github.io/supermetroid/reference/sm_world.html</loc>
   </url>
   <url>
+    <loc>https://softloud.github.io/supermetroid/reference/splits_df.html</loc>
+  </url>
+  <url>
     <loc>https://softloud.github.io/supermetroid/reference/src_df.html</loc>
+  </url>
+  <url>
+    <loc>https://softloud.github.io/supermetroid/reference/src_top_df.html</loc>
   </url>
   <url>
     <loc>https://softloud.github.io/supermetroid/reference/theme_sm.html</loc>
@@ -103,6 +109,12 @@
     <loc>https://softloud.github.io/supermetroid/reference/top_five_vis.html</loc>
   </url>
   <url>
+    <loc>https://softloud.github.io/supermetroid/reference/top_five_vis_dat.html</loc>
+  </url>
+  <url>
     <loc>https://softloud.github.io/supermetroid/reference/top_games_vis.html</loc>
+  </url>
+  <url>
+    <loc>https://softloud.github.io/supermetroid/reference/top_plot.html</loc>
   </url>
 </urlset>

@@ -141,578 +141,59 @@ out all the <code>bombs</code> with the bathwater.</p>
 <code class="sourceCode R"><span><span class="va">label_counts</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">starts_with</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="dwmrgmnati" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dwmrgmnati table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#dwmrgmnati thead, #dwmrgmnati tbody, #dwmrgmnati tfoot, #dwmrgmnati tr, #dwmrgmnati td, #dwmrgmnati th {
-  border-style: none;
-}
-
-#dwmrgmnati p {
-  margin: 0;
-  padding: 0;
-}
-
-#dwmrgmnati .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#dwmrgmnati .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#dwmrgmnati .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#dwmrgmnati .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#dwmrgmnati .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#dwmrgmnati .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#dwmrgmnati .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#dwmrgmnati .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#dwmrgmnati .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#dwmrgmnati .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#dwmrgmnati .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#dwmrgmnati .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#dwmrgmnati .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#dwmrgmnati .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#dwmrgmnati .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dwmrgmnati .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#dwmrgmnati .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#dwmrgmnati .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#dwmrgmnati .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dwmrgmnati .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#dwmrgmnati .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dwmrgmnati .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#dwmrgmnati .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dwmrgmnati .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#dwmrgmnati .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#dwmrgmnati .gt_left {
-  text-align: left;
-}
-
-#dwmrgmnati .gt_center {
-  text-align: center;
-}
-
-#dwmrgmnati .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#dwmrgmnati .gt_font_normal {
-  font-weight: normal;
-}
-
-#dwmrgmnati .gt_font_bold {
-  font-weight: bold;
-}
-
-#dwmrgmnati .gt_font_italic {
-  font-style: italic;
-}
-
-#dwmrgmnati .gt_super {
-  font-size: 65%;
-}
-
-#dwmrgmnati .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#dwmrgmnati .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#dwmrgmnati .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#dwmrgmnati .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#dwmrgmnati .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#dwmrgmnati .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#dwmrgmnati .gt_indent_5 {
-  text-indent: 25px;
-}
-</style>
-<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead><tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label">label</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="n">n</th>
-    </tr></thead>
-<tbody class="gt_table_body">
-<tr>
-<td headers="label" class="gt_row gt_left">space jump</td>
-<td headers="n" class="gt_row gt_right">411</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">screw attack</td>
-<td headers="n" class="gt_row gt_right">360</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">bombs</td>
-<td headers="n" class="gt_row gt_right">339</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">gravity suit</td>
-<td headers="n" class="gt_row gt_right">326</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">phantoon</td>
-<td headers="n" class="gt_row gt_right">294</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">plasma beam</td>
-<td headers="n" class="gt_row gt_right">271</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">speed booster</td>
-<td headers="n" class="gt_row gt_right">262</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">varia suit</td>
-<td headers="n" class="gt_row gt_right">259</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">spring ball</td>
-<td headers="n" class="gt_row gt_right">257</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">wave beam</td>
-<td headers="n" class="gt_row gt_right">252</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">ice beam</td>
-<td headers="n" class="gt_row gt_right">248</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">charge beam</td>
-<td headers="n" class="gt_row gt_right">231</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">grapple beam</td>
-<td headers="n" class="gt_row gt_right">207</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">spazer</td>
-<td headers="n" class="gt_row gt_right">203</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">x-ray</td>
-<td headers="n" class="gt_row gt_right">203</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">golden 4</td>
-<td headers="n" class="gt_row gt_right">154</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">varia</td>
-<td headers="n" class="gt_row gt_right">154</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">morph ball</td>
-<td headers="n" class="gt_row gt_right">153</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">ridley e-tank</td>
-<td headers="n" class="gt_row gt_right">143</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">ridley</td>
-<td headers="n" class="gt_row gt_right">142</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">g4</td>
-<td headers="n" class="gt_row gt_right">119</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">ridley's e-tank</td>
-<td headers="n" class="gt_row gt_right">115</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">x-ray scope</td>
-<td headers="n" class="gt_row gt_right">115</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">botwoon</td>
-<td headers="n" class="gt_row gt_right">113</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">turtle e-tank</td>
-<td headers="n" class="gt_row gt_right">113</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">grapple</td>
-<td headers="n" class="gt_row gt_right">112</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">golden four</td>
-<td headers="n" class="gt_row gt_right">105</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">gravity</td>
-<td headers="n" class="gt_row gt_right">105</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">escape!</td>
-<td headers="n" class="gt_row gt_right">96</td>
-</tr>
-<tr>
-<td headers="label" class="gt_row gt_left">kraid</td>
-<td headers="n" class="gt_row gt_right">94</td>
-</tr>
-</tbody>
-</table>
-</div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                   label   n</span></span>
+<span><span class="co">#&gt; 1            space jump 411</span></span>
+<span><span class="co">#&gt; 2          screw attack 360</span></span>
+<span><span class="co">#&gt; 3                 bombs 339</span></span>
+<span><span class="co">#&gt; 4          gravity suit 326</span></span>
+<span><span class="co">#&gt; 5              phantoon 294</span></span>
+<span><span class="co">#&gt; 6           plasma beam 271</span></span>
+<span><span class="co">#&gt; 7         speed booster 262</span></span>
+<span><span class="co">#&gt; 8            varia suit 259</span></span>
+<span><span class="co">#&gt; 9           spring ball 257</span></span>
+<span><span class="co">#&gt; 10            wave beam 252</span></span>
+<span><span class="co">#&gt; 11             ice beam 248</span></span>
+<span><span class="co">#&gt; 12          charge beam 231</span></span>
+<span><span class="co">#&gt; 13         grapple beam 207</span></span>
+<span><span class="co">#&gt; 14               spazer 203</span></span>
+<span><span class="co">#&gt; 15                x-ray 203</span></span>
+<span><span class="co">#&gt; 16             golden 4 154</span></span>
+<span><span class="co">#&gt; 17                varia 154</span></span>
+<span><span class="co">#&gt; 18           morph ball 153</span></span>
+<span><span class="co">#&gt; 19        ridley e-tank 143</span></span>
+<span><span class="co">#&gt; 20               ridley 142</span></span>
+<span><span class="co">#&gt; 21                   g4 119</span></span>
+<span><span class="co">#&gt; 22      ridley's e-tank 115</span></span>
+<span><span class="co">#&gt; 23          x-ray scope 115</span></span>
+<span><span class="co">#&gt; 24              botwoon 113</span></span>
+<span><span class="co">#&gt; 25        turtle e-tank 113</span></span>
+<span><span class="co">#&gt; 26              grapple 112</span></span>
+<span><span class="co">#&gt; 27          golden four 105</span></span>
+<span><span class="co">#&gt; 28              gravity 105</span></span>
+<span><span class="co">#&gt; 29              escape!  96</span></span>
+<span><span class="co">#&gt; 30                kraid  94</span></span>
+<span><span class="co">#&gt; 31         mother brain  93</span></span>
+<span><span class="co">#&gt; 32              draygon  91</span></span>
+<span><span class="co">#&gt; 33               escape  91</span></span>
+<span><span class="co">#&gt; 34       kraid missiles  84</span></span>
+<span><span class="co">#&gt; 35        hi-jump boots  82</span></span>
+<span><span class="co">#&gt; 36            crocomire  72</span></span>
+<span><span class="co">#&gt; 37       grappling beam  72</span></span>
+<span><span class="co">#&gt; 38          bomb torizo  71</span></span>
+<span><span class="co">#&gt; 39            ss supers  71</span></span>
+<span><span class="co">#&gt; 40             any% pbs  70</span></span>
+<span><span class="co">#&gt; 41               plasma  70</span></span>
+<span><span class="co">#&gt; 42          crab supers  66</span></span>
+<span><span class="co">#&gt; 43                  ice  63</span></span>
+<span><span class="co">#&gt; 44                boots  62</span></span>
+<span><span class="co">#&gt; 45         early supers  59</span></span>
+<span><span class="co">#&gt; 46 watering hole supers  59</span></span>
+<span><span class="co">#&gt; 47        golden torizo  57</span></span>
+<span><span class="co">#&gt; 48  green hill missiles  57</span></span>
+<span><span class="co">#&gt; 49         kraid e-tank  56</span></span>
+<span><span class="co">#&gt; 50       etecoon supers  53</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># write labels to sheet for labelling </span></span>
@@ -729,51 +210,40 @@ out all the <code>bombs</code> with the bathwater.</p>
 <h3 id="add-labels">Add labels<a class="anchor" aria-label="anchor" href="#add-labels"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">relabels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"data-raw/sio-relabels.csv"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">relabels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"../data-raw/sio-relabels.csv"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">label</span>, <span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: 'data-raw/sio-relabels.csv' does not exist in current working directory ('/home/runner/work/supermetroid/supermetroid/vignettes').</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">2563</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span> (3): starts_with, label, supermetroid_label</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">dbl</span> (1): n</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">sio_relabelled</span> <span class="op">&lt;-</span> </span>
-<span><span class="va">sio_splits_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">game_event</span><span class="op">)</span>,</span>
-<span>    label <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span></span>
-<span>      <span class="va">label</span> <span class="op">==</span> <span class="st">"grappling beam"</span>, <span class="st">"grapple beam"</span>, <span class="va">label</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">relabels</span>, by <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'relabels' not found</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># check out counts now</span></span>
-<span><span class="va">sio_relabelled</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'sio_relabelled' not found</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sio_df</span> <span class="op">&lt;-</span> <span class="va">sio_relabelled</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">name</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">supermetroid_label</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, split_player <span class="op">=</span> <span class="va">label</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'sio_relabelled' not found</span></span>
+<span>  <span class="va">sio_splits_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>      label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">game_event</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">relabels</span>, by <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="co"># replace label values</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span>, <span class="va">supermetroid_label</span>, <span class="va">label</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">game_event</span>, <span class="op">-</span><span class="va">name</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"label"</span><span class="op">)</span>, <span class="va">player_name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"realtime"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   supermetroid_label player_name           game_event segment_number</span></span>
-<span><span class="co">#&gt; 1         morph ball  anatomecha        Morphing Ball              0</span></span>
-<span><span class="co">#&gt; 2               &lt;NA&gt;  anatomecha       First Missiles              1</span></span>
-<span><span class="co">#&gt; 3              bombs  anatomecha                 Bomb              2</span></span>
-<span><span class="co">#&gt; 4               &lt;NA&gt;  anatomecha First Super Missiles              3</span></span>
-<span><span class="co">#&gt; 5        charge beam  anatomecha          Charge Beam              4</span></span>
-<span><span class="co">#&gt; 6             spazer  anatomecha               Spazer              5</span></span>
-<span><span class="co">#&gt;   realtime_start_ms                           segment_id run_id player_id</span></span>
-<span><span class="co">#&gt; 1                 0 69d90da3-1634-4af4-9096-419a32bedd0a   ato1     89646</span></span>
-<span><span class="co">#&gt; 2            200835 fad50319-d55b-460e-923a-c416f233daea   ato1     89646</span></span>
-<span><span class="co">#&gt; 3            224926 089daf0b-64c3-4eec-8902-022335b2b179   ato1     89646</span></span>
-<span><span class="co">#&gt; 4            358321 2a215dcd-2989-4939-8558-a7215904dfd1   ato1     89646</span></span>
-<span><span class="co">#&gt; 5            589662 e906991d-e919-47c1-a809-2b4da9b67461   ato1     89646</span></span>
-<span><span class="co">#&gt; 6            709962 10439232-43c7-4752-afb9-ee23782da4a9   ato1     89646</span></span>
+<span><span class="co"># there now, that's looking better</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sio_relabelled</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  label supermetroid_label player_name realtime_start_ms</span></span>
+<span><span class="co">#&gt; 1           morph ball         morph ball  anatomecha                 0</span></span>
+<span><span class="co">#&gt; 2       first missiles               &lt;NA&gt;  anatomecha            200835</span></span>
+<span><span class="co">#&gt; 3                bombs              bombs  anatomecha            224926</span></span>
+<span><span class="co">#&gt; 4 first super missiles               &lt;NA&gt;  anatomecha            358321</span></span>
+<span><span class="co">#&gt; 5          charge beam        charge beam  anatomecha            589662</span></span>
+<span><span class="co">#&gt; 6               spazer             spazer  anatomecha            709962</span></span>
 <span><span class="co">#&gt;   realtime_duration_ms realtime_end_ms realtime_shortest_duration_ms</span></span>
 <span><span class="co">#&gt; 1               200835          200835                        200835</span></span>
 <span><span class="co">#&gt; 2                24091          224926                         23286</span></span>
@@ -781,66 +251,44 @@ out all the <code>bombs</code> with the bathwater.</p>
 <span><span class="co">#&gt; 4               231341          589662                        227335</span></span>
 <span><span class="co">#&gt; 5               120300          709962                        120299</span></span>
 <span><span class="co">#&gt; 6                97876          807838                         95884</span></span>
-<span><span class="co">#&gt;   realtime_gold         split_player                split</span></span>
-<span><span class="co">#&gt; 1          TRUE        morphing ball        morphing ball</span></span>
-<span><span class="co">#&gt; 2         FALSE       first missiles       first missiles</span></span>
-<span><span class="co">#&gt; 3         FALSE                 bomb                 bomb</span></span>
-<span><span class="co">#&gt; 4         FALSE first super missiles first super missiles</span></span>
-<span><span class="co">#&gt; 5         FALSE          charge beam          charge beam</span></span>
-<span><span class="co">#&gt; 6         FALSE               spazer               spazer</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_data</span><span class="op">(</span><span class="va">sio_df</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="what-routes-do-people-take">What routes do people take?<a class="anchor" aria-label="anchor" href="#what-routes-do-people-take"></a>
-</h3>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">routes_raw</span> <span class="op">&lt;-</span> </span>
-<span><span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">supermetroid_label</span>, <span class="va">player_name</span>, split_order <span class="op">=</span> <span class="va">segment_number</span>, <span class="va">realtime_end_ms</span>, <span class="va">run_id</span>, <span class="va">player_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="co"># get just the universal splits</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">splits_orders</span> <span class="op">&lt;-</span> </span>
-<span><span class="va">routes_raw</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">supermetroid_label</span>, <span class="va">split_order</span>, <span class="va">run_id</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">nested_splits</span> <span class="op">&lt;-</span> </span>
-<span><span class="va">splits_orders</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">run_id</span>, <span class="va">split_order</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">split_order</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span>splits <span class="op">=</span> <span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span>runs <span class="op">=</span> <span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    route_length <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_int</a></span><span class="op">(</span><span class="va">splits</span>, <span class="va">nrow</span><span class="op">)</span>,</span>
-<span>    route_id <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html" class="external-link">str_c</a></span><span class="op">(</span><span class="st">"route "</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">route_length</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
-<span><span class="va">nested_splits</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="co">#&gt;   realtime_gold segment_number                           segment_id run_id</span></span>
+<span><span class="co">#&gt; 1          TRUE              0 69d90da3-1634-4af4-9096-419a32bedd0a   ato1</span></span>
+<span><span class="co">#&gt; 2         FALSE              1 fad50319-d55b-460e-923a-c416f233daea   ato1</span></span>
+<span><span class="co">#&gt; 3         FALSE              2 089daf0b-64c3-4eec-8902-022335b2b179   ato1</span></span>
+<span><span class="co">#&gt; 4         FALSE              3 2a215dcd-2989-4939-8558-a7215904dfd1   ato1</span></span>
+<span><span class="co">#&gt; 5         FALSE              4 e906991d-e919-47c1-a809-2b4da9b67461   ato1</span></span>
+<span><span class="co">#&gt; 6         FALSE              5 10439232-43c7-4752-afb9-ee23782da4a9   ato1</span></span>
+<span><span class="co">#&gt;   player_id</span></span>
+<span><span class="co">#&gt; 1     89646</span></span>
+<span><span class="co">#&gt; 2     89646</span></span>
+<span><span class="co">#&gt; 3     89646</span></span>
+<span><span class="co">#&gt; 4     89646</span></span>
+<span><span class="co">#&gt; 5     89646</span></span>
+<span><span class="co">#&gt; 6     89646</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># check out counts now</span></span>
+<span><span class="va">sio_relabelled</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">label</span>, <span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="msxhppsyug" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#msxhppsyug table {
+<div id="vmcfxufhkq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vmcfxufhkq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#msxhppsyug thead, #msxhppsyug tbody, #msxhppsyug tfoot, #msxhppsyug tr, #msxhppsyug td, #msxhppsyug th {
+#vmcfxufhkq thead, #vmcfxufhkq tbody, #vmcfxufhkq tfoot, #vmcfxufhkq tr, #vmcfxufhkq td, #vmcfxufhkq th {
   border-style: none;
 }
 
-#msxhppsyug p {
+#vmcfxufhkq p {
   margin: 0;
   padding: 0;
 }
 
-#msxhppsyug .gt_table {
+#vmcfxufhkq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -866,12 +314,12 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-left-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_caption {
+#vmcfxufhkq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#msxhppsyug .gt_title {
+#vmcfxufhkq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -883,7 +331,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-width: 0;
 }
 
-#msxhppsyug .gt_subtitle {
+#vmcfxufhkq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -895,7 +343,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-top-width: 0;
 }
 
-#msxhppsyug .gt_heading {
+#vmcfxufhkq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -907,13 +355,13 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_bottom_border {
+#vmcfxufhkq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_col_headings {
+#vmcfxufhkq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -928,7 +376,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_col_heading {
+#vmcfxufhkq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -948,7 +396,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   overflow-x: hidden;
 }
 
-#msxhppsyug .gt_column_spanner_outer {
+#vmcfxufhkq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -960,15 +408,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 4px;
 }
 
-#msxhppsyug .gt_column_spanner_outer:first-child {
+#vmcfxufhkq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#msxhppsyug .gt_column_spanner_outer:last-child {
+#vmcfxufhkq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#msxhppsyug .gt_column_spanner {
+#vmcfxufhkq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -980,11 +428,11 @@ out all the <code>bombs</code> with the bathwater.</p>
   width: 100%;
 }
 
-#msxhppsyug .gt_spanner_row {
+#vmcfxufhkq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#msxhppsyug .gt_group_heading {
+#vmcfxufhkq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1010,7 +458,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   text-align: left;
 }
 
-#msxhppsyug .gt_empty_group_heading {
+#vmcfxufhkq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1025,15 +473,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   vertical-align: middle;
 }
 
-#msxhppsyug .gt_from_md > :first-child {
+#vmcfxufhkq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#msxhppsyug .gt_from_md > :last-child {
+#vmcfxufhkq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#msxhppsyug .gt_row {
+#vmcfxufhkq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1052,7 +500,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   overflow-x: hidden;
 }
 
-#msxhppsyug .gt_stub {
+#vmcfxufhkq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1065,7 +513,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#msxhppsyug .gt_stub_row_group {
+#vmcfxufhkq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1079,15 +527,15 @@ out all the <code>bombs</code> with the bathwater.</p>
   vertical-align: top;
 }
 
-#msxhppsyug .gt_row_group_first td {
+#vmcfxufhkq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#msxhppsyug .gt_row_group_first th {
+#vmcfxufhkq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#msxhppsyug .gt_summary_row {
+#vmcfxufhkq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1097,16 +545,16 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#msxhppsyug .gt_first_summary_row {
+#vmcfxufhkq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_first_summary_row.thick {
+#vmcfxufhkq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#msxhppsyug .gt_last_summary_row {
+#vmcfxufhkq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1116,7 +564,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_grand_summary_row {
+#vmcfxufhkq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1126,7 +574,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#msxhppsyug .gt_first_grand_summary_row {
+#vmcfxufhkq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1136,7 +584,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-top-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_last_grand_summary_row_top {
+#vmcfxufhkq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1146,11 +594,11 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_striped {
+#vmcfxufhkq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#msxhppsyug .gt_table_body {
+#vmcfxufhkq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1159,7 +607,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_footnotes {
+#vmcfxufhkq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1173,7 +621,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_footnote {
+#vmcfxufhkq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1182,7 +630,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#msxhppsyug .gt_sourcenotes {
+#vmcfxufhkq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1196,7 +644,7 @@ out all the <code>bombs</code> with the bathwater.</p>
   border-right-color: #D3D3D3;
 }
 
-#msxhppsyug .gt_sourcenote {
+#vmcfxufhkq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1204,150 +652,433 @@ out all the <code>bombs</code> with the bathwater.</p>
   padding-right: 5px;
 }
 
-#msxhppsyug .gt_left {
+#vmcfxufhkq .gt_left {
   text-align: left;
 }
 
-#msxhppsyug .gt_center {
+#vmcfxufhkq .gt_center {
   text-align: center;
 }
 
-#msxhppsyug .gt_right {
+#vmcfxufhkq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#msxhppsyug .gt_font_normal {
+#vmcfxufhkq .gt_font_normal {
   font-weight: normal;
 }
 
-#msxhppsyug .gt_font_bold {
+#vmcfxufhkq .gt_font_bold {
   font-weight: bold;
 }
 
-#msxhppsyug .gt_font_italic {
+#vmcfxufhkq .gt_font_italic {
   font-style: italic;
 }
 
-#msxhppsyug .gt_super {
+#vmcfxufhkq .gt_super {
   font-size: 65%;
 }
 
-#msxhppsyug .gt_footnote_marks {
+#vmcfxufhkq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#msxhppsyug .gt_asterisk {
+#vmcfxufhkq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#msxhppsyug .gt_indent_1 {
+#vmcfxufhkq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#msxhppsyug .gt_indent_2 {
+#vmcfxufhkq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#msxhppsyug .gt_indent_3 {
+#vmcfxufhkq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#msxhppsyug .gt_indent_4 {
+#vmcfxufhkq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#msxhppsyug .gt_indent_5 {
+#vmcfxufhkq .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="splits">splits</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="runs">runs</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="route_length">route_length</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="route_id">route_id</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label">label</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="supermetroid_label">supermetroid_label</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="n">n</th>
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="splits" class="gt_row gt_center">c("morph ball", "bombs", "first supers", "charge beam", "kraid", "varia suit", "hi-jump boots", "speed booster", "wave beam", "crocomire", "grapple beam", "ice beam", "phantoon", "gravity suit", "gauntlet e-tank", "spore spawn supers", "spore spawn supers", "draygon", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4", "golden 4", "kraid", "phantoon", "draygon", "ridley")</td>
-<td headers="runs" class="gt_row gt_center">zwv</td>
-<td headers="route_length" class="gt_row gt_right">29</td>
-<td headers="route_id" class="gt_row gt_left">route 167</td>
+<td headers="label" class="gt_row gt_left">space jump</td>
+<td headers="supermetroid_label" class="gt_row gt_left">space jump</td>
+<td headers="n" class="gt_row gt_right">450</td>
 </tr>
 <tr>
-<td headers="splits" class="gt_row gt_center">c("ridley", "morph ball", "bombs", "first supers", "charge beam", "spazer", "kraid", "varia suit", "hi-jump boots", "speed booster", "wave beam", "crocomire", "grapple beam", "ice beam", "phantoon", "gravity suit", "spore spawn supers", "draygon", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
-<td headers="runs" class="gt_row gt_center">c("2h20", "2h5x", "2l5q", "2q6n", "30jr", "3b65", "3vjk", "40wo", "47j9", "56yj", "5hht", "5ykr")</td>
-<td headers="route_length" class="gt_row gt_right">24</td>
-<td headers="route_id" class="gt_row gt_left">route 29</td>
+<td headers="label" class="gt_row gt_left">varia suit</td>
+<td headers="supermetroid_label" class="gt_row gt_left">varia suit</td>
+<td headers="n" class="gt_row gt_right">425</td>
 </tr>
 <tr>
-<td headers="splits" class="gt_row gt_center">c("morph ball", "bombs", "first supers", "charge beam", "spazer", "kraid", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "spore spawn supers", "draygon", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray", "golden 4", "escape")</td>
-<td headers="runs" class="gt_row gt_center">amcl</td>
-<td headers="route_length" class="gt_row gt_right">24</td>
-<td headers="route_id" class="gt_row gt_left">route 159</td>
+<td headers="label" class="gt_row gt_left">grapple beam</td>
+<td headers="supermetroid_label" class="gt_row gt_left">grapple beam</td>
+<td headers="n" class="gt_row gt_right">405</td>
 </tr>
 <tr>
-<td headers="splits" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "kraid", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "draygon", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray", "mother brain", "escape")</td>
-<td headers="runs" class="gt_row gt_center">ato1</td>
-<td headers="route_length" class="gt_row gt_right">22</td>
-<td headers="route_id" class="gt_row gt_left">route 162</td>
+<td headers="label" class="gt_row gt_left">screw attack</td>
+<td headers="supermetroid_label" class="gt_row gt_left">screw attack</td>
+<td headers="n" class="gt_row gt_right">404</td>
 </tr>
 <tr>
-<td headers="splits" class="gt_row gt_center">c("morph ball", "first supers", "charge beam", "spazer", "kraid", "varia suit", "hi-jump boots", "speed booster", "wave beam", "crocomire", "grapple beam", "phantoon", "spore spawn supers", "draygon", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray")</td>
-<td headers="runs" class="gt_row gt_center">c("5g6d", "5g6e")</td>
-<td headers="route_length" class="gt_row gt_right">21</td>
-<td headers="route_id" class="gt_row gt_left">route 86</td>
+<td headers="label" class="gt_row gt_left">bombs</td>
+<td headers="supermetroid_label" class="gt_row gt_left">bombs</td>
+<td headers="n" class="gt_row gt_right">399</td>
 </tr>
 <tr>
-<td headers="splits" class="gt_row gt_center">c("morph ball", "bombs", "spazer", "kraid", "varia suit", "hi-jump boots", "wave beam", "crocomire", "grapple beam", "phantoon", "gravity suit", "spore spawn supers", "draygon", "space jump", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray", "golden 4", "mother brain")</td>
-<td headers="runs" class="gt_row gt_center">6zvk</td>
-<td headers="route_length" class="gt_row gt_right">21</td>
-<td headers="route_id" class="gt_row gt_left">route 107</td>
+<td headers="label" class="gt_row gt_left">x-ray</td>
+<td headers="supermetroid_label" class="gt_row gt_left">x-ray</td>
+<td headers="n" class="gt_row gt_right">359</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">plasma beam</td>
+<td headers="supermetroid_label" class="gt_row gt_left">plasma beam</td>
+<td headers="n" class="gt_row gt_right">342</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">gravity suit</td>
+<td headers="supermetroid_label" class="gt_row gt_left">gravity suit</td>
+<td headers="n" class="gt_row gt_right">334</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">ice beam</td>
+<td headers="supermetroid_label" class="gt_row gt_left">ice beam</td>
+<td headers="n" class="gt_row gt_right">324</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">phantoon</td>
+<td headers="supermetroid_label" class="gt_row gt_left">phantoon</td>
+<td headers="n" class="gt_row gt_right">323</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">speed booster</td>
+<td headers="supermetroid_label" class="gt_row gt_left">speed booster</td>
+<td headers="n" class="gt_row gt_right">313</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">spring ball</td>
+<td headers="supermetroid_label" class="gt_row gt_left">spring ball</td>
+<td headers="n" class="gt_row gt_right">289</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">golden 4</td>
+<td headers="supermetroid_label" class="gt_row gt_left">golden 4</td>
+<td headers="n" class="gt_row gt_right">286</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">wave beam</td>
+<td headers="supermetroid_label" class="gt_row gt_left">wave beam</td>
+<td headers="n" class="gt_row gt_right">283</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">charge beam</td>
+<td headers="supermetroid_label" class="gt_row gt_left">charge beam</td>
+<td headers="n" class="gt_row gt_right">232</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">spazer</td>
+<td headers="supermetroid_label" class="gt_row gt_left">spazer</td>
+<td headers="n" class="gt_row gt_right">218</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">hi-jump boots</td>
+<td headers="supermetroid_label" class="gt_row gt_left">hi-jump boots</td>
+<td headers="n" class="gt_row gt_right">212</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">morph ball</td>
+<td headers="supermetroid_label" class="gt_row gt_left">morph ball</td>
+<td headers="n" class="gt_row gt_right">208</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">ridley</td>
+<td headers="supermetroid_label" class="gt_row gt_left">ridley</td>
+<td headers="n" class="gt_row gt_right">182</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">ridley e-tank</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">143</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">spore spawn supers</td>
+<td headers="supermetroid_label" class="gt_row gt_left">spore spawn supers</td>
+<td headers="n" class="gt_row gt_right">136</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">draygon</td>
+<td headers="supermetroid_label" class="gt_row gt_left">draygon</td>
+<td headers="n" class="gt_row gt_right">121</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">ridley's e-tank</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">115</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">kraid</td>
+<td headers="supermetroid_label" class="gt_row gt_left">kraid</td>
+<td headers="n" class="gt_row gt_right">114</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">botwoon</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">113</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">turtle e-tank</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">113</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">golden four</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">105</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">gravity</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">105</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">crocomire</td>
+<td headers="supermetroid_label" class="gt_row gt_left">crocomire</td>
+<td headers="n" class="gt_row gt_right">103</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">mother brain</td>
+<td headers="supermetroid_label" class="gt_row gt_left">mother brain</td>
+<td headers="n" class="gt_row gt_right">99</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">escape!</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">96</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">first supers</td>
+<td headers="supermetroid_label" class="gt_row gt_left">first supers</td>
+<td headers="n" class="gt_row gt_right">92</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">escape</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">91</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">kraid missiles</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">84</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">bomb torizo</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">71</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">any% pbs</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">70</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">crab supers</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">66</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">watering hole supers</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">59</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">golden torizo</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">57</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">green hill missiles</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">57</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">kraid e-tank</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">56</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">etecoon supers</td>
+<td headers="supermetroid_label" class="gt_row gt_left">NA</td>
+<td headers="n" class="gt_row gt_right">53</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">anatomecha_splits</span> <span class="op">&lt;-</span></span>
-<span>  <span class="co"># get standard order</span></span>
-<span>  <span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">player_name</span> <span class="op">==</span> <span class="st">"anatomecha"</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">segment_number</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="co"># should really filter to last date</span></span>
-<span>  <span class="co"># will need to fix this when there's more than one anatomecha run</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>split_anatomecha <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sio_df</span> <span class="op">&lt;-</span> <span class="va">sio_relabelled</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>game_event <span class="op">=</span> <span class="va">label</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">sio_df</span><span class="op">$</span><span class="va">split</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">anatomecha_splits</span><span class="op">$</span><span class="va">split</span></span></code></pre></div>
+<span><span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             game_event player_name realtime_start_ms realtime_duration_ms</span></span>
+<span><span class="co">#&gt; 1           morph ball  anatomecha                 0               200835</span></span>
+<span><span class="co">#&gt; 2       first missiles  anatomecha            200835                24091</span></span>
+<span><span class="co">#&gt; 3                bombs  anatomecha            224926               133395</span></span>
+<span><span class="co">#&gt; 4 first super missiles  anatomecha            358321               231341</span></span>
+<span><span class="co">#&gt; 5          charge beam  anatomecha            589662               120300</span></span>
+<span><span class="co">#&gt; 6               spazer  anatomecha            709962                97876</span></span>
+<span><span class="co">#&gt;   realtime_end_ms realtime_shortest_duration_ms realtime_gold segment_number</span></span>
+<span><span class="co">#&gt; 1          200835                        200835          TRUE              0</span></span>
+<span><span class="co">#&gt; 2          224926                         23286         FALSE              1</span></span>
+<span><span class="co">#&gt; 3          358321                        129371         FALSE              2</span></span>
+<span><span class="co">#&gt; 4          589662                        227335         FALSE              3</span></span>
+<span><span class="co">#&gt; 5          709962                        120299         FALSE              4</span></span>
+<span><span class="co">#&gt; 6          807838                         95884         FALSE              5</span></span>
+<span><span class="co">#&gt;                             segment_id run_id player_id</span></span>
+<span><span class="co">#&gt; 1 69d90da3-1634-4af4-9096-419a32bedd0a   ato1     89646</span></span>
+<span><span class="co">#&gt; 2 fad50319-d55b-460e-923a-c416f233daea   ato1     89646</span></span>
+<span><span class="co">#&gt; 3 089daf0b-64c3-4eec-8902-022335b2b179   ato1     89646</span></span>
+<span><span class="co">#&gt; 4 2a215dcd-2989-4939-8558-a7215904dfd1   ato1     89646</span></span>
+<span><span class="co">#&gt; 5 e906991d-e919-47c1-a809-2b4da9b67461   ato1     89646</span></span>
+<span><span class="co">#&gt; 6 10439232-43c7-4752-afb9-ee23782da4a9   ato1     89646</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># not run</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_data</span><span class="op">(</span><span class="va">sio_df</span>, overwrite<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="selected-splits">Selected splits<a class="anchor" aria-label="anchor" href="#selected-splits"></a>
+</h3>
+<p>Select most common splits used by players.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">game_event</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    n_runners <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n_runners</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">n_runners</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">sm_col_h</span><span class="op">$</span><span class="va">label</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/theme_sm.html">theme_sm</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Counts of runners for splits"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
+<p><img src="splits_files/figure-html/unnamed-chunk-12-1.png" width="768" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">common_splits</span> <span class="op">&lt;-</span></span>
+<span>  <span class="co"># get standard order - recorded by at least 30 runners</span></span>
+<span>  <span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">game_event</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    n_runners <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">player_id</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n_runners</span> <span class="op">&gt;=</span> <span class="fl">30</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n_runners</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">common_splits</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 19 × 2</span></span></span>
+<span><span class="co">#&gt;    game_event    n_runners</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> varia suit           80</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> bombs                75</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> space jump           75</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> grapple beam         72</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> screw attack         68</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> x-ray                68</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ice beam             63</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> plasma beam          58</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> speed booster        58</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> phantoon             56</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> gravity suit         55</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> golden 4             54</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> wave beam            49</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> spring ball          45</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> charge beam          37</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> morph ball           37</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> hi-jump boots        35</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> spazer               33</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> ridley               30</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># not run</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_data</span><span class="op">(</span><span class="va">common_splits</span>, overwrite<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="what-routes-do-people-take">What routes do people take?<a class="anchor" aria-label="anchor" href="#what-routes-do-people-take"></a>
+</h3>
+<p>Oh this code is all borked and from early experimental phase from
+here. Waiting to copy-paste, etc.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_data</span><span class="op">(</span><span class="va">anatomecha_splits</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">routes_raw</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">supermetroid_label</span>, <span class="va">player_name</span>, split_order <span class="op">=</span> <span class="va">segment_number</span>, <span class="va">realtime_end_ms</span>, <span class="va">run_id</span>, <span class="va">player_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># get just the universal splits</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't subset columns that don't exist.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Column `supermetroid_label` doesn't exist.</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">splits_orders</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">routes_raw</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">supermetroid_label</span>, <span class="va">split_order</span>, <span class="va">run_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'routes_raw' not found</span></span>
+<span></span>
+<span><span class="va">nested_splits</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">splits_orders</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">run_id</span>, <span class="va">split_order</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">split_order</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span>splits <span class="op">=</span> <span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span>runs <span class="op">=</span> <span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    route_length <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_int</a></span><span class="op">(</span><span class="va">splits</span>, <span class="va">nrow</span><span class="op">)</span>,</span>
+<span>    route_id <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html" class="external-link">str_c</a></span><span class="op">(</span><span class="st">"route "</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">route_length</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'splits_orders' not found</span></span>
+<span>  </span>
+<span><span class="va">nested_splits</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'nested_splits' not found</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">routes</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">nested_splits</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="co"># head() %&gt;% </span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>event <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">splits</span>, \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">anatomecha_splits</span>, by <span class="op">=</span> <span class="st">"supermetroid_label"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>event <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">splits</span>, \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">common_splits</span>, by <span class="op">=</span> <span class="st">"supermetroid_label"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>         route_anatomecha <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">event</span>, \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">split_anatomecha</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">split_anatomecha</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>         route_standard <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_lgl</a></span><span class="op">(</span><span class="va">route_anatomecha</span>,</span>
 <span>                                  \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span>         <span class="op">)</span></span>
-<span></span>
-<span> </span></code></pre></div>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'nested_splits' not found</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="time-vs-cumulative-time-by-splits">time vs cumulative time by splits<a class="anchor" aria-label="anchor" href="#time-vs-cumulative-time-by-splits"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># dashboard this for y axis</span></span>
 <span><span class="co"># dashboard this for x axis, too selector tool with tick boxes, select all, clear</span></span>
 <span></span>
 <span><span class="co"># plot &lt;- </span></span>
 <span>  <span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">anatomecha_splits</span>, by <span class="op">=</span> <span class="st">"supermetroid_label"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">common_splits</span>, by <span class="op">=</span> <span class="st">"supermetroid_label"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>split_anatomecha <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">split_anatomecha</span><span class="op">)</span>,</span>
 <span>         t_h <span class="op">=</span> <span class="va">realtime_end_ms</span><span class="op">/</span><span class="fl">1000</span><span class="op">/</span><span class="fl">60</span></span>
@@ -1367,19 +1098,16 @@ out all the <code>bombs</code> with the bathwater.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle<span class="op">=</span><span class="fl">90</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="va">anatomecha_splits</span><span class="op">$</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="va">game_event</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">route_standard</span> <span class="op">~</span><span class="va">.</span> <span class="op">)</span> </span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `combine_vars()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> At least one layer must contain all faceting variables:</span></span>
-<span><span class="co">#&gt;   `route_standard`</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Plot is missing `route_standard`</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Layer 1 is missing `route_standard`</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Layer 2 is missing `route_standard`</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `left_join()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Join columns in `x` must be present in the data.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Problem with `supermetroid_label`.</span></span>
 <span></span>
 <span><span class="co"># ggplotly(plot)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># selected_split &lt;- "ice beam" </span></span>
-<span><span class="va">selected_split</span> <span class="op">&lt;-</span> <span class="st">"ice beam"</span><span class="co"># sample(anatomecha_splits$supermetroid_label, 1)</span></span>
+<span><span class="va">selected_split</span> <span class="op">&lt;-</span> <span class="st">"ice beam"</span><span class="co"># sample(game_event, 1)</span></span>
 <span><span class="va">rank</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">25</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#xlim &lt;- c(0.8, 1.2)</span></span>
@@ -1405,7 +1133,7 @@ mean event time</p>
 <li>Evaluated the accuracy of the KNn classifer with different values of
 k by cross validation</li>
 </ol>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get an array of segments</span></span></code></pre></div>
 </div>
 </div>
@@ -1418,14 +1146,14 @@ is, need to impute, conditional on the other values in the array. Need
 to read about imputation. Perhaps I should just write my own imputation,
 I think I could calculate that. Then apply hierarchical clustering to
 find out which.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create wideform array</span></span>
 <span><span class="va">routes_wide</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">routes_raw</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>game_event <span class="op">=</span> <span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">realtime_end_ms</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">realtime_end_ms</span><span class="op">)</span>,</span>
-<span>           <span class="va">game_event</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">anatomecha_splits</span><span class="op">$</span><span class="va">supermetroid_label</span></span>
+<span>           <span class="va">game_event</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">game_event</span></span>
 <span>           <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -1435,9 +1163,8 @@ find out which.</p>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>id_cols <span class="op">=</span> <span class="st">"run_id"</span>, </span>
 <span>                names_from <span class="op">=</span> <span class="st">"game_event"</span>, </span>
 <span>                values_from <span class="op">=</span> <span class="st">"realtime_end_ms"</span><span class="op">)</span> </span>
-<span></span>
-<span>  </span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'routes_raw' not found</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in library(caret): there is no package called 'caret'</span></span>
 <span></span>
@@ -1453,13 +1180,13 @@ find out which.</p>
 <span>             metric     <span class="op">=</span> <span class="st">"Accuracy"</span>,</span>
 <span>             data       <span class="op">=</span> <span class="va">routes_raw</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in train(supermetroid_label ~ realtime_end_ms, method = "knn", tuneGrid = expand.grid(k = 1:10), : could not find function "train"</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">routes_wide</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">routes</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">route_id</span>, <span class="va">runs</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">runs</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">split</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">anatomecha_splits</span><span class="op">$</span><span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">split</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">game_event</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">run_id</span>,</span>
 <span>                     <span class="va">realtime_end_ms</span>, <span class="va">split</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">run_id</span>, <span class="va">split</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -1469,12 +1196,13 @@ find out which.</p>
 <span>  <span class="co"># 0 entries must be corrupt?</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">realtime_end_ms</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="st">"split"</span>, values_from <span class="op">=</span> <span class="st">"realtime_end_ms"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">clean_names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">clean_names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'routes' not found</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sio_routes_wide</span> <span class="op">&lt;-</span> <span class="va">routes_wide</span></span>
 <span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_data</span><span class="op">(</span><span class="va">sio_routes_wide</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span></span>
 <span></span>
@@ -1511,7 +1239,7 @@ find out which.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">preProcValues</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'preProcValues' not found</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ice_beam</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">routes_wide</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">route_id</span>, <span class="va">route_id</span>, <span class="va">ice_beam</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -1521,24 +1249,22 @@ find out which.</p>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">ice_beam</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; Adding missing grouping variables: `run_id`</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'routes_wide' not found</span></span>
 <span></span>
 <span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">ice_beam</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in dist(ice_beam): NAs introduced by coercion</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'ice_beam' not found</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span>, labels <span class="op">=</span> <span class="va">ice_beam</span><span class="op">$</span><span class="va">route_id</span><span class="op">)</span></span></code></pre></div>
-<p><img src="splits_files/figure-html/unnamed-chunk-25-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andrie/ggdendro" class="external-link">ggdendro</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusters</span>, labels <span class="op">=</span> <span class="va">ice_beam</span><span class="op">$</span><span class="va">route_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'clusters' not found</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/ggdendro/man/ggdendrogram.html" class="external-link">ggdendrogram</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span></span></code></pre></div>
-<p><img src="splits_files/figure-html/unnamed-chunk-26-1.png" width="768" style="display: block; margin: auto;"></p>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andrie/ggdendro" class="external-link">ggdendro</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ggdendro/man/ggdendrogram.html" class="external-link">ggdendrogram</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'clusters' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># fuckit write csv</span></span>
-<span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">routes_wide</span>, <span class="st">"dev/routes_wide.csv"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Cannot open file for writing:</span></span>
-<span><span class="co">#&gt; * 'dev/routes_wide.csv'</span></span></code></pre></div>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">routes_wide</span>, <span class="st">"dev/routes_wide.csv"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; No module named 'numpy'</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> KNNImputer</span>
@@ -1558,11 +1284,11 @@ find out which.</p>
 <span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'py' not found</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x_event</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">routes_wide</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">route_id</span>, <span class="va">run_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'x_event' not found</span></span>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'routes_wide' not found</span></span>
 <span></span>
 <span><span class="va">routes_imputed</span> <span class="op">=</span> </span>
 <span>  <span class="va">routes_wide</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">route_id</span>, <span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">x_event</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: object 'x_event' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'routes_wide' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># try using caret to do knn classification</span></span>

@@ -81,6 +81,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://softloud.github.io/supermetroid/">supermetroid</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/" class="external-link">gt</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">306</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
@@ -92,17 +93,17 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get routes</span></span>
 <span><span class="va">run_routes</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">sio_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="va">splits_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="co"># ensure data is arranged by run, ordered by segment time</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">run_id</span>, <span class="va">realtime_end_ms</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="co"># why is player name a list?</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>player_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">player_name</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="co"># filter to common splits shared by players</span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">supermetroid_label</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">player_name</span>, <span class="va">supermetroid_label</span>, <span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">game_event</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">common_splits</span><span class="op">$</span><span class="va">game_event</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">player_name</span>, <span class="va">game_event</span>, <span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">run_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="co"># create a list-column of label dataframes</span></span>
-<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">game_event</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>route <span class="op">=</span> <span class="va">data</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">run_routes</span><span class="op">)</span></span>
@@ -110,12 +111,12 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># Groups:   run_id [6]</span></span></span>
 <span><span class="co">#&gt;   player_name run_id route            </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> mchan338    100x   <span style="color: #949494;">&lt;tibble [18 × 1]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> mchan338    100x   <span style="color: #949494;">&lt;tibble [14 × 1]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> tm9001      105d   <span style="color: #949494;">&lt;tibble [1 × 1]&gt;</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> tm9001      10a5   <span style="color: #949494;">&lt;tibble [1 × 1]&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> NaN         12qr   <span style="color: #949494;">&lt;tibble [12 × 1]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> NaN         12qs   <span style="color: #949494;">&lt;tibble [12 × 1]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> NaN         12qt   <span style="color: #949494;">&lt;tibble [12 × 1]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> NaN         12qr   <span style="color: #949494;">&lt;tibble [11 × 1]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> NaN         12qs   <span style="color: #949494;">&lt;tibble [11 × 1]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> NaN         12qt   <span style="color: #949494;">&lt;tibble [11 × 1]&gt;</span></span></span>
 <span></span>
 <span><span class="co"># get distinct routes and their corresponding run_ids</span></span>
 <span><span class="va">distinct_routes</span> <span class="op">&lt;-</span></span>
@@ -131,16 +132,16 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   route_id route             run_id          </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> route  1 <span style="color: #949494;">&lt;tibble [18 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [9 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> route  1 <span style="color: #949494;">&lt;tibble [14 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [9 × 2]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> route  2 <span style="color: #949494;">&lt;tibble [1 × 1]&gt;</span>  <span style="color: #949494;">&lt;tibble [2 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> route  3 <span style="color: #949494;">&lt;tibble [12 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [6 × 2]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> route  4 <span style="color: #949494;">&lt;tibble [16 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [3 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> route  3 <span style="color: #949494;">&lt;tibble [11 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [7 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> route  4 <span style="color: #949494;">&lt;tibble [15 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [3 × 2]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> route  5 <span style="color: #949494;">&lt;tibble [9 × 1]&gt;</span>  <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> route  6 <span style="color: #949494;">&lt;tibble [7 × 1]&gt;</span>  <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># will use these data in route-graph vignette</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_data</span><span class="op">(</span><span class="va">distinct_routes</span><span class="op">)</span></span></code></pre></div>
-<p>In these data we have 569 runs that use 211 routes, but subroutes are
+<p>In these data we have runs that use routes, but subroutes are
 considered separate routes. Which isn’t quite what I want, i.e., a route
 containing a single label is considered distinct from every other route
 that it is a label from.</p>
@@ -154,7 +155,7 @@ classify by routes</li>
 </ul>
 <p>But here we are to do the easy routes, i.e., route = a,b,d, should be
 considered the same as route a,b,c,d, instead of different, which the
-211 routes counts. So, how many actual routes are represented, and how
+195 routes counts. So, how many actual routes are represented, and how
 many runs can we not classify?</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">viable_routes</span> <span class="op">&lt;-</span></span>
@@ -168,13 +169,13 @@ many runs can we not classify?</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   route_id route             run_id           route_length</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> route  1 <span style="color: #949494;">&lt;tibble [18 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [9 × 2]&gt;</span>           18</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> route  3 <span style="color: #949494;">&lt;tibble [12 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [6 × 2]&gt;</span>           12</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> route  4 <span style="color: #949494;">&lt;tibble [16 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [3 × 2]&gt;</span>           16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> route  1 <span style="color: #949494;">&lt;tibble [14 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [9 × 2]&gt;</span>           14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> route  3 <span style="color: #949494;">&lt;tibble [11 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [7 × 2]&gt;</span>           11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> route  4 <span style="color: #949494;">&lt;tibble [15 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [3 × 2]&gt;</span>           15</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> route  5 <span style="color: #949494;">&lt;tibble [9 × 1]&gt;</span>  <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span>            9</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> route  6 <span style="color: #949494;">&lt;tibble [7 × 1]&gt;</span>  <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span>            7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> route  7 <span style="color: #949494;">&lt;tibble [10 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span>           10</span></span></code></pre></div>
-<p>Filtering by routes greater than 1, we have 206 different routes and
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> route  7 <span style="color: #949494;">&lt;tibble [9 × 1]&gt;</span>  <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span>            9</span></span></code></pre></div>
+<p>Filtering by routes greater than 1, we have 190 different routes and
 subroutes.</p>
 <div class="section level3">
 <h3 id="identifying-if-one-route-is-a-subset-and-same-permutation-of-another">Identifying if one route is a subset and same permutation of
@@ -189,10 +190,10 @@ and with the same size are already collapsed by the
 <span>  <span class="va">viable_routes</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
-<span><span class="co">#&gt;   route_id   route             run_id           route_length</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> route  182 <span style="color: #949494;">&lt;tibble [6 × 1]&gt;</span>  <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span>            6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> route  105 <span style="color: #949494;">&lt;tibble [10 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [1 × 2]&gt;</span>           10</span></span></code></pre></div>
+<span><span class="co">#&gt;   route_id   route            run_id            route_length</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> route  182 <span style="color: #949494;">&lt;tibble [3 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [5 × 2]&gt;</span>             3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> route  105 <span style="color: #949494;">&lt;tibble [7 × 1]&gt;</span> <span style="color: #949494;">&lt;tibble [25 × 2]&gt;</span>            7</span></span></code></pre></div>
 <p>Now assign the first of the longest route to primary route, and the
 other route to the possible subroute of the comparison route.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -220,30 +221,24 @@ are considered distinct routes, that is, <span class="math inline">\(r_1\)</span
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">two_routes</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">route</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 1</span></span></span>
-<span><span class="co">#&gt;   supermetroid_label</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bombs             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> varia suit        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> grapple beam      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> space jump        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> screw attack      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> golden 4          </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
+<span><span class="co">#&gt;   game_event</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> space jump</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> phantoon  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ridley    </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 1</span></span></span>
-<span><span class="co">#&gt;    supermetroid_label</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> bombs             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> charge beam       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> varia suit        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> speed booster     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> grapple beam      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> gravity suit      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> space jump        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> plasma beam       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ice beam          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> screw attack</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 1</span></span></span>
+<span><span class="co">#&gt;   game_event  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> charge beam </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> wave beam   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> grapple beam</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> gravity suit</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> space jump  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> spring ball </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> screw attack</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="check-if-routes-are-in-the-same-order">Check if routes are in the same order<a class="anchor" aria-label="anchor" href="#check-if-routes-are-in-the-same-order"></a>
@@ -255,7 +250,7 @@ are considered distinct routes, that is, <span class="math inline">\(r_1\)</span
 <span>  <span class="va">two_routes</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">route_length</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">route</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">route_id</span>, <span class="va">supermetroid_label</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">route_id</span>, <span class="va">game_event</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">route_id</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>route_order <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>route_label <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">route_id</span> <span class="op">==</span> <span class="va">comparison_route</span>, </span>
@@ -266,20 +261,18 @@ are considered distinct routes, that is, <span class="math inline">\(r_1\)</span
 <span></span>
 <span><span class="co"># inspect</span></span>
 <span><span class="va">pivoted_routes</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 3</span></span></span>
-<span><span class="co">#&gt;    supermetroid_label comparison_route possible_subroute</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> bombs                             1                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> charge beam                       2                <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> varia suit                        3                 2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> speed booster                     4                <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> grapple beam                      5                 3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> gravity suit                      6                <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> space jump                        7                 4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> plasma beam                       8                <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ice beam                          9                <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> screw attack                     10                 5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> golden 4                         <span style="color: #BB0000;">NA</span>                 6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 3</span></span></span>
+<span><span class="co">#&gt;   game_event   comparison_route possible_subroute</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> charge beam                 1                <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> wave beam                   2                <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> grapple beam                3                <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> gravity suit                4                <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> space jump                  5                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> spring ball                 6                <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> screw attack                7                <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> phantoon                   <span style="color: #BB0000;">NA</span>                 2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> ridley                     <span style="color: #BB0000;">NA</span>                 3</span></span>
 <span></span>
 <span><span class="co"># now filter for overlapping events</span></span>
 <span><span class="va">compared_routes</span> <span class="op">&lt;-</span> <span class="va">pivoted_routes</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -296,15 +289,11 @@ are considered distinct routes, that is, <span class="math inline">\(r_1\)</span
 <span></span>
 <span><span class="co"># inspect</span></span>
 <span><span class="va">compared_routes</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
-<span><span class="co">#&gt;   supermetroid_label comparison_route possible_subroute possible_order</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bombs                             1                 1              1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> varia suit                        3                 2              2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> grapple beam                      5                 3              3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> space jump                        7                 4              4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> screw attack                     10                 5              5</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: comparison_order &lt;int&gt;, order_eq &lt;lgl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 6</span></span></span>
+<span><span class="co">#&gt;   game_event comparison_route possible_subroute possible_order comparison_order</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> space jump                5                 1              1                1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: order_eq &lt;lgl&gt;</span></span></span>
 <span></span>
 <span></span>
 <span><span class="co"># now check to see if they're all true</span></span>
@@ -356,12 +345,12 @@ are considered distinct routes, that is, <span class="math inline">\(r_1\)</span
 <span><span class="co"># number of routes * 1 less number of routes </span></span>
 <span><span class="co"># because we won't compare a route with itself</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">viable_route_id</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">viable_route_id</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; [1] 42230</span></span>
+<span><span class="co">#&gt; [1] 35910</span></span>
 <span></span>
 <span><span class="co"># comfirm number of comparisons</span></span>
 <span><span class="va">comparison_id_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 42230</span></span>
+<span><span class="co">#&gt; [1] 35910</span></span>
 <span></span>
 <span><span class="co"># whoa combinatorics! </span></span></code></pre></div>
 <p>Now we need to compare each route. We want to apply a function that
@@ -372,6 +361,1439 @@ pieces of information.</p>
 lengths of two routes 3. if <code>possible_classroute</code> is an
 absolute subroute 4. if <code>possible_classroute</code></p>
 <p>We need to find out if <code>possible_classroute</code></p>
+</div>
+<div class="section level3">
+<h3 id="all-the-routes">all the routes<a class="anchor" aria-label="anchor" href="#all-the-routes"></a>
+</h3>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">distinct_routes</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div id="sygziwminy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sygziwminy table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#sygziwminy thead, #sygziwminy tbody, #sygziwminy tfoot, #sygziwminy tr, #sygziwminy td, #sygziwminy th {
+  border-style: none;
+}
+
+#sygziwminy p {
+  margin: 0;
+  padding: 0;
+}
+
+#sygziwminy .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#sygziwminy .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sygziwminy .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sygziwminy .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sygziwminy .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sygziwminy .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sygziwminy .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sygziwminy .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#sygziwminy .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#sygziwminy .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#sygziwminy .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#sygziwminy .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#sygziwminy .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#sygziwminy .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#sygziwminy .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#sygziwminy .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sygziwminy .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sygziwminy .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#sygziwminy .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sygziwminy .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#sygziwminy .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#sygziwminy .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#sygziwminy .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sygziwminy .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#sygziwminy .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#sygziwminy .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sygziwminy .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sygziwminy .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#sygziwminy .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sygziwminy .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#sygziwminy .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sygziwminy .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sygziwminy .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sygziwminy .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sygziwminy .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sygziwminy .gt_left {
+  text-align: left;
+}
+
+#sygziwminy .gt_center {
+  text-align: center;
+}
+
+#sygziwminy .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sygziwminy .gt_font_normal {
+  font-weight: normal;
+}
+
+#sygziwminy .gt_font_bold {
+  font-weight: bold;
+}
+
+#sygziwminy .gt_font_italic {
+  font-style: italic;
+}
+
+#sygziwminy .gt_super {
+  font-size: 65%;
+}
+
+#sygziwminy .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#sygziwminy .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#sygziwminy .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#sygziwminy .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#sygziwminy .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#sygziwminy .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#sygziwminy .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="route_id">route_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="route">route</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="run_id">run_id</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  1</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "spring ball", "plasma beam", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("mchan338", "NaN", "NaN", "mchan338", "mchan338", "mchan338", "mchan338", "mchan338", "mchan338"), c("100x", "lw8", "m1a", "sma", "x3t", "y48", "y6z", "ylc", "zpg")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  2</td>
+<td headers="route" class="gt_row gt_center">x-ray</td>
+<td headers="run_id" class="gt_row gt_center">c("tm9001", "tm9001"), c("105d", "10a5")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  3</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN", "NaN", "Dyceron", "SpaghettyPlays", "Alex_X8"), c("12qr", "12qs", "12qt", "12qu", "638", "6r8z", "7hqa")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  4</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("stephini", "NaN", "Flacksan"), c("15vn", "9yp2", "9yp3")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  5</td>
+<td headers="route" class="gt_row gt_center">c("gravity suit", "space jump", "ice beam", "morph ball", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 16y</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  6</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "phantoon", "space jump", "screw attack", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 188i</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  7</td>
+<td headers="route" class="gt_row gt_center">c("grapple beam", "ice beam", "bombs", "varia suit", "hi-jump boots", "phantoon", "gravity suit", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">aldriel, 1apv</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  8</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "spring ball", "plasma beam", "ice beam", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "mchan338", "mchan338"), c("1fy2", "1m8a", "1xql")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  9</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">HemZar, 1ih0</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  10</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("HemZar", "HemZar", "jaychalke", "jaychalke", "HemZar", "NaN", "jaychalke", "jaychalke", "jaychalke", "NaN", "HemZar", "NaN", "jaychalke", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN"), c("1j8g", "1j8h", "1o66", "1ob5", "1oiu", "1oiv", "1oo5", "1owo", "1p9z", "1qqz", "1qr1", "1sf1", "3z8f", "6m4q", "6m4r", "6mbi", "6nji", "6tnc", "6u4y", "6uvz", "6xlo", "753f", "a014")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  11</td>
+<td headers="route" class="gt_row gt_center">c("hi-jump boots", "phantoon", "spring ball", "plasma beam", "charge beam", "spazer", "speed booster", "wave beam", "grapple beam", "gravity suit", "ice beam", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("mchan338", "mchan338"), c("1kw5", "1kw6")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  12</td>
+<td headers="route" class="gt_row gt_center">c("charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "spring ball", "plasma beam", "ice beam", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">mchan338, 1l5s</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  13</td>
+<td headers="route" class="gt_row gt_center">c("spring ball", "plasma beam", "charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "ice beam", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">mchan338, 1lh6</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  14</td>
+<td headers="route" class="gt_row gt_center">c("spring ball", "plasma beam", "morph ball", "charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "ice beam", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">mchan338, 1lh8</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  15</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "enmet", "tmaidchan", "chexhuman", "chexhuman", "NaN", "NaN", "NaN", "NaN", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman", "chexhuman"), c("1ll9", "1pkr", "2rqi", "3wjq", "4hwl", "4p6c", "4qhz", "4qk5", "4qk6", "4qvm", "5gvk", "5gvl", "5gvm", "6bty", "6dju", "6dq5", "6dwf", "6dwg", "6e68", "6er4", "6fga")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  16</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "plasma beam", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 1lo2</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  17</td>
+<td headers="route" class="gt_row gt_center">c("x-ray", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 1lo4</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  18</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "gravity suit", "space jump", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">marvelgirl186, 1owd</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  19</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "grapple beam")</td>
+<td headers="run_id" class="gt_row gt_center">c("Mumu_Didi", "Mumu_Didi", "Mumu_Didi"), c("1p2e", "1vef", "1xjq")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  20</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "grapple beam", "gravity suit", "space jump", "ice beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN"), c("1p5k", "1q10")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  21</td>
+<td headers="route" class="gt_row gt_center">c("x-ray", "varia suit", "grapple beam", "gravity suit", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 1p65</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  22</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "grapple beam", "gravity suit", "space jump", "spring ball", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 1rva</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  23</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("avijobat", "avijobat", "ZenTrigger", "ZenTrigger", "ZenTrigger"), c("1t3c", "1v7y", "47zu", "49h4", "49nt")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  24</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("avijobat", "avijobat"), c("1t6n", "1usx")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  25</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "dorkmasterflek", "dorkmasterflek", "dorkmasterflek", "dorkmasterflek"), c("1ukb", "wrr", "xey", "yrg", "z77")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  26</td>
+<td headers="route" class="gt_row gt_center">c("screw attack", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "ice beam", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">avijobat, 1upw</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  27</td>
+<td headers="route" class="gt_row gt_center">c("x-ray", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 1v8f</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  28</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 1vbx</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  29</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "gravity suit", "morph ball", "charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "spring ball", "plasma beam", "ice beam", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">mchan338, 1vwd</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  30</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "varia suit", "grapple beam")</td>
+<td headers="run_id" class="gt_row gt_center">c("Mumu_Didi", "Mumu_Didi"), c("1ykk", "211k")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  31</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("avijobat", "avijobat", "avijobat", "avijobat"), c("1yoo", "1yop", "2b6m", "2b8a")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  32</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 23ly</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  33</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN", "NaN", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "Severe_Studios", "NaN", "NaN", "NaN", "NaN", "michaelmodena24", 
+"michaelmodena24", "michaelmodena24", "michaelmodena24", "michaelmodena24", "michaelmodena24", "michaelmodena24", "michaelmodena24", "Shugo09"), c("287v", "30nf", "315i", "316d", "6sz9", "6sza", "6t5k", "6t5l", "6tas", "6tr9", "6tsy", "6u6l", "6v3y", "6wcq", "6wg1", "6wxr", "6x9z", "6xhb", "715c", "715e", "72wq", "74en", "74pf", "785h", "787c", "79k5", "79ug", "7mqa", "81av", "83ku", "84vr", "8dky", "8jbw", "8jia", "8kag", "8kd9", "8ke1", "8kge", "8kiz", "8lc6", "9go1")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  34</td>
+<td headers="route" class="gt_row gt_center">c("gravity suit", "x-ray", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN"), c("2c9l", "2cbu")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  35</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "spazer", "varia suit", "hi-jump boots", "wave beam", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("canadianowl_srl", "NaN", "NaN", "canadianowl_srl"), c("2c9r", "2i8c", "2ioh", "2jyu")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  36</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "x-ray", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN"), c("2cfm", "2er5", "2ghb", "2gll", "2h0i", "2hjr", "2j7v", "2jcd", "2jn6", "2k6x", "2k7l", "2kgg", "2kgj", "2n6s", "2naw")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  37</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "gravity suit", "space jump", "plasma beam", "ice beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">plackorbinto, 2gjo</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  38</td>
+<td headers="route" class="gt_row gt_center">c("ridley", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("unhchabo", "unhchabo", "unhchabo", "unhchabo", "unhchabo", "unhchabo", "unhchabo", "unhchabo", "unhchabo"), c("2h20", "2h5x", "30jr", "3b65", "3vjk", "40wo", "47j9", "56yj", "5hht")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  39</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "grapple beam", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("capncarl87", "capncarl87", "capncarl87", "capncarl87", "capncarl87", "capncarl87", "capncarl87", "capncarl87", "capncarl87"), c("2ikg", "2j31", "3lkg", "3n4z", "3n90", "3npx", "3ouc", "3p64", "3pr6")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  40</td>
+<td headers="route" class="gt_row gt_center">c("ice beam", "screw attack", "bombs", "spazer", "varia suit", "hi-jump boots", "wave beam", "space jump", "spring ball", "plasma beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 2iqj</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  41</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "space jump", "spring ball", "ice beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("mrguyaverage", "mrguyaverage", "mrguyaverage", "mrguyaverage", "mrguyaverage", "mrguyaverage"), c("2jmh", "2jng", "2kgq", "2kxh", "2xt2", "3eiw")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  42</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "ridley", "morph ball", "bombs", "charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">unhchabo, 2l5q</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  43</td>
+<td headers="route" class="gt_row gt_center">c("x-ray", "bombs", "spazer", "varia suit", "hi-jump boots", "wave beam", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">canadianowl_srl, 2l90</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  44</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "bombs", "spazer", "varia suit", "hi-jump boots", "wave beam", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">canadianowl_srl, 2lvh</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  45</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN", "NaN", "jackson_______d77", "NaN", "NaN", "NaN"), c("2nik", "2p20", "2pgo", "2tsb", "2tsd", "35jd", "3d8m", "3dot")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  46</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "varia suit", "hi-jump boots", "speed booster", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN"), c("2nr4", "2nv6", "30m6")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  47</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "ridley", "ridley", "morph ball", "bombs", "charge beam", "spazer", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">unhchabo, 2q6n</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  48</td>
+<td headers="route" class="gt_row gt_center">c("golden 4", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("CountCreep", "CountCreep"), c("2z9r", "3cmv")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  49</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "wave beam", "grapple beam", "space jump", "spring ball", "plasma beam", "ice beam", "spazer", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN"), c("2zc", "2zd", "lbg")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  50</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "grapple beam", "bombs", "varia suit", "ice beam", "space jump", "screw attack", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 300m</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  51</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "grapple beam", "bombs", "varia suit", "ice beam", "phantoon", "screw attack", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 3084</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  52</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "gravity suit", "space jump", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link", "64bit_link"), c("399i", "399k", "39uv", "3aph", "3b5i", "3c2g", "3esb", "3zin", "4cs6", "4dyw", "4eco", "4ei4", "4fll", "4zb7", "51h3", "58ur", "5au5")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  53</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "ice beam", "phantoon", "space jump", "screw attack", "ridley", "grapple beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN"), c("3b0f", "3qis")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  54</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "grapple beam", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">plof27, 3biv</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  55</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">komaru, 3ck7</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  56</td>
+<td headers="route" class="gt_row gt_center">c("grapple beam", "spring ball", "morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "gravity suit", "space jump", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">komaru, 3ckw</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  57</td>
+<td headers="route" class="gt_row gt_center">c("gravity suit", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">DenglishDamion, 3e83</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  58</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "taikalanne"), c("3eqa", "3eqb")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  59</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Boxmeister, 3fbn</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  60</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "varia suit", "grapple beam", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("Mumu_Didi", "Mumu_Didi", "Mumu_Didi"), c("3huk", "3xal", "4he3")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  61</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("Boxmeister", "Boxmeister", "Boxmeister", "Boxmeister", "Boxmeister", "Boxmeister"), c("3i63", "4l8h", "4x5j", "657a", "6coc", "9r2o")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  62</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "ice beam", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">c("DaniloRoxette", "DaniloRoxette", "DaniloRoxette", "DaniloRoxette"), c("3jt1", "af1z", "af7h", "aqqu")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  63</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">c("MurderBeam_TV", "MurderBeam_TV", "MurderBeam_TV", "MurderBeam_TV", "MurderBeam_TV", "MurderBeam_TV", "MurderBeam_TV", "MurderBeam_TV", "MurderBeam_TV"), c("3mek", "3mv1", "3n9v", "3nl7", "3ps9", "3qs7", "3r8r", "3xcn", "4i51")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  64</td>
+<td headers="route" class="gt_row gt_center">c("spring ball", "x-ray", "bombs", "varia suit", "wave beam", "ice beam", "phantoon", "gravity suit", "space jump", "plasma beam", "screw attack", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">cynanmachae, 3ngi</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  65</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "space jump", "varia suit", "speed booster", "ice beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">lethargicwaldo, 3omh</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  66</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">electroniclogic, 3pbd</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  67</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "spazer", "spring ball", "ice beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("hero_82", "hero_82", "hero_82", "hero_82", "hero_82", "hero_82"), c("3pgp", "4kqx", "4uu3", "4zf5", "5erx", "6gsy")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  68</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "varia suit", "wave beam", "grapple beam", "gravity suit", "space jump", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">ptoil, 3pvc</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  69</td>
+<td headers="route" class="gt_row gt_center">c("spazer", "varia suit", "speed booster", "space jump", "plasma beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN", "NaN", "NaN"), c("3q63", "3qd4", "3r6a", "3rda", "3s07")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  70</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "ice beam", "phantoon", "space jump", "plasma beam", "screw attack", "ridley", "grapple beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "CScottyW", "CScottyW", "CScottyW", "CScottyW", "CScottyW", "CScottyW"), c("3qnn", "4lnp", "6d18", "6ddj", "6dp8", "6j3a", "6ju4")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  71</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "gravity suit", "varia suit", "speed booster", "grapple beam", "phantoon", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Boxmeister, 3qwj</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  72</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster")</td>
+<td headers="run_id" class="gt_row gt_center">MurderBeam_TV, 3r8q</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  73</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "spazer", "spring ball", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("canadianowl_srl", "canadianowl_srl"), c("3tcz", "48up")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  74</td>
+<td headers="route" class="gt_row gt_center">c("gravity suit", "space jump")</td>
+<td headers="run_id" class="gt_row gt_center">derxu, 3u1z</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  75</td>
+<td headers="route" class="gt_row gt_center">c("x-ray", "bombs", "varia suit", "wave beam", "grapple beam", "gravity suit", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">64bit_link, 3uxu</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  76</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "plasma beam", "varia suit", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 3y6j</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  77</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 3ybt</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  78</td>
+<td headers="route" class="gt_row gt_center">space jump</td>
+<td headers="run_id" class="gt_row gt_center">c("derxu", "LakeDemon", "LakeDemon", "LakeDemon", "LakeDemon"), c("3zbt", "990l", "990m", "999j", "99t2")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  79</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("jaychalke", "jaychalke", "jaychalke", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "Metroid_Gameplays", "Metroid_Gameplays"), c("3zdx", "63jx", "6d47", "6g2h", "6g2i", "7hqp", "7i31", "7jik", "7jql", "7kqb", "7kwc", "7mbw", "7pk8", "7q0j", "7sxl", "7zqh", "8698", "86fv", "8l0y", "8q7w", "a1g7")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  80</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "ice beam", "space jump", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">FrenchLightningJohn, 3zhd</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  81</td>
+<td headers="route" class="gt_row gt_center">c("gravity suit", "x-ray", "morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "ice beam", "phantoon", "space jump", "screw attack", "grapple beam")</td>
+<td headers="run_id" class="gt_row gt_center">Maniacal42, 3zhx</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  82</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("cynanmachae", "cynanmachae", "cynanmachae", "cynanmachae", "cynanmachae", "NaN", "cynanmachae", "cynanmachae", "cynanmachae"), c("41sf", "4330", "57gu", "5a92", "5kg4", "5kg6", "9pky", "9q7q", "9r8z")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  83</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "ice beam", "gravity suit", "space jump", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 43jb</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  84</td>
+<td headers="route" class="gt_row gt_center">c("gravity suit", "plasma beam", "x-ray", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "space jump", "spring ball", "ice beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Gameaholic2k, 454l</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  85</td>
+<td headers="route" class="gt_row gt_center">c("ridley", "bombs", "varia suit", "wave beam", "grapple beam", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">CadenzaVvi, 4b0s</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  86</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">ZenTrigger, 4bhe</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  87</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "wave beam", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 4c2i</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  88</td>
+<td headers="route" class="gt_row gt_center">c("speed booster", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("chexhuman", "chexhuman"), c("4ccn", "4q5d")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  89</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "space jump", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("canadianowl_srl", "canadianowl_srl", "canadianowl_srl", "canadianowl_srl", "canadianowl_srl", "canadianowl_srl", "canadianowl_srl"), c("4crx", "4cs2", "4e6k", "4inn", "4kch", "4p04", "4r0u")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  90</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "ice beam", "gravity suit", "space jump", "spring ball", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 4ee4</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  91</td>
+<td headers="route" class="gt_row gt_center">c("charge beam", "wave beam", "grapple beam", "phantoon", "space jump")</td>
+<td headers="run_id" class="gt_row gt_center">c("marcelodmc3", "marcelodmc3"), c("4eq3", "4m25")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  92</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("TonyLs03", "TonyLs03", "NaN", "TonyLs03"), c("4fpf", "4gpz", "4inj", "4ink")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  93</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "phantoon", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "Cptanihilate"), c("4hvm", "4mkh", "6ep0")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  94</td>
+<td headers="route" class="gt_row gt_center">c("grapple beam", "bombs", "varia suit", "wave beam", "phantoon", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">CadenzaVvi, 4i2a</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  95</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("Enfieldgamer", "Enfieldgamer"), c("4u6r", "4um9")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  96</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN"), c("4utl", "51ka")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  97</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "speed booster", "grapple beam", "gravity suit", "space jump", "ice beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 4wg</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  98</td>
+<td headers="route" class="gt_row gt_center">c("charge beam", "wave beam", "grapple beam", "space jump", "spring ball", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">c("marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3"), c("50as", "50nn", "53ks", "55op")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  99</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "grapple beam", "gravity suit", "space jump", "plasma beam", "ice beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">Enfieldgamer, 52dt</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  100</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "varia suit", "speed booster", "grapple beam", "gravity suit", "space jump", "plasma beam", "ice beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">Enfieldgamer, 52du</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  101</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "spazer", "phantoon", "gravity suit", "spring ball", "ridley", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 5300</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  102</td>
+<td headers="route" class="gt_row gt_center">c("screw attack", "bombs", "varia suit", "speed booster", "ice beam", "space jump", "spring ball", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Timochun, 563d</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  103</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "ice beam", "space jump", "spring ball", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Timochun, 563e</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  104</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "space jump", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("malzakiel", "lightquarz", "lightquarz", "lightquarz", "lightquarz", "lightquarz", "lightquarz"), c("5826", "7hua", "7huf", "7myy", "7om3", "7om5", "7om7")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  105</td>
+<td headers="route" class="gt_row gt_center">c("charge beam", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">c("marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3"), c("58zx", "59sl", "7o62", "7tms", "7wbd", "7xa8", "7yjl", "7z1s", "7ze4", "7zpm", "7zqd", "8017", "80co", "80db", "80i0", "80vq", "8128", "8181", "81eh", "81ut", "827q", "82cr", "835d", "83od", "86fj")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  106</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">Timochun, 5bt1</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  107</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "phantoon", "space jump", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">derxu, 5bta</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  108</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("iamthecheese234", "iamthecheese234"), c("5g6d", "5g6e")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  109</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "space jump", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("apathyduck07", "apathyduck07", "apathyduck07"), c("5i6d", "5tpz", "5tq1")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  110</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">MM2nescartridge, 5ou1</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  111</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "grapple beam", "morph ball", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 5qne</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  112</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "gravity suit", "space jump", "ice beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Falconcan, 5v9q</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  113</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "ice beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 5xcp</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  114</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "ice beam", "space jump", "screw attack", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN"), c("5xsy", "5yjz", "5yt2")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  115</td>
+<td headers="route" class="gt_row gt_center">c("grapple beam", "ridley", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">unhchabo, 5ykr</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  116</td>
+<td headers="route" class="gt_row gt_center">bombs</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 5ytn</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  117</td>
+<td headers="route" class="gt_row gt_center">golden 4</td>
+<td headers="run_id" class="gt_row gt_center">solrecon111, 66b3</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  118</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 684y</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  119</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "speed booster", "space jump")</td>
+<td headers="run_id" class="gt_row gt_center">c("LakeDemon", "LakeDemon"), c("69n5", "6afi")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  120</td>
+<td headers="route" class="gt_row gt_center">c("x-ray", "morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">komaru, 6a6i</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  121</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "space jump", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">delcamx, 6bbm</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  122</td>
+<td headers="route" class="gt_row gt_center">c("grapple beam", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("chexhuman", "chexhuman", "chexhuman"), c("6c9s", "6cfi", "6clj")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  123</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "bombs", "varia suit", "ice beam", "space jump", "plasma beam", "screw attack", "ridley", "grapple beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">CScottyW, 6cxm</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  124</td>
+<td headers="route" class="gt_row gt_center">c("grapple beam", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 6ebp</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  125</td>
+<td headers="route" class="gt_row gt_center">c("hi-jump boots", "speed booster", "phantoon", "gravity suit", "space jump", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 6g4x</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  126</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "hi-jump boots", "speed booster", "phantoon", "gravity suit", "space jump", "plasma beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 6gh3</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  127</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "varia suit", "wave beam", "grapple beam", "ice beam", "phantoon", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">Cptanihilate, 6gqz</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  128</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "ice beam", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("xopa0343", "xopa0343"), c("6hqg", "7lpe")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  129</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "ice beam", "space jump", "plasma beam", "screw attack", "ridley", "grapple beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "CScottyW", "NaN"), c("6lbe", "6oc3", "6r25")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  130</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "phantoon", "space jump", "ice beam", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">apathyduck07, 6ml9</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  131</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">tooFATforBUTTer, 6nms</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  132</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 6vbp</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  133</td>
+<td headers="route" class="gt_row gt_center">c("charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "phantoon", "plasma beam", "ice beam", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 6wg7</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  134</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "spazer", "varia suit", "hi-jump boots", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 6zvk</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  135</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "bombs", "varia suit", "wave beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">lightquarz, 77vo</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  136</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "spazer", "varia suit", "wave beam", "grapple beam", "ice beam", "phantoon", "space jump", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("dayne", "dayne"), c("7aap", "7mls")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  137</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "phantoon", "space jump", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">tewfus, 7aua</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  138</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">PhoenixDarkDirk, 7dhs</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  139</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "ice beam", "gravity suit", "space jump", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">c("Lord_Jas", "Lord_Jas"), c("7g7u", "7guz")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  140</td>
+<td headers="route" class="gt_row gt_center">c("x-ray", "bombs", "varia suit", "wave beam", "space jump", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "lightquarz"), c("7geo", "7gep")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  141</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "x-ray", "bombs", "varia suit", "wave beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("lightquarz", "lightquarz"), c("7o0r", "7o0y")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  142</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">EXAKTScience, 7wa6</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  143</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "space jump", "plasma beam", "ice beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("paulsvilledr", "paulsvilledr", "paulsvilledr"), c("7xbn", "7xt3", "82m2")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  144</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "phantoon", "gravity suit", "plasma beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("phatscott25", "phatscott25"), c("81ql", "9hr6")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  145</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "ice beam", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">brandonpersonal23, 86em</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  146</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "speed booster", "ice beam", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">brandonpersonal23, 86x3</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  147</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "gravity suit", "space jump", "spring ball", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Bdog, 8a0z</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  148</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Glaucio_Souza, 8e3b</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  149</td>
+<td headers="route" class="gt_row gt_center">phantoon</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 8eec</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  150</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "spazer", "varia suit", "wave beam", "grapple beam", "ice beam", "phantoon", "space jump", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">dayne, 8fsi</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  151</td>
+<td headers="route" class="gt_row gt_center">c("spazer", "morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 8gqu</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  152</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "wave beam", "ice beam", "phantoon", "gravity suit", "plasma beam", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">kaesden, 8gv6</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  153</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "wave beam", "gravity suit", "space jump", "plasma beam", "ice beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 8mx4</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  154</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "ice beam", "space jump", "spring ball", "screw attack", "grapple beam", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN"), c("8n8d", "97g1")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  155</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("HemZar", "NaN", "NaN", "NaN", "NaN", "HemZar", "NaN", "HemZar", "HemZar", "RaeKasl", "HemZar", "NaN", "HemZar", "loogy30"), c("8n8f", "91hv", "946q", "94bw", "94xo", "96vu", "994c", "9cgd", "9ch5", "9co7", "9fon", "9jz4", "9t1z", "a1yk")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  156</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "bombs", "varia suit", "speed booster", "grapple beam", "space jump", "plasma beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">forwardssbm, 8op4</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  157</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "space jump", "plasma beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">c("forwardssbm", "forwardssbm", "forwardssbm"), c("8op5", "8op6", "8zb5")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  158</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "grapple beam", "space jump", "ice beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">forwardssbm, 8op9</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  159</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "grapple beam", "space jump", "ice beam", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 8p2p</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  160</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "grapple beam", "space jump", "plasma beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 8rci</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  161</td>
+<td headers="route" class="gt_row gt_center">c("speed booster", "space jump")</td>
+<td headers="run_id" class="gt_row gt_center">c("happyartea", "happyartea"), c("8rsn", "8rsp")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  162</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 8rzk</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  163</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "space jump", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN"), c("8s5f", "8s5h")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  164</td>
+<td headers="route" class="gt_row gt_center">c("varia suit", "phantoon", "ridley", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 93mq</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  165</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "spazer", "varia suit", "wave beam", "grapple beam", "space jump", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">dayne, 9502</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  166</td>
+<td headers="route" class="gt_row gt_center">c("charge beam", "plasma beam")</td>
+<td headers="run_id" class="gt_row gt_center">c("Compugab", "Compugab"), c("95ir", "amy2")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  167</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "grapple beam", "phantoon", "ice beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">LakeDemon, 9e8x</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  168</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "grapple beam", "space jump", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 9il1</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  169</td>
+<td headers="route" class="gt_row gt_center">c("gravity suit", "spring ball")</td>
+<td headers="run_id" class="gt_row gt_center">c("marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3", "marcelodmc3"), c("9irn", "9jhn", "9khm", "9kzy", "9q7v", "9qhm", "9qi8")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  170</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("xSLEEP3Rx", "xSLEEP3Rx"), c("9j1t", "9j48")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  171</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "HemZar"), c("9kox", "9kpd", "9sgu")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  172</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "hi-jump boots", "speed booster", "phantoon", "gravity suit", "space jump", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 9l7l</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  173</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">loogy30, 9lju</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  174</td>
+<td headers="route" class="gt_row gt_center">c("ice beam", "morph ball", "bombs", "spazer", "varia suit", "grapple beam", "phantoon", "space jump", "spring ball", "space jump", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">CostilerAphid18, 9r8g</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  175</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "morph ball", "bombs", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">PapaSchmo, 9ubw</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  176</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "spring ball", "plasma beam", "morph ball", "bombs", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, 9ufv</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  177</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "PapaSchmo", "PapaSchmo", "PapaSchmo", "chtpwner", "chtpwner"), c("9usc", "a3gh", "a3gi", "a3gj", "apa3", "apek")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  178</td>
+<td headers="route" class="gt_row gt_center">c("plasma beam", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">eholden, 9yj6</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  179</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN"), c("9zgr", "9zv0", "ac1n")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  180</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "ice beam", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "x-ray", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "starbrightrecordings"), c("a0me", "a0mf")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  181</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Metroid_Gameplays, a1g9</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  182</td>
+<td headers="route" class="gt_row gt_center">c("space jump", "phantoon", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "michaelmodena24", "michaelmodena24", "michaelmodena24", "michaelmodena24"), c("a62x", "a663", "a6cr", "a6jn", "a80a")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  183</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "ice beam", "space jump", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN"), c("a913", "a94d", "abjb", "abjc", "acoz", "anxx", "any2", "aoag", "aoah")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  184</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "phantoon", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">c("NaN", "NaN"), c("aax6", "aax7")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  185</td>
+<td headers="route" class="gt_row gt_center">c("spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("juniorr300", "juniorr300", "juniorr300", "juniorr300", "juniorr300"), c("aiy6", "ajht", "alpo", "ar7a", "asmc")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  186</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "ice beam", "phantoon", "space jump", "spring ball", "screw attack", "grapple beam", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">c("jpufry", "jpufry"), c("ak20", "amuv")</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  187</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">HolySmoke, amcl</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  188</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">DaniloRoxette, aqqw</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  189</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "grapple beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">Hatz, aqvs</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  190</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "ridley", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">anatomecha, ato1</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  191</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "varia suit", "speed booster", "wave beam", "phantoon", "plasma beam", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">lenophis, f0e</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  192</td>
+<td headers="route" class="gt_row gt_center">c("bombs", "charge beam", "varia suit", "speed booster", "grapple beam", "phantoon", "gravity suit", "plasma beam", "screw attack", "ridley", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, r9f</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  193</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray", "golden 4")</td>
+<td headers="run_id" class="gt_row gt_center">NaN, vwt</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  194</td>
+<td headers="route" class="gt_row gt_center">c("phantoon", "morph ball", "bombs", "charge beam", "spazer", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "gravity suit", "space jump", "spring ball", "plasma beam", "ice beam", "screw attack", "x-ray")</td>
+<td headers="run_id" class="gt_row gt_center">dorkmasterflek, xx6</td>
+</tr>
+<tr>
+<td headers="route_id" class="gt_row gt_left">route  195</td>
+<td headers="route" class="gt_row gt_center">c("morph ball", "bombs", "charge beam", "varia suit", "hi-jump boots", "speed booster", "wave beam", "grapple beam", "ice beam", "phantoon", "gravity suit", "space jump", "spring ball", "plasma beam", "screw attack", "x-ray", "golden 4", "golden 4", "phantoon", "ridley")</td>
+<td headers="run_id" class="gt_row gt_center">gulopine, zwv</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
